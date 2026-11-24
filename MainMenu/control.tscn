@@ -310,21 +310,6 @@ theme_override_styles/disabled = SubResource("StyleBoxFlat_btn_disabled")
 disabled = true
 text = "第五关"
 
-[node name="Level6Button" type="Button" parent="CenterContainer/VBoxContainer" unique_id=1055279511]
-custom_minimum_size = Vector2(380, 52)
-layout_mode = 2
-theme_override_colors/font_color = Color(0.92, 0.97, 1, 1)
-theme_override_colors/font_hover_color = Color(0.85, 0.93, 1, 1)
-theme_override_colors/font_disabled_color = Color(0.45, 0.5, 0.55, 0.7)
-theme_override_fonts/font = ExtResource("1_font")
-theme_override_font_sizes/font_size = 26
-theme_override_styles/normal = SubResource("StyleBoxFlat_btn")
-theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_pressed")
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
-theme_override_styles/disabled = SubResource("StyleBoxFlat_btn_disabled")
-disabled = true
-text = "第六关"
-
 [node name="ZenModeButton" type="Button" parent="CenterContainer/VBoxContainer" unique_id=122150700]
 custom_minimum_size = Vector2(380, 52)
 layout_mode = 2

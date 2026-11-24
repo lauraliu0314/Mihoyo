@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://dtne8dl12ab0s"]
+
+[ext_resource type="Script" uid="uid://cgjdk1ea8obhs" path="res://level1/split_view.gd" id="1_script"]
+[ext_resource type="PackedScene" uid="uid://v7rsmrmwdgsn" path="res://level2/main.tscn" id="2_main"]
+[ext_resource type="PackedScene" uid="uid://dvfa43ncwe4bg" path="res://level2/main_mirror.tscn" id="3_mirror"]
+
+[node name="SplitView" type="Control" unique_id=1847263601]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+process_mode = 3
+script = ExtResource("1_script")
+
+[node name="HBox" type="HBoxContainer" parent="." unique_id=1847263602]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+theme_override_constants/separation = 0
+
+[node name="LeftContainer" type="SubViewportContainer" parent="HBox" unique_id=1847263603]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+process_mode = 3
+stretch = true
+
+[node name="LeftViewport" type="SubViewport" parent="HBox/LeftContainer" unique_id=1847263604]
+handle_input_locally = true
+own_world_3d = true
+size = Vector2i(960, 1080)
+render_target_update_mode = 4
+
+[node name="Main" parent="HBox/LeftContainer/LeftViewport" unique_id=1847263605 instance=ExtResource("2_main")]
+process_mode = 1
+
+[node name="RightContainer" type="SubViewportContainer" parent="HBox" unique_id=1847263606]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+process_mode = 3
+stretch = true
+
+[node name="RightViewport" type="SubViewport" parent="HBox/RightContainer" unique_id=1847263607]
+audio_listener_enable_3d = false
+gui_disable_input = true
+handle_input_locally = false
+own_world_3d = true
+size = Vector2i(960, 1080)
+render_target_update_mode = 4
+
+[node name="Main" parent="HBox/RightContainer/RightViewport" unique_id=1847263608 instance=ExtResource("3_mirror")]
+process_mode = 1

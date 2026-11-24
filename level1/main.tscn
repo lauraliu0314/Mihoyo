@@ -12,7 +12,7 @@
 [ext_resource type="Script" uid="uid://b0yu40hr5sku3" path="res://global_script/crush_detector.gd" id="8_p2avx"]
 [ext_resource type="PackedScene" uid="uid://bl2up3desqwht" path="res://assets/model/box/static_box_ice.tscn" id="10_j6i1c"]
 [ext_resource type="AudioStream" uid="uid://cwe26e3fiw2e0" path="res://assets/audio/掉落.mp3" id="10_nyv7x"]
-[ext_resource type="PackedScene" uid="uid://bmmutdrs0ne12" path="res://assets/ui/ui_ingame_shared.tscn" id="13_nyv7x"]
+[ext_resource type="PackedScene" uid="uid://1is4plx7j8v1" path="res://ui_scene/ui_ingame.tscn" id="13_nyv7x"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_1r6oq"]
 size = Vector3(0.92, 0.8, 0.92)
@@ -229,7 +229,7 @@ current = true
 size = 10.0
 
 [node name="ui_ingame" parent="." unique_id=285500255 instance=ExtResource("13_nyv7x")]
-next_scene_path = "uid://v7rsmrmwdgsn"
+next_scene = "res://level2/split_view.tscn"
 welcome_text = "欢迎来到第一关『眼疾手快』
 小心头顶……"
 

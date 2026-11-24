@@ -456,26 +456,46 @@ func show_win_after_absorb() -> void:
 
 	won = true
 
+	_mark_current_level_complete()
 	_hide_welcome_immediately()
 
-	help_button.visible = false
-	help_background.visible = false
-	help_panel.visible = false
-
-	congratulations_label.visible = false
-	restart_button.visible = false
-	next_button.visible = false
-	game_over_panel.visible = false
-
+	# Dim the rest of the HUD so only VictoryPanel shows (same as ui_scene).
 	if victory_panel != null:
+		for child in get_children():
+			if child is CanvasItem and child != victory_panel:
+				(child as CanvasItem).visible = false
+		victory_panel.process_mode = Node.PROCESS_MODE_ALWAYS
 		victory_panel.visible = true
 		if victory_next_button != null:
+			victory_next_button.process_mode = Node.PROCESS_MODE_ALWAYS
 			victory_next_button.visible = not next_scene_path.is_empty()
+		for btn_name in ["RestartButton", "QuitButton"]:
+			var btn := victory_panel.find_child(btn_name, true, false) as Button
+			if btn != null:
+				btn.process_mode = Node.PROCESS_MODE_ALWAYS
+	else:
+		help_button.visible = false
+		help_background.visible = false
+		help_panel.visible = false
+		congratulations_label.visible = false
+		restart_button.visible = false
+		next_button.visible = false
+		game_over_panel.visible = false
 
 	_play_succeed_sfx()
 
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	get_tree().paused = true
+
+
+func _mark_current_level_complete() -> void:
+	var progress := get_node_or_null("/root/LevelProgress")
+	if progress == null:
+		return
+	var scene := get_tree().current_scene
+	if scene == null:
+		return
+	progress.mark_completed_for_scene(scene.scene_file_path)
 
 
 func _show_win() -> void:

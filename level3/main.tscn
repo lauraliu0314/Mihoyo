@@ -72,7 +72,7 @@ roughness = 0.4
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_npc45"]
 
-[node name="Main" type="Node3D" unique_id=222267479]
+[node name="Main4" type="Node3D" unique_id=222267479]
 
 [node name="Node3D" type="Node3D" parent="." unique_id=2128679359]
 script = ExtResource("1_djs47")
@@ -311,9 +311,8 @@ overlap_speed_max = 0.9
 [node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/staticboxes/StaticBox_E1" unique_id=2141731239]
 shape = SubResource("BoxShape3D_a7i5e")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Node3D/staticboxes/StaticBox_E1" unique_id=1489774404]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.00054883957, 0, 0)
-mesh = SubResource("BoxMesh_7i5fj")
+[node name="Pizza Box" parent="Node3D/staticboxes/StaticBox_E1" unique_id=1489774404 instance=ExtResource("16_hojkh")]
+transform = Transform3D(-4.371139e-08, 1, 3.821371e-15, -4.371139e-08, 1.9106855e-15, -1, -1, -4.371139e-08, 4.371139e-08, -0.5, 0, 0)
 
 [node name="Tool_B_D_G" type="Node3D" parent="Node3D" unique_id=887628236]
 script = ExtResource("8_dxs6i")
@@ -456,8 +455,8 @@ transform = Transform3D(-4.3711385e-08, 0, -1, 0, 1, 0, 0.99999994, 0, -4.371139
 transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 1.5, 0.45, 1.5)
 
 [node name="ui_ingame" parent="." unique_id=840960031 instance=ExtResource("13_npc45")]
-welcome_text = "欢迎来到第三关！
-请走到绿色出口吧！"
+welcome_text = "欢迎来到第三关『向上突破』！
+喝下药水，突破你所熟悉的机制吧！"
 congrats_text = "恭喜你完成了第三关！"
 next_scene = "res://level4/main.tscn"
 

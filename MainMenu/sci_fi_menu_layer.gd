@@ -35,6 +35,9 @@ func _ready() -> void:
 	_apply_styles()
 	_connect_buttons()
 	_refresh_unlocks()
+	var progress := get_node_or_null("/root/LevelProgress")
+	if progress != null and progress.has_signal("progress_changed"):
+		progress.progress_changed.connect(_refresh_unlocks)
 	if _how_to_play:
 		_how_to_play.return_requested.connect(_on_help_closed)
 
@@ -74,12 +77,12 @@ func _refresh_unlocks() -> void:
 		_set_level_button_state(_level5_button, false)
 		_set_level_button_state(_level6_button, false)
 		return
-	_set_level_button_state(_level1_button, progress.is_completed("teach"))
-	_set_level_button_state(_level2_button, progress.is_completed("level1"))
-	_set_level_button_state(_level3_button, progress.is_completed("level2"))
-	_set_level_button_state(_level4_button, progress.is_completed("level3"))
-	_set_level_button_state(_level5_button, progress.is_completed("level4"))
-	_set_level_button_state(_level6_button, progress.is_completed("level5"))
+	_set_level_button_state(_level1_button, progress.is_level_unlocked("level1"))
+	_set_level_button_state(_level2_button, progress.is_level_unlocked("level2"))
+	_set_level_button_state(_level3_button, progress.is_level_unlocked("level3"))
+	_set_level_button_state(_level4_button, progress.is_level_unlocked("level4"))
+	_set_level_button_state(_level5_button, progress.is_level_unlocked("level5"))
+	_set_level_button_state(_level6_button, progress.is_level_unlocked("level6"))
 
 
 func _set_level_button_state(btn: Button, unlocked: bool) -> void:
@@ -126,12 +129,12 @@ func _on_tutorial_pressed() -> void:
 
 func _on_level1_pressed() -> void:
 	await _button_feedback(_level1_button)
-	_go_to_scene("res://level1/main.tscn")
+	_go_to_scene("res://level1/split_view.tscn")
 
 
 func _on_level2_pressed() -> void:
 	await _button_feedback(_level2_button)
-	_go_to_scene("res://level2/main.tscn")
+	_go_to_scene("res://level2/split_view.tscn")
 
 
 func _on_level3_pressed() -> void:

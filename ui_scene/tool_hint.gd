@@ -1,11 +1,8 @@
 extends Control
 
-## Contextual item hint: cursor hover or a cardinal (front/back/left/right)
-## one-cell approach. The panel lives at the left-side center, away from the map.
+## Contextual item hint: the tool's own floor cell and its four orthogonal neighbors.
+## The panel lives at the left-side center, away from the map.
 const CHECK_INTERVAL := 0.12
-const CARDINAL_STEP_MIN := 0.55
-const CARDINAL_STEP_MAX := 1.45
-const CARDINAL_OFF_AXIS_MAX := 0.65
 const SCREEN_HOVER_RADIUS := 34.0
 
 var _title: Label
@@ -35,9 +32,8 @@ func _process(delta: float) -> void:
 	if _elapsed < CHECK_INTERVAL:
 		return
 	_elapsed = 0.0
-	var candidate: Node3D = _find_hovered_tool()
-	if candidate == null:
-		candidate = _find_nearby_tool()
+	# Mouse hover temporarily disabled for adjacency-only testing.
+	var candidate: Node3D = _find_nearby_tool()
 	_update_hint(candidate)
 
 
@@ -138,27 +134,34 @@ func _find_nearby_tool() -> Node3D:
 
 
 func _is_cardinally_adjacent(player: Node3D, tool: Node3D) -> bool:
-	# Use cube-local coordinates so the rule remains correct after the cube rotates.
-	var delta: Vector3 = _grid_position(player) - _grid_position(tool)
-	var steps := 0
-	for amount: float in [absf(delta.x), absf(delta.y), absf(delta.z)]:
-		if amount > CARDINAL_STEP_MAX:
-			return false
-		if amount >= CARDINAL_STEP_MIN:
-			steps += 1
-		elif amount > CARDINAL_OFF_AXIS_MAX:
-			return false
-	# Exactly one changed grid axis means front/back/left/right only; diagonals use two.
-	return steps == 1
+	# Same floor only. A prop one cell up a wall is not a neighbor of the floor cell.
+	if absf(player.global_position.y - tool.global_position.y) > 0.75:
+		return false
+	var player_cell := _horizontal_cell(player, player.global_position)
+	var tool_cell := _horizontal_cell(player, tool.global_position)
+	var dx := absi(player_cell.x - tool_cell.x)
+	var dz := absi(player_cell.y - tool_cell.y)
+	# The tool's own cell, plus front / back / left / right. Not diagonals.
+	return dx + dz <= 1
 
 
-func _grid_position(node: Node3D) -> Vector3:
-	var current: Node = node
-	while current != null:
-		if current is Node3D and (current.has_method("get_nearest_walls_for") or current.has_method("request_orient_wall_as_floor")):
-			return (current as Node3D).to_local(node.global_position)
-		current = current.get_parent()
-	return node.global_position
+func _horizontal_cell(player: Node3D, world_pos: Vector3) -> Vector2i:
+	var x := world_pos.x
+	var z := world_pos.z
+	if player.has_method("snap_grid_axis"):
+		x = player.snap_grid_axis(x)
+		z = player.snap_grid_axis(z)
+	var even_grid := true
+	if player.has_method("get_map_n"):
+		even_grid = int(player.get_map_n()) % 2 == 0
+	return Vector2i(_cell_index(x, even_grid), _cell_index(z, even_grid))
+
+
+func _cell_index(center: float, even_grid: bool) -> int:
+	# Even maps use *.5 centers. roundi() alone maps -0.5 and 0.5 two cells apart.
+	if even_grid:
+		return roundi(center - 0.5)
+	return roundi(center)
 
 
 func _select_last_entered_tool(player: Node3D, candidates: Array[Node3D]) -> Node3D:
@@ -255,8 +258,8 @@ func _tool_info(node: Node) -> Dictionary:
 			return _info("蛋糕盘", "盛有蛋糕", "美味的蛋糕挡住了道路，需要想办法处理。")
 		"StaticBox_E1":
 			if _bool_property(node, &"_unlocked"):
-				return _info("料理检测台", "已激活", "料理检测完成，隐藏机关已启动。")
-			return _info("料理检测台", "未激活", "等待指定料理，唤醒隐藏功能。")
+				return _info("披萨盒", "已激活", "料理完成，隐藏机关已启动。")
+			return _info("披萨盒", "", "一个普通的盒子，似乎在等待某种料理。")
 		"StaticBox_E2":
 			if _bool_property(node, &"is_open"):
 				return _info("暗门", "开启", "暗门开启，新的道路出现。")
@@ -264,8 +267,6 @@ func _tool_info(node: Node) -> Dictionary:
 		# F must use the child Area3D itself. ToolsF is only a container at the
 		# scene origin; treating it as an interactable would ignore the final
 		# trigger_position configured in the level.
-		"F_Trigger":
-			return _info("交换台", "", "两个特殊物品的位置或许会发生奇妙变化。")
 		"Portal_A", "Portal_B":
 			var root: Node = node.get_parent()
 			if _bool_property(root, &"portals_unlocked"):
@@ -285,7 +286,7 @@ func _tool_info(node: Node) -> Dictionary:
 		"Tool_Y":
 			var xyz_root: Node = node.get_parent()
 			if _bool_property(xyz_root, &"_pad_active"):
-				return _info("跳板", "已解锁", "利用弹力跳跃，可突破上方障碍。")
+				return _info("跳板", "已解锁", "按space解锁跳跃，可突破上方障碍。")
 			return _info("跳板", "未解锁", "似乎缺少动力。")
 		"Tool_Z":
 			return _info("脆弱岩体", "", "看起来并不牢固，也许可以被撞碎。")

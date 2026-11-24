@@ -1,10 +1,11 @@
-[gd_scene load_steps=10 format=3 uid="uid://1is4plx7j8v1"]
+[gd_scene load_steps=11 format=3 uid="uid://1is4plx7j8v1"]
 
 [ext_resource type="Script" uid="uid://crdioc5gl6y26" path="res://ui_scene/ui_ingame.gd" id="1_f8os5"]
 [ext_resource type="StyleBox" uid="uid://b7kvhwnskxjva" path="res://assets/story_style.tres" id="2_0kaxw"]
 [ext_resource type="PackedScene" path="res://ui_scene/how_to_play_layer.tscn" id="4_howto"]
 [ext_resource type="Script" path="res://ui_scene/movement_hint.gd" id="5_movement"]
 [ext_resource type="Script" path="res://ui_scene/tool_hint.gd" id="6_tool_hint"]
+[ext_resource type="PackedScene" path="res://ui_scene/tools_explain_layer.tscn" id="7_tools"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_272bh"]
 bg_color = Color(0.43134022, 0.43134025, 0.43134025, 1)
@@ -143,6 +144,13 @@ offset_bottom = 70.0
 theme_override_font_sizes/font_size = 30
 text = "玩法说明"
 
+[node name="tools_button" type="Button" parent="."]
+offset_left = 1500.0
+offset_right = 1700.0
+offset_bottom = 70.0
+theme_override_font_sizes/font_size = 30
+text = "道具说明"
+
 [node name="main_menu" type="Button" parent="." unique_id=1810501355]
 offset_right = 200.0
 offset_bottom = 70.0
@@ -246,6 +254,8 @@ theme_override_font_sizes/font_size = 30
 text = "返回游戏"
 
 [node name="HowToPlayLayer" parent="." instance=ExtResource("4_howto")]
+
+[node name="ToolsExplainLayer" parent="." instance=ExtResource("7_tools")]
 
 [node name="GameOverPanel" type="ColorRect" parent="."]
 visible = false
@@ -421,10 +431,12 @@ text = "返回主菜单"
 [connection signal="pressed" from="next" to="." method="_on_next_pressed"]
 [connection signal="pressed" from="next2" to="." method="_on_next2_pressed"]
 [connection signal="pressed" from="help_button" to="." method="_on_help_button_pressed"]
+[connection signal="pressed" from="tools_button" to="." method="_on_tools_button_pressed"]
 [connection signal="pressed" from="main_menu" to="." method="_on_main_menu_pressed"]
 [connection signal="pressed" from="zen_mode" to="." method="_on_zen_mode_pressed"]
 [connection signal="pressed" from="help/back_to_game" to="." method="_on_back_to_game_pressed"]
 [connection signal="return_requested" from="HowToPlayLayer" to="." method="_on_back_to_game_pressed"]
+[connection signal="return_requested" from="ToolsExplainLayer" to="." method="_on_back_to_game_pressed"]
 [connection signal="pressed" from="GameOverPanel/CenterContainer/DessertPanel/ContentMargin/GameOverContent/RestartButton" to="." method="_on_restart_button_pressed"]
 [connection signal="pressed" from="GameOverPanel/CenterContainer/DessertPanel/ContentMargin/GameOverContent/QuitButton" to="." method="_on_quit_button_pressed"]
 [connection signal="pressed" from="VictoryPanel/CenterContainer/DessertPanel/ContentMargin/VictoryContent/NextLevelButton" to="." method="_on_victory_next_pressed"]

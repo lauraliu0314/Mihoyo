@@ -92,13 +92,17 @@ func _refresh_exit_look() -> void:
 
 
 func _find_ui_ingame() -> Node:
+	var tree := get_tree()
+	if tree != null:
+		var from_group := tree.get_first_node_in_group("ui_ingame")
+		if from_group != null:
+			return from_group
 	var n: Node = self
 	while n != null:
 		var ui := n.get_node_or_null("ui_ingame")
 		if ui != null:
 			return ui
 		n = n.get_parent()
-	var tree := get_tree()
 	if tree != null and tree.current_scene != null:
 		return tree.current_scene.get_node_or_null("ui_ingame")
 	return null

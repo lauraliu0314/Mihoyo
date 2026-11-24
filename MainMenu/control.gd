@@ -22,6 +22,9 @@ var _feedback_busy := false
 func _ready() -> void:
 	_connect_buttons()
 	_refresh_unlocks()
+	var progress := get_node_or_null("/root/LevelProgress")
+	if progress != null and progress.has_signal("progress_changed"):
+		progress.progress_changed.connect(_refresh_unlocks)
 	if how_to_play:
 		how_to_play.return_requested.connect(_on_help_closed)
 
@@ -34,7 +37,6 @@ func _connect_buttons() -> void:
 	level3_button.pressed.connect(_on_level3_pressed)
 	level4_button.pressed.connect(_on_level4_pressed)
 	level5_button.pressed.connect(_on_level5_pressed)
-	level6_button.pressed.connect(_on_level6_pressed)
 	quit_button.pressed.connect(_on_quit_pressed)
 	help_button.pressed.connect(_on_help_pressed)
 	zen_mode_button.pressed.connect(_on_zen_mode_pressed)
@@ -50,14 +52,12 @@ func _refresh_unlocks() -> void:
 		_set_level_button_state(level3_button, false)
 		_set_level_button_state(level4_button, false)
 		_set_level_button_state(level5_button, false)
-		_set_level_button_state(level6_button, false)
 		return
-	_set_level_button_state(level1_button, progress.is_completed("teach"))
-	_set_level_button_state(level2_button, progress.is_completed("level1"))
-	_set_level_button_state(level3_button, progress.is_completed("level2"))
-	_set_level_button_state(level4_button, progress.is_completed("level3"))
-	_set_level_button_state(level5_button, progress.is_completed("level4"))
-	_set_level_button_state(level6_button, progress.is_completed("level5"))
+	_set_level_button_state(level1_button, progress.is_level_unlocked("level1"))
+	_set_level_button_state(level2_button, progress.is_level_unlocked("level2"))
+	_set_level_button_state(level3_button, progress.is_level_unlocked("level3"))
+	_set_level_button_state(level4_button, progress.is_level_unlocked("level4"))
+	_set_level_button_state(level5_button, progress.is_level_unlocked("level5"))
 
 
 func _set_level_button_state(btn: Button, unlocked: bool) -> void:
@@ -103,12 +103,12 @@ func _on_tutorial_pressed() -> void:
 
 func _on_level1_pressed() -> void:
 	await _button_feedback(level1_button)
-	_go_to_scene("res://level1/main.tscn")
+	_go_to_scene("res://level1/split_view.tscn")
 
 
 func _on_level2_pressed() -> void:
 	await _button_feedback(level2_button)
-	_go_to_scene("res://level2/main.tscn")
+	_go_to_scene("res://level2/split_view.tscn")
 
 
 func _on_level3_pressed() -> void:
@@ -124,11 +124,6 @@ func _on_level4_pressed() -> void:
 func _on_level5_pressed() -> void:
 	await _button_feedback(level5_button)
 	_go_to_scene("res://level5/main.tscn")
-
-
-func _on_level6_pressed() -> void:
-	await _button_feedback(level6_button)
-	_go_to_scene("res://level6/main.tscn")
 
 
 func _on_quit_pressed() -> void:

@@ -48,6 +48,9 @@ var _saved_start_pos: Vector3i
 var _saved_end_pos: Vector3i
 var _saved_path: Array[Vector3i] = []
 var _map_saved: bool = false
+## Marker3D position at map size 6 (captured once from the scene).
+var _marker_base_pos: Vector3 = Vector3.ZERO
+var _marker_base_captured: bool = false
 # 生成时立方体的朝向（重置时恢复，否则用已翻转的坐标系算出生点会出错）。
 var _saved_cube_transform: Transform3D
 # 场景默认的立方体姿态（新地图生成前恢复到标准朝向）。
@@ -824,33 +827,33 @@ func _apply_map() -> void:
 	_place_player_at()
 
 
-## 根据矩阵尺寸 n（6–12）调节：
-##  - Marker3D/Camera3D 的 Size：10 → 12
-##  - Marker3D 的 position.y：0 → 2（尺寸越大相机抬得越高，画面更好看）
+## 根据矩阵尺寸 n（6–12）调节相机：
+##  基准 n=6 → Marker3D 保持场景位置 (x,y,z)，Camera3D.size = 10
+##  尺寸为 6+d → 位置 (x-d, y-d/2, z-d)，size = 10+3d/2
 ## Marker3D 是 Main（本节点的父级）的子节点，因此通过 get_parent() 访问。
-## 公开方法：生成/重置流程都可能调用，保证相机始终跟随当前尺寸。
 func adjust_camera() -> void:
-	var t := clampf((float(n) - 6.0) / 6.0, 0.0, 1.0)
+	var d := n - 6
 
 	var marker := get_parent().get_node_or_null("Marker3D") as Marker3D
 	if marker == null:
 		marker = get_node_or_null("Marker3D") as Marker3D
 	if marker != null:
-		var pos := marker.position
-		pos.y = lerpf(0.0, 2.0, t)
-		marker.position = pos
+		if not _marker_base_captured:
+			_marker_base_pos = marker.position
+			_marker_base_captured = true
+		var df := float(d)
+		marker.position = _marker_base_pos + Vector3(-df, -df * 0.5, -df)
 
-		# 同时调节 Marker3D 下的相机 Size。
 		var cam := marker.get_node_or_null("Camera3D") as Camera3D
 		if cam != null:
-			cam.size = lerpf(10.0, 12.0, t)
+			cam.size = 10.0 + df * 1.5
 			cam.make_current()
 		return
 
 	# 兜底：找不到 Marker3D 时，仍调节视口当前相机。
 	var active := get_viewport().get_camera_3d()
 	if active != null:
-		active.size = lerpf(10.0, 12.0, t)
+		active.size = 10.0 + float(d) * 1.5
 		active.make_current()
 
 
@@ -1035,7 +1038,64 @@ func _position_exit() -> void:
 		exit_area.body_entered.disconnect(_on_exit_body_entered)
 	exit_area.body_entered.connect(_on_exit_body_entered)
 
+	# 平底锅上的吸入区只有一根很矮的圆柱（高出墙面约 0.15–0.45）。
+	# 外壳是一整块尺寸为 n 的墙。n≥10 时玩家贴在这块大碰撞体上，
+	# Jolt 经常不报这根细圆柱的 body_entered，吸入就不会开始。
+	# 上一局吸入还会把 monitoring 关掉且 is_absorbing 保持为 true。
+	_arm_exit_capture(exit_area)
+
 	print("[ZenExit] positioned at world=", exit_area.global_position, " monitoring=", exit_area.monitoring, " monitorable=", exit_area.monitorable)
+
+
+## 把吸入区拉成盖住整格的盒子，并清掉上一局残留的吸入状态。
+func _arm_exit_capture(exit_area: Area3D) -> void:
+	var capture := exit_area.get_node_or_null("FryingPan/CaptureArea") as Area3D
+	if capture == null:
+		return
+	# 不调用 reset_portal()：它会按上一局的状态把玩家物理重新打开。
+	capture.set("is_absorbing", false)
+	capture.monitoring = true
+	capture.monitorable = true
+	var cap_col := capture.get_node_or_null("CollisionShape3D") as CollisionShape3D
+	if cap_col == null:
+		return
+	var box := BoxShape3D.new()
+	# FryingPan 原点在墙面上，局部 +Y 指向房间内侧。
+	box.size = Vector3(0.92, 1.25, 0.92)
+	cap_col.shape = box
+	cap_col.position = Vector3(0.0, 0.62, 0.0)
+	cap_col.disabled = false
+
+
+func _physics_process(_delta: float) -> void:
+	if not _map_saved or flipping:
+		return
+	_try_trigger_exit_by_cell()
+
+
+## 玩家原点落在出口格上就启动吸入，不依赖细碰撞体是否报重叠。
+func _try_trigger_exit_by_cell() -> void:
+	var exit_area := get_node_or_null("staticboxes/StaticBox_EXIT") as Area3D
+	if exit_area == null or not exit_area.visible:
+		return
+	var player := get_parent().get_node_or_null("Player") as Node3D
+	if player == null or not player.is_in_group("player"):
+		return
+	if player.get("is_dead") == true:
+		return
+	var capture := exit_area.get_node_or_null("FryingPan/CaptureArea") as Area3D
+	if capture == null or capture.get("is_absorbing") == true:
+		return
+	# 出口局部 +Y 指向墙内（离开墙面）。原点在格子中心。
+	var inward := exit_area.global_basis.y.normalized()
+	var delta := player.global_position - exit_area.global_position
+	var along := delta.dot(inward)
+	var lateral := (delta - inward * along).length()
+	# 邻格中心距离为 1。0.62 只覆盖当前格，并允许贴墙时的少量侧向挤出。
+	if lateral > 0.62 or along < -0.85 or along > 0.85:
+		return
+	if capture.has_method("_on_body_entered"):
+		capture._on_body_entered(player)
 
 
 func _on_exit_body_entered(body: Node) -> void:
@@ -1082,11 +1142,19 @@ func _place_player_at() -> void:
 	var local_spawn := _wp(start_pos.x, start_pos.y, start_pos.z) + inward * 0.55
 	var world_pos := to_global(local_spawn)
 
+	# 只缩放 basis，不要用 Transform3D.scaled()（会连 origin 一起缩小）。
 	var player_scale := player.scale
-	var xform := Transform3D(Basis.IDENTITY, world_pos).scaled(player_scale)
+	if player_scale.length() < 0.01:
+		player_scale = Vector3(0.9, 0.9, 0.9)
+	var xform := Transform3D(Basis.IDENTITY, world_pos)
+	xform.basis = xform.basis.scaled(player_scale)
 	if player.has_method("set_start_transform"):
 		player.set_start_transform(xform)
-	player.global_transform = xform
+	# reset_to_start 会恢复吸入后被隐藏的模型，并复位碰撞/输入。
+	if player.has_method("reset_to_start"):
+		player.reset_to_start()
+	else:
+		player.global_transform = xform
 	if player is CharacterBody3D:
 		(player as CharacterBody3D).velocity = Vector3.ZERO
 

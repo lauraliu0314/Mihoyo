@@ -146,6 +146,13 @@ func reset_to_start() -> void:
 		
 	is_dead = false
 	collision_shape.set_deferred("disabled", false)
+
+	# 出口吸入会关掉视觉与输入；重置时全部恢复。
+	visible = true
+	set_physics_process(true)
+	set_process_input(true)
+	set_process_unhandled_input(true)
+	set_process_unhandled_key_input(true)
 	
 	jump_controller.cancel()
 	roll_controller.cancel()
@@ -182,12 +189,21 @@ func _reset_visual_state() -> void:
 	if visual_body.has_method("stop_shape_tween"):
 		visual_body.stop_shape_tween()
 
+	# 平底锅吸入会把 Pivot/PlayerCube 设为 invisible，重置时必须恢复。
+	if pivot != null:
+		pivot.visible = true
+	if visual_root != null:
+		visual_root.visible = true
+		visual_root.scale = Vector3.ONE
+
 	pivot.basis = Basis.IDENTITY
 	visual_root.basis = Basis.IDENTITY
 
 	visual_body.position = start_visual_body_position
 	visual_body.basis = Basis.IDENTITY
 	visual_body.scale = Vector3.ONE
+	if visual_face != null:
+		visual_face.visible = true
 
 func _physics_process(delta: float) -> void:
 	if debug_track_exit:

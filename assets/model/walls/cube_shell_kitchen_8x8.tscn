@@ -229,7 +229,7 @@ material = SubResource("ShaderMaterial_7o6ex")
 size = Vector2(8, 8)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_tctkp"]
-size = Vector3(6, 1, 6)
+size = Vector3(8, 1, 8)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rmeo5"]
 render_priority = 0

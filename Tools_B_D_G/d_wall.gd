@@ -19,15 +19,23 @@ var _adsorbed_b: Node3D = null
 
 @onready var static_body: StaticBody3D = $StaticBody3D
 @onready var area: Area3D = $Area3D
-@onready var cake_visual: Node3D = $CakeVisual
+## Prefer CakeVisual; fall back to legacy MeshInstance3D (e.g. D_Wall2 in older levels).
+@onready var cake_visual: Node3D = _resolve_cake_visual()
 
 var is_open: bool = false
 var g_collected: bool = false
 
 var _cake_materials: Array[BaseMaterial3D] = []
 var _cake_base_colors: Array[Color] = []
-var _cake_start_scale: Vector3
+var _cake_start_scale: Vector3 = Vector3.ONE
 var _cake_tween: Tween
+
+
+func _resolve_cake_visual() -> Node3D:
+	var cake := get_node_or_null("CakeVisual") as Node3D
+	if cake != null:
+		return cake
+	return get_node_or_null("MeshInstance3D") as Node3D
 
 
 func _ready() -> void:
@@ -42,9 +50,12 @@ func _ready() -> void:
 	if not area.body_entered.is_connected(_on_body_entered):
 		area.body_entered.connect(_on_body_entered)
 
-	_cake_start_scale = cake_visual.scale
-	_prepare_cake_materials()
-	_restore_cake()
+	if cake_visual != null:
+		_cake_start_scale = cake_visual.scale
+		_prepare_cake_materials()
+		_restore_cake()
+	else:
+		push_warning("%s：找不到 CakeVisual / MeshInstance3D，开门无视觉渐隐" % name)
 
 	set_physics_process(false)
 	call_deferred("check_b_overlap")
@@ -85,7 +96,7 @@ func keep_open_for_exit() -> void:
 	_set_blocking_enabled(false)
 	_set_area_enabled(false)
 
-	if cake_visual.visible:
+	if cake_visual != null and cake_visual.visible:
 		_fade_out_cake()
 
 
@@ -181,7 +192,7 @@ func open_as_passable() -> void:
 	_set_blocking_enabled(false)
 	_set_area_enabled(false)
 
-	if cake_visual.visible:
+	if cake_visual != null and cake_visual.visible:
 		_fade_out_cake()
 
 
@@ -235,6 +246,8 @@ func _set_area_enabled(enabled: bool) -> void:
 func _prepare_cake_materials() -> void:
 	_cake_materials.clear()
 	_cake_base_colors.clear()
+	if cake_visual == null:
+		return
 	_collect_cake_materials(cake_visual)
 
 
@@ -284,6 +297,9 @@ func _set_cake_visibility(value: float) -> void:
 
 
 func _fade_out_cake() -> void:
+	if cake_visual == null:
+		return
+
 	_kill_cake_tween()
 
 	cake_visual.visible = true
@@ -313,11 +329,14 @@ func _fade_out_cake() -> void:
 
 	_cake_tween.tween_callback(
 		func() -> void:
-			cake_visual.visible = false
+			if cake_visual != null:
+				cake_visual.visible = false
 	)
 
 
 func _restore_cake() -> void:
+	if cake_visual == null:
+		return
 	_kill_cake_tween()
 	cake_visual.visible = true
 	cake_visual.scale = _cake_start_scale

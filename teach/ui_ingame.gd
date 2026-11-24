@@ -149,4 +149,4 @@ func reset_level() -> void:
 func _on_next_pressed() -> void:
 	# Win screen pauses the tree; clear it or level1 will load frozen.
 	get_tree().paused = false
-	get_tree().change_scene_to_file("res://level1/main.tscn")
+	get_tree().change_scene_to_file("res://level1/split_view.tscn")

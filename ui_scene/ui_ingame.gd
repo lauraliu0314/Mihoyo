@@ -4,13 +4,13 @@ const SUCCEED_SFX_PATH := "res://assets/audio/succeed.mp3"
 ## Resolved .import UID -> use path load as fallback when uid:// fails (e.g. Web).
 const FONT_PATH := "res://Fonts/Source Han Sans CN.ttf"
 
-## 欢迎语，在 _ready 中自动设置到 welcome Label
-@export_multiline var welcome_text: String = "欢迎来到教学关卡！\n请走到绿色出口吧！"
-## 通关祝贺语
-@export_multiline var congrats_text: String = "恭喜你完成了教学关卡！"
-## 下一关的场景路径，为空则隐藏"下一关"按钮
+## ????? _ready ?????? welcome Label
+@export_multiline var welcome_text: String = "?????????\n?????????"
+## ?????
+@export_multiline var congrats_text: String = "???????????"
+## ??????????????"???"??
 @export var next_scene: String = ""
-## 是否为禅模式：true 时显示"重新生成"按钮并隐藏"下一关"
+## ???????true ???"????"?????"???"
 @export var is_zen_mode: bool = false
 
 var won: bool = false
@@ -35,7 +35,7 @@ func _ready() -> void:
 	$help.visible = false
 	$help_bg.visible = false
 	$welcome.visible = true
-	# 禅模式才显示"重新生成"按钮
+	# ??????"????"??
 	$recreate.visible = is_zen_mode
 
 	$welcome.text = welcome_text
@@ -65,7 +65,7 @@ func _ready() -> void:
 func _apply_ui_theme() -> void:
 	var font := load(FONT_PATH) as Font
 	if font == null:
-		push_error("无法加载字体：Fonts/Source Han Sans CN.ttf")
+		push_error("???????Fonts/Source Han Sans CN.ttf")
 		return
 	var controls: Array[Node] = []
 	_gather_text_controls(self, controls)
@@ -136,6 +136,10 @@ func _show_win() -> void:
 	_play_succeed_sfx()
 	# Unlock next level as soon as this stage is cleared (not only when pressing Next).
 	_mark_current_level_complete()
+	# Zen mode: skip VictoryPanel and return to the size-picker / generate UI.
+	if is_zen_mode:
+		_on_recreate_pressed()
+		return
 	# Legacy win chrome stays hidden; dessert VictoryPanel is the win UI.
 	$congratulations.visible = false
 	$back.visible = false
@@ -221,12 +225,12 @@ func _on_main_menu_pressed() -> void:
 
 
 func _on_next2_pressed() -> void:
-	# 如果父节点有"重新生成"或"下一轮游戏"方法则调用，否则回退
+	# ??????"????"?"?????"??????????
 	_on_recreate_pressed()
 
 
 func _on_recreate_pressed() -> void:
-	# 优先查找父节点上的 ZenUI（禅模式挂载点）
+	# ????????? ZenUI????????
 	var zen := get_parent().get_node_or_null("ZenUI")
 	if zen != null and zen.has_method("_on_recreate_pressed"):
 		zen._on_recreate_pressed()
@@ -245,12 +249,27 @@ func _on_help_button_pressed() -> void:
 	# Always hide legacy help panel ? only show sci-fi HowToPlayLayer.
 	$help.visible = false
 	$help_bg.visible = false
+	if has_node("ToolsExplainLayer"):
+		$ToolsExplainLayer.close()
 	game_paused()
 	var help_layer := $HowToPlayLayer as HowToPlayLayer
 	if help_layer:
 		help_layer.open()
 	else:
 		push_error("HowToPlayLayer missing on ui_ingame")
+
+
+func _on_tools_button_pressed() -> void:
+	$help.visible = false
+	$help_bg.visible = false
+	if has_node("HowToPlayLayer"):
+		$HowToPlayLayer.close()
+	game_paused()
+	var tools_layer := get_node_or_null("ToolsExplainLayer")
+	if tools_layer != null and tools_layer.has_method("open"):
+		tools_layer.open()
+	else:
+		push_error("ToolsExplainLayer missing on ui_ingame")
 
 
 func game_paused() -> void:
@@ -288,6 +307,8 @@ func game_continued() -> void:
 		game_over.visible = false
 	if has_node("HowToPlayLayer"):
 		$HowToPlayLayer.close()
+	if has_node("ToolsExplainLayer"):
+		$ToolsExplainLayer.close()
 
 	var player := get_parent().get_node_or_null("Player")
 	if player != null:
@@ -321,14 +342,14 @@ func _movable_boxes() -> Array[RigidBody3D]:
 
 
 func reset_level() -> void:
-	# 禅模式 reload 前先恢复运行，避免暂停状态残留
+	# ??? reload ???????????????
 	var tree := get_tree()
 	if tree == null:
 		return
 	tree.paused = false
 	won = false
 
-	# 禅模式：重置立方体 / 箱子 / 玩家到开局状态
+	# ????????? / ?? / ???????
 	if is_zen_mode:
 		var cube := get_parent().get_node_or_null("Node3D")
 		if cube != null and cube.has_method("reset_to_start"):
@@ -344,14 +365,12 @@ func reset_level() -> void:
 		game_continued()
 		return
 
-	# 非禅模式：直接重新加载当前场景
 	tree.reload_current_scene()
 
 
 func _on_next_pressed() -> void:
 	get_tree().paused = false
 	if not next_scene.is_empty():
-		# 标记当前关卡完成
 		_mark_current_level_complete()
 		get_tree().change_scene_to_file(next_scene)
 
@@ -360,44 +379,10 @@ func _mark_current_level_complete() -> void:
 	var progress := get_node_or_null("/root/LevelProgress")
 	if progress == null:
 		return
-	# Prefer next_scene mapping; fall back to current scene path.
-	var key := ""
-	match next_scene:
-		"res://level1/main.tscn":
-			key = "teach"
-		"res://level2/main.tscn":
-			key = "level1"
-		"res://level3/main.tscn":
-			key = "level2"
-		"res://level4/main.tscn":
-			key = "level3"
-		"res://level5/main.tscn":
-			key = "level4"
-		"res://level6/main.tscn":
-			key = "level5"
-		_:
-			var scene := get_tree().current_scene
-			var path := ""
-			if scene != null:
-				path = scene.scene_file_path
-			match path:
-				"res://teach/main.tscn":
-					key = "teach"
-				"res://level1/main.tscn":
-					key = "level1"
-				"res://level2/main.tscn":
-					key = "level2"
-				"res://level3/main.tscn":
-					key = "level3"
-				"res://level4/main.tscn":
-					key = "level4"
-				"res://level5/main.tscn":
-					key = "level5"
-				"res://level6/main.tscn":
-					key = "level6"
-	if key.is_empty():
+	var scene := get_tree().current_scene
+	if scene == null:
 		return
-	progress.mark_completed(key)
+	progress.mark_completed_for_scene(scene.scene_file_path)
 
 
 func _on_player_died() -> void:
@@ -422,7 +407,7 @@ func _on_restart_button_pressed() -> void:
 	var level_root := get_parent()
 	var scene_path: String = level_root.scene_file_path if level_root != null else ""
 	if scene_path.is_empty():
-		push_error("无法重新加载关卡：缺少 scene_file_path")
+		push_error("??????????? scene_file_path")
 		return
 	get_tree().change_scene_to_file(scene_path)
 

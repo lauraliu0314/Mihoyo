@@ -50,17 +50,23 @@ func _set_solid_shapes_disabled(disabled: bool) -> void:
 
 
 func _set_mesh_transparency(alpha: float) -> void:
-	var mi := get_node_or_null("MeshInstance3D") as MeshInstance3D
-	if mi == null:
-		return
-	var src_mat := mi.get_active_material(0)
-	var mat: StandardMaterial3D
-	if src_mat != null and src_mat is StandardMaterial3D:
-		mat = (src_mat as StandardMaterial3D).duplicate()
-	else:
-		mat = StandardMaterial3D.new()
-		if src_mat != null:
-			mat.albedo_color = src_mat.albedo_color
-	mi.material_override = mat
-	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
-	mat.albedo_color.a = alpha
+	# 兼容旧黄方块 MeshInstance3D，以及披萨盒等嵌套模型。
+	_apply_transparency_recursive(self, alpha)
+
+
+func _apply_transparency_recursive(node: Node, alpha: float) -> void:
+	if node is MeshInstance3D:
+		var mi := node as MeshInstance3D
+		var src_mat := mi.get_active_material(0)
+		var mat: StandardMaterial3D
+		if src_mat != null and src_mat is StandardMaterial3D:
+			mat = (src_mat as StandardMaterial3D).duplicate()
+		else:
+			mat = StandardMaterial3D.new()
+			if src_mat != null and "albedo_color" in src_mat:
+				mat.albedo_color = src_mat.albedo_color
+		mi.material_override = mat
+		mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+		mat.albedo_color.a = alpha
+	for child in node.get_children():
+		_apply_transparency_recursive(child, alpha)

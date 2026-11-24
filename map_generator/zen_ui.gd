@@ -127,11 +127,21 @@ func _generate_with_size(size: int) -> void:
 	get_tree().paused = false
 	_cube.set("n", size)
 	_cube.generate()
-	# node_3d.gd 的内部 generate() 已经包含了 _place_player_at()，无需额外调用。
+	# node_3d.gd 的 generate() 已包含 _place_player_at()（会 reset 玩家外观）。
 
 	var player := get_parent().get_node_or_null("Player") as Node3D
 	if player != null:
+		player.visible = true
 		player.set_physics_process(true)
+		player.set_process_input(true)
+		player.set_process_unhandled_input(true)
+		player.set_process_unhandled_key_input(true)
+		var visual := player.get_node_or_null("Pivot/PlayerCube") as Node3D
+		if visual != null:
+			visual.visible = true
+		var pivot := player.get_node_or_null("Pivot") as Node3D
+		if pivot != null:
+			pivot.visible = true
 
 	# 先移除大小面板
 	if _size_panel != null and is_instance_valid(_size_panel):
@@ -167,13 +177,18 @@ func _generate_with_size(size: int) -> void:
 
 
 
-## 从共享 UI 的“重新生成”按钮调用：回到尺寸选择界面。
+## 从共享 UI 的“重新生成”按钮 / 通关回调调用：回到尺寸选择界面。
 func _on_recreate_pressed() -> void:
 	get_tree().paused = true
 
-	# 隐藏共享 UI（保留但隐藏，尺寸面板覆盖在上方）
+	# 隐藏共享 UI（含 VictoryPanel），尺寸面板覆盖在上方。
 	if _shared_ui != null and is_instance_valid(_shared_ui):
+		var victory := _shared_ui.get_node_or_null("VictoryPanel") as CanvasItem
+		if victory != null:
+			victory.visible = false
 		_shared_ui.visible = false
+		if "won" in _shared_ui:
+			_shared_ui.set("won", false)
 
 	# 冻结玩家，等待重新生成
 	var player := get_parent().get_node_or_null("Player") as Node3D
