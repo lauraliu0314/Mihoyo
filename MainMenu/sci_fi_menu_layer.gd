@@ -13,14 +13,9 @@ const BTN_BG_PRESSED := Color(0.22, 0.38, 0.52, 0.98)
 @onready var _root: Control = $Root
 @onready var _help_button: Button = $Root/TopBar/HelpButton
 @onready var _start_button: Button = $Root/CenterContainer/VBoxContainer/StartButton
-@onready var _tutorial_button: Button = $Root/CenterContainer/VBoxContainer/TutorialButton
 @onready var _level1_button: Button = $Root/CenterContainer/VBoxContainer/Level1Button
 @onready var _level2_button: Button = $Root/CenterContainer/VBoxContainer/Level2Button
 @onready var _level3_button: Button = $Root/CenterContainer/VBoxContainer/Level3Button
-@onready var _level4_button: Button = $Root/CenterContainer/VBoxContainer/Level4Button
-@onready var _level5_button: Button = $Root/CenterContainer/VBoxContainer/Level5Button
-@onready var _level6_button: Button = $Root/CenterContainer/VBoxContainer/Level6Button
-@onready var _zen_mode_button: Button = $Root/CenterContainer/VBoxContainer/ZenModeButton
 @onready var _quit_button: Button = $Root/CenterContainer/VBoxContainer/QuitButton
 @onready var _how_to_play: HowToPlayLayer = $HowToPlayLayer
 
@@ -53,36 +48,22 @@ func hide_menu() -> void:
 
 func _connect_buttons() -> void:
 	_start_button.pressed.connect(_on_start_pressed)
-	_tutorial_button.pressed.connect(_on_tutorial_pressed)
 	_level1_button.pressed.connect(_on_level1_pressed)
 	_level2_button.pressed.connect(_on_level2_pressed)
 	_level3_button.pressed.connect(_on_level3_pressed)
-	_level4_button.pressed.connect(_on_level4_pressed)
-	_level5_button.pressed.connect(_on_level5_pressed)
-	_level6_button.pressed.connect(_on_level6_pressed)
 	_quit_button.pressed.connect(_on_quit_pressed)
 	_help_button.pressed.connect(_on_help_pressed)
-	_zen_mode_button.pressed.connect(_on_zen_mode_pressed)
 
 
 func _refresh_unlocks() -> void:
-	# Fresh save: only 教学关 is playable; later levels unlock in order.
 	var progress := get_node_or_null("/root/LevelProgress")
-	_set_level_button_state(_tutorial_button, true)
+	_set_level_button_state(_level1_button, true)
 	if progress == null:
-		_set_level_button_state(_level1_button, false)
 		_set_level_button_state(_level2_button, false)
 		_set_level_button_state(_level3_button, false)
-		_set_level_button_state(_level4_button, false)
-		_set_level_button_state(_level5_button, false)
-		_set_level_button_state(_level6_button, false)
 		return
-	_set_level_button_state(_level1_button, progress.is_level_unlocked("level1"))
-	_set_level_button_state(_level2_button, progress.is_level_unlocked("level2"))
-	_set_level_button_state(_level3_button, progress.is_level_unlocked("level3"))
-	_set_level_button_state(_level4_button, progress.is_level_unlocked("level4"))
-	_set_level_button_state(_level5_button, progress.is_level_unlocked("level5"))
-	_set_level_button_state(_level6_button, progress.is_level_unlocked("level6"))
+	_set_level_button_state(_level2_button, progress.is_level_unlocked("level_new2"))
+	_set_level_button_state(_level3_button, progress.is_level_unlocked("level_new3"))
 
 
 func _set_level_button_state(btn: Button, unlocked: bool) -> void:
@@ -118,54 +99,27 @@ func _go_to_scene(path: String) -> void:
 
 func _on_start_pressed() -> void:
 	await _button_feedback(_start_button)
-	# Start = first available unlocked level (teach by default)
-	_go_to_scene("res://teach/main.tscn")
-
-
-func _on_tutorial_pressed() -> void:
-	await _button_feedback(_tutorial_button)
-	_go_to_scene("res://teach/main.tscn")
+	_go_to_scene("res://level_new/main.tscn")
 
 
 func _on_level1_pressed() -> void:
 	await _button_feedback(_level1_button)
-	_go_to_scene("res://level1/split_view.tscn")
+	_go_to_scene("res://level_new/main.tscn")
 
 
 func _on_level2_pressed() -> void:
 	await _button_feedback(_level2_button)
-	_go_to_scene("res://level2/split_view.tscn")
+	_go_to_scene("res://level_new2/main.tscn")
 
 
 func _on_level3_pressed() -> void:
 	await _button_feedback(_level3_button)
-	_go_to_scene("res://level3/main.tscn")
-
-
-func _on_level4_pressed() -> void:
-	await _button_feedback(_level4_button)
-	_go_to_scene("res://level4/main.tscn")
-
-
-func _on_level5_pressed() -> void:
-	await _button_feedback(_level5_button)
-	_go_to_scene("res://level5/main.tscn")
-
-
-func _on_level6_pressed() -> void:
-	await _button_feedback(_level6_button)
-	_go_to_scene("res://level6/main.tscn")
+	_go_to_scene("res://level_new3/main.tscn")
 
 
 func _on_quit_pressed() -> void:
 	await _button_feedback(_quit_button)
 	get_tree().quit()
-
-
-func _on_zen_mode_pressed() -> void:
-	# Independent entry: Zen mode is never gated by story-level completion.
-	await _button_feedback(_zen_mode_button)
-	_go_to_scene("res://map_generator/zen_mode.tscn")
 
 
 func _on_help_pressed() -> void:
@@ -237,14 +191,9 @@ func _apply_styles() -> void:
 	subtitle.add_theme_color_override("font_color", CYAN_DIM)
 
 	_style_menu_button(_start_button)
-	_style_menu_button(_tutorial_button, true)
 	_style_menu_button(_level1_button)
 	_style_menu_button(_level2_button)
 	_style_menu_button(_level3_button)
-	_style_menu_button(_level4_button)
-	_style_menu_button(_level5_button)
-	_style_menu_button(_level6_button)
-	_style_menu_button(_zen_mode_button, true)
 	_style_menu_button(_quit_button)
 
 	_help_button.add_theme_font_size_override("font_size", 18)

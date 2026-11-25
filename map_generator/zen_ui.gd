@@ -200,7 +200,7 @@ func _on_recreate_pressed() -> void:
 
 func _on_back_pressed() -> void:
 	get_tree().paused = false
-	get_tree().change_scene_to_file("res://MainMenu/control.tscn")
+	get_tree().change_scene_to_file("res://MainMenu/level_select.tscn")
 
 
 # ═══════════════════════════════════════════════════════════════

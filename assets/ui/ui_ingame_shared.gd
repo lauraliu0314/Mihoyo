@@ -6,8 +6,9 @@ extends CanvasLayer
 # ==================================================
 
 # 下一关场景路径。
-# 教学关：res://level1/main.tscn
-# 第一关：res://level2/main.tscn
+# 第一关：res://level_new/main.tscn
+# 第二关：res://level_new2/main.tscn
+# 第三关：res://level_new3/main.tscn
 # 最后一关可以留空。
 @export_file("*.tscn")
 var next_scene_path: String = ""
@@ -615,7 +616,7 @@ func _on_exit_pressed() -> void:
 # 死亡界面中的退出按钮可以连接到这里。
 func _on_quit_button_pressed() -> void:
 	get_tree().paused = false
-	get_tree().change_scene_to_file("res://MainMenu/control.tscn")
+	get_tree().change_scene_to_file("res://MainMenu/level_select.tscn")
 
 
 # ==================================================

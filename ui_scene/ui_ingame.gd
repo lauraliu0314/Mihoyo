@@ -221,7 +221,7 @@ func _on_zen_mode_pressed() -> void:
 
 func _on_main_menu_pressed() -> void:
 	get_tree().paused = false
-	get_tree().change_scene_to_file("res://MainMenu/control.tscn")
+	get_tree().change_scene_to_file("res://MainMenu/level_select.tscn")
 
 
 func _on_next2_pressed() -> void:
@@ -273,7 +273,6 @@ func _on_tools_button_pressed() -> void:
 
 
 func game_paused() -> void:
-	$exit.disabled = true
 	$welcome.visible = false
 	$help.visible = false
 	$help_bg.visible = false
@@ -291,7 +290,6 @@ func game_paused() -> void:
 
 
 func game_continued() -> void:
-	$exit.disabled = false
 	$back.visible = false
 	$next.visible = false
 	$next2.visible = false
@@ -322,10 +320,6 @@ func game_continued() -> void:
 
 func _on_back_to_game_pressed() -> void:
 	game_continued()
-
-
-func _on_exit_pressed() -> void:
-	get_tree().quit()
 
 
 func _movable_boxes() -> Array[RigidBody3D]:
@@ -414,4 +408,4 @@ func _on_restart_button_pressed() -> void:
 
 func _on_quit_button_pressed() -> void:
 	get_tree().paused = false
-	get_tree().change_scene_to_file("res://MainMenu/control.tscn")
+	get_tree().change_scene_to_file("res://MainMenu/level_select.tscn")

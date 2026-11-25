@@ -97,7 +97,7 @@ func _update_bg_cover() -> void:
 
 
 func _on_button_pressed() -> void:
-	get_tree().change_scene_to_file("res://MainMenu/control.tscn")
+	get_tree().change_scene_to_file("res://MainMenu/level_select.tscn")
 
 
 func _on_area_3d_body_entered(_body: Node3D) -> void:

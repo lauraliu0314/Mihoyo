@@ -1,0 +1,24 @@
+[gd_resource type="Resource" format=3]
+
+[ext_resource type="Script" path="res://assets/decon/decon_style.gd" id="1_style"]
+
+[resource]
+script = ExtResource("1_style")
+wall_blur = 0.2
+wall_sharpness = 0.78
+wall_grain = 0.13
+wall_brightness = 0.68
+seam = 0.19
+block_blur = 0.58
+block_sharpness = 0.37
+transmit = 1.0
+roundness = 0.44
+gap = 0.055
+face_contrast = 0.75
+wall_hue = -0.02000000000000001
+block_hue = 0.0
+light_yaw = -0.43999999999999995
+light_pitch = 0.6499999999999999
+light_strength = 0.52
+light_fill = 0.4
+light_hue = 0.07000000000000006

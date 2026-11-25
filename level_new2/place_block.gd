@@ -2,7 +2,8 @@ extends Node
 
 ## Hover an empty surface cell on a visible face, then left-click to drop a block.
 
-const BOX_SCENE := "res://assets/model/box/static_box_ice.tscn"
+const BOX_SCENE := "res://assets/decon/decon_block.tscn"
+const DeconFx := preload("res://assets/decon/decon_fx.gd")
 const XZ_MIN := -2.5
 const XZ_MAX := 2.5
 const Y_MIN := 0.5
@@ -13,10 +14,13 @@ const HINT_FACE_USED := "这一面已经放过方块，换一面再放"
 const HINT_PREVIEW := "高亮的方块会消失"
 const HINT_PREVIEW_MULTI := "有多种消法，放下后选择其中一排"
 const HINT_CHOOSE := "有多种三连，点一种，这三块会消失"
+const HINT_CLEARING := "方块已放上，马上碎裂"
 const PLACE_LIMIT := 3
+## Place slide is 0.2s. Hold long enough to see the block land, then shatter.
+const CLEAR_REVEAL_SEC := 0.58
 
 var _cube: Node3D
-var _ghost: MeshInstance3D
+var _ghost: Node3D
 var _hint: Label
 var _stock: Label
 var _blocks_left := PLACE_LIMIT
@@ -32,24 +36,39 @@ var _preview_colors: Array[Color] = []
 var _has_clear_preview := false
 var _preview_cell := Vector3.ZERO
 var _ghost_mat: StandardMaterial3D
-var _ghost_color := Color(0.55, 0.95, 1.0, 0.4)
+var _ghost_color := Color(1.0, 1.0, 1.0, 0.38)
 var _choice_layer: CanvasLayer
+var _clearing := false
 
 
 func _ready() -> void:
 	_cube = get_parent() as Node3D
-	_ghost = MeshInstance3D.new()
+	_ghost = Node3D.new()
 	_ghost.name = "PlaceGhost"
+	var block_size: float = preload("res://assets/decon/decon_style.gd").load_default().visual_scale()
+	var rim := MeshInstance3D.new()
+	var rim_mesh := BoxMesh.new()
+	rim_mesh.size = Vector3.ONE * block_size
+	rim.mesh = rim_mesh
+	var rim_mat := StandardMaterial3D.new()
+	rim_mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
+	rim_mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	rim_mat.albedo_color = Color(0.9, 0.9, 0.9, 0.08)
+	rim.material_override = rim_mat
+	rim.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	_ghost.add_child(rim)
+	var fill := MeshInstance3D.new()
 	var mesh := BoxMesh.new()
-	mesh.size = Vector3(0.92, 0.92, 0.92)
-	_ghost.mesh = mesh
+	mesh.size = Vector3.ONE * block_size
+	fill.mesh = mesh
 	var mat := StandardMaterial3D.new()
 	mat.transparency = BaseMaterial3D.TRANSPARENCY_ALPHA
 	mat.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
 	mat.albedo_color = _ghost_color
 	_ghost_mat = mat
-	_ghost.material_override = mat
-	_ghost.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	fill.material_override = mat
+	fill.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
+	_ghost.add_child(fill)
 	_ghost.visible = false
 	_cube.add_child(_ghost)
 	_add_hint()
@@ -58,6 +77,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	_update_hover()
 	_pulse_clear_preview()
+	_pulse_pending_clear()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -66,7 +86,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	var click := event as InputEventMouseButton
 	if not click.pressed or click.button_index != MOUSE_BUTTON_LEFT:
 		return
-	if _cube != null and bool(_cube.get("flipping")):
+	if _clearing or (_cube != null and bool(_cube.get("flipping"))):
 		return
 	if _choosing:
 		_try_choose_from_click()
@@ -90,7 +110,7 @@ func _add_hint() -> void:
 	label.offset_right = 720.0
 	label.offset_bottom = -16.0
 	label.add_theme_font_size_override("font_size", 22)
-	label.add_theme_color_override("font_color", Color(0.92, 0.98, 1.0))
+	label.add_theme_color_override("font_color", Color(0.96, 0.96, 0.95))
 	label.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.65))
 	label.add_theme_constant_override("shadow_offset_x", 1)
 	label.add_theme_constant_override("shadow_offset_y", 1)
@@ -104,8 +124,8 @@ func _add_hint() -> void:
 	panel.offset_bottom = 40.0
 	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	var style := StyleBoxFlat.new()
-	style.bg_color = Color(0.04, 0.1, 0.16, 0.88)
-	style.border_color = Color(0.45, 0.95, 1.0, 0.95)
+	style.bg_color = Color(0.06, 0.06, 0.06, 0.88)
+	style.border_color = Color(0.96, 0.96, 0.95, 0.95)
 	style.set_border_width_all(2)
 	style.set_corner_radius_all(14)
 	style.content_margin_left = 28.0
@@ -120,7 +140,7 @@ func _add_hint() -> void:
 	stock.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	stock.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	stock.add_theme_font_size_override("font_size", 34)
-	stock.add_theme_color_override("font_color", Color(0.72, 0.98, 1.0))
+	stock.add_theme_color_override("font_color", Color(0.96, 0.96, 0.95))
 	_stock = stock
 	_refresh_stock()
 	panel.add_child(stock)
@@ -162,7 +182,7 @@ func _update_hover() -> void:
 
 
 func _is_busy() -> bool:
-	return _choosing or (_cube != null and bool(_cube.get("flipping")))
+	return _choosing or _clearing or (_cube != null and bool(_cube.get("flipping")))
 
 
 func _pick_cell(origin: Vector3, direction: Vector3) -> Variant:
@@ -306,10 +326,11 @@ func _place(cell: Vector3) -> void:
 	var root := _cube.get_node_or_null("staticboxes")
 	if root == null:
 		root = _cube
-	root.add_child(box)
 	box.position = cell
+	root.add_child(box)
 	if _cube.has_method("register_placed_box"):
 		_cube.register_placed_box(box)
+	DeconFx.play_place(box)
 	_blocks_left -= 1
 	_used_faces.append(_cell_outward(cell))
 	_refresh_stock()
@@ -323,9 +344,9 @@ func _refresh_stock() -> void:
 		return
 	_stock.text = "剩余可放置：%d" % _blocks_left
 	if _blocks_left <= 0:
-		_stock.add_theme_color_override("font_color", Color(1.0, 0.72, 0.45))
+		_stock.add_theme_color_override("font_color", Color(0.55, 0.55, 0.55))
 	else:
-		_stock.add_theme_color_override("font_color", Color(0.72, 0.98, 1.0))
+		_stock.add_theme_color_override("font_color", Color(0.96, 0.96, 0.95))
 
 
 func _resolve_line(origin: Vector3) -> void:
@@ -333,7 +354,7 @@ func _resolve_line(origin: Vector3) -> void:
 	if lines.is_empty():
 		return
 	if lines.size() == 1:
-		_erase_option(lines[0])
+		_reveal_then_erase(lines[0])
 		return
 	_begin_choice(lines)
 
@@ -403,7 +424,7 @@ func _show_choice_ui(lines: Array[Dictionary]) -> void:
 	panel.offset_top = -168.0
 	panel.offset_bottom = -72.0
 	var panel_style := StyleBoxFlat.new()
-	panel_style.bg_color = Color(0.05, 0.08, 0.12, 0.9)
+	panel_style.bg_color = Color(0.06, 0.06, 0.06, 0.92)
 	panel_style.set_corner_radius_all(10)
 	panel_style.content_margin_left = 16.0
 	panel_style.content_margin_right = 16.0
@@ -419,7 +440,7 @@ func _show_choice_ui(lines: Array[Dictionary]) -> void:
 	title.text = "选择要消除的一排"
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	title.add_theme_font_size_override("font_size", 22)
-	title.add_theme_color_override("font_color", Color(0.94, 0.98, 1.0))
+	title.add_theme_color_override("font_color", Color(0.96, 0.96, 0.95))
 	column.add_child(title)
 
 	var row := HBoxContainer.new()
@@ -460,7 +481,8 @@ func _style_choice_button(button: Button, color: Color) -> void:
 	button.add_theme_stylebox_override("normal", normal)
 	button.add_theme_stylebox_override("hover", hover)
 	button.add_theme_stylebox_override("pressed", hover)
-	button.add_theme_color_override("font_color", Color(0.08, 0.1, 0.12))
+	var ink := Color(0.08, 0.08, 0.08) if color.get_luminance() > 0.55 else Color(0.96, 0.96, 0.95)
+	button.add_theme_color_override("font_color", ink)
 	button.add_theme_font_size_override("font_size", 18)
 
 
@@ -512,6 +534,48 @@ func _commit_line(index: int) -> void:
 	_erase_option(chosen)
 
 
+func _reveal_then_erase(option: Dictionary) -> void:
+	_clearing = true
+	_clear_clear_preview()
+	if _hint != null:
+		_hint.text = HINT_CLEARING
+	_paint_pending_clear(option)
+	get_tree().create_timer(CLEAR_REVEAL_SEC).timeout.connect(_finish_reveal_clear.bind(option), CONNECT_ONE_SHOT)
+
+
+func _paint_pending_clear(option: Dictionary) -> void:
+	_clear_highlights()
+	var stored: Variant = option.get("nodes", [])
+	if not (stored is Array):
+		return
+	for node in stored as Array:
+		if node is Node3D and is_instance_valid(node):
+			_add_highlight(node as Node3D, Color(0.15, 0.15, 0.15, 0.28))
+
+
+func _finish_reveal_clear(option: Dictionary) -> void:
+	if not is_inside_tree():
+		return
+	_clearing = false
+	_clear_highlights()
+	_erase_option(option)
+	if not _choosing and _hint != null:
+		_hint.text = HINT_PLACE
+
+
+func _pulse_pending_clear() -> void:
+	if not _clearing:
+		return
+	var wave := 0.16 + 0.22 * (0.5 + 0.5 * sin(float(Time.get_ticks_msec()) * 0.014))
+	for hint in _highlights:
+		if not is_instance_valid(hint):
+			continue
+		var mat := hint.material_override as StandardMaterial3D
+		if mat == null:
+			continue
+		mat.albedo_color = Color(0.15, 0.15, 0.15, wave)
+
+
 func _erase_option(option: Dictionary) -> void:
 	var stored: Variant = option.get("nodes", [])
 	if stored is Array:
@@ -525,13 +589,22 @@ func _erase_option(option: Dictionary) -> void:
 
 
 func _erase_box(box: Node3D) -> void:
+	if _cube != null:
+		DeconFx.play_clear(_cube, box.global_position)
 	var shapes: Array[Node] = box.find_children("*", "CollisionShape3D", true, false)
 	for shape in shapes:
 		var collision := shape as CollisionShape3D
 		if collision != null:
 			collision.disabled = true
-	box.visible = false
-	box.queue_free()
+	var piece := box.get_node_or_null("MeshInstance3D") as Node3D
+	if piece == null:
+		box.visible = false
+		box.queue_free()
+		return
+	var crack := create_tween()
+	crack.tween_property(piece, "scale", Vector3(1.08, 1.08, 1.08), 0.06)
+	crack.tween_property(piece, "scale", Vector3(0.12, 0.12, 0.12), 0.12).set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+	crack.tween_callback(box.queue_free)
 
 
 func _end_choice() -> void:
@@ -602,14 +675,14 @@ func _sync_clear_preview(cell: Vector3) -> void:
 	_preview_cell = cell
 	var multi := lines.size() > 1
 	if multi:
-		_ghost_color = Color(1.0, 0.95, 0.75, 0.55)
+		_ghost_color = Color(0.82, 0.82, 0.82, 0.55)
 	else:
-		_ghost_color = Color(1.0, 0.62, 0.28, 0.55)
+		_ghost_color = Color(1.0, 1.0, 1.0, 0.62)
 	if _hint != null:
 		_hint.text = HINT_PREVIEW_MULTI if multi else HINT_PREVIEW
 	var marked: Array[Vector3] = []
 	for index in lines.size():
-		var color := _option_color(index) if multi else Color(1.0, 0.55, 0.22)
+		var color := _option_color(index) if multi else Color(0.15, 0.15, 0.15)
 		var stored: Variant = lines[index].get("cells", [])
 		if not (stored is Array):
 			continue
@@ -680,10 +753,10 @@ func _clear_clear_preview() -> void:
 			hint.queue_free()
 	_previews.clear()
 	_preview_colors.clear()
-	_ghost_color = Color(0.55, 0.95, 1.0, 0.4)
+	_ghost_color = Color(1.0, 1.0, 1.0, 0.38)
 	if _ghost_mat != null:
 		_ghost_mat.albedo_color = _ghost_color
-	if not _choosing and _hint != null:
+	if not _choosing and not _clearing and _hint != null:
 		_hint.text = HINT_PLACE
 
 
@@ -777,15 +850,15 @@ func _axis_name(axis: int) -> String:
 func _option_color(index: int) -> Color:
 	match index % 5:
 		0:
-			return Color(0.25, 0.95, 1.0)
+			return Color(0.96, 0.96, 0.95)
 		1:
-			return Color(1.0, 0.66, 0.22)
+			return Color(0.62, 0.62, 0.62)
 		2:
-			return Color(0.74, 0.46, 1.0)
+			return Color(0.1, 0.1, 0.1)
 		3:
-			return Color(0.42, 1.0, 0.52)
+			return Color(0.78, 0.78, 0.78)
 		_:
-			return Color(1.0, 0.42, 0.58)
+			return Color(0.35, 0.35, 0.35)
 
 
 func _snap_center(value: float, lo: float, hi: float) -> float:

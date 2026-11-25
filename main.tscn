@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dxcd6mgvrkqky"]
 
-[ext_resource type="PackedScene" uid="uid://ceuu150fmggvr" path="res://teach/player.tscn" id="1_ig7tw"]
+[ext_resource type="PackedScene" uid="uid://b7n3wplayersc" path="res://level_new/player.tscn" id="1_ig7tw"]
 [ext_resource type="Script" uid="uid://cjjbnvmcuu62f" path="res://cube_world.gd" id="2_cube"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_ig7tw"]

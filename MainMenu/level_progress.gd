@@ -5,28 +5,17 @@ signal progress_changed
 
 const SAVE_PATH := "user://progress.cfg"
 
-## Menu / story order. Each entry unlocks after the previous is completed.
-## "teach" is always playable.
+## Menu order. The first level is always playable; the next unlocks after it.
 const LEVEL_ORDER: Array[String] = [
-	"teach",
-	"level1",
-	"level2",
-	"level3",
-	"level4",
-	"level5",
-	"level6",
+	"level_new",
+	"level_new2",
+	"level_new3",
 ]
 
 const SCENE_TO_KEY := {
-	"res://teach/main.tscn": "teach",
-	"res://level1/main.tscn": "level1",
-	"res://level1/split_view.tscn": "level1",
-	"res://level2/main.tscn": "level2",
-	"res://level2/split_view.tscn": "level2",
-	"res://level3/main.tscn": "level3",
-	"res://level4/main.tscn": "level4",
-	"res://level5/main.tscn": "level5",
-	"res://level6/main.tscn": "level6",
+	"res://level_new/main.tscn": "level_new",
+	"res://level_new2/main.tscn": "level_new2",
+	"res://level_new3/main.tscn": "level_new3",
 }
 
 var completed: Dictionary = {}
@@ -87,14 +76,10 @@ func mark_completed_for_scene(scene_path: String) -> void:
 	mark_completed(key)
 
 
-## teach always unlocked.
-## level4 and level5 both unlock after level3; otherwise each unlocks after the previous.
+## The first level is always unlocked. Each later level unlocks after the previous one.
 func is_level_unlocked(level_key: String) -> bool:
-	if level_key == "teach":
+	if level_key == "level_new":
 		return true
-	# 第三关通关后，第四、五关同时解锁。
-	if level_key == "level4" or level_key == "level5":
-		return is_completed("level3")
 	var idx := LEVEL_ORDER.find(level_key)
 	if idx <= 0:
 		return false

@@ -2,7 +2,8 @@
 
 [ext_resource type="Script" uid="uid://c7n3wcubewrld" path="res://level_new/cube_world.gd" id="1_djs47"]
 [ext_resource type="PackedScene" uid="uid://c4ah64xctwpig" path="res://assets/model/walls/cube_shell_kitchen.tscn" id="2_djs47"]
-[ext_resource type="PackedScene" uid="uid://bl2up3desqwht" path="res://assets/model/box/static_box_ice.tscn" id="5_3aslf"]
+[ext_resource type="PackedScene" path="res://assets/decon/decon_block.tscn" id="5_3aslf"]
+[ext_resource type="Script" path="res://assets/decon/decon_look.gd" id="decon_look"]
 [ext_resource type="PackedScene" uid="uid://dpjdtxojyrf41" path="res://assets/environment/level_environment.tscn" id="11_6n5l6"]
 [ext_resource type="PackedScene" uid="uid://b7n3wplayersc" path="res://level_new/player.tscn" id="12_dxs6i"]
 [ext_resource type="PackedScene" uid="uid://1is4plx7j8v1" path="res://ui_scene/ui_ingame.tscn" id="13_npc45"]
@@ -10,7 +11,8 @@
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_npc45"]
 
-[node name="Main4" type="Node3D" unique_id=222267479]
+[node name="Main5" type="Node3D" unique_id=222267479]
+script = ExtResource("decon_look")
 
 [node name="Node3D" type="Node3D" parent="." unique_id=2128679359]
 script = ExtResource("1_djs47")
@@ -244,9 +246,8 @@ transform = Transform3D(-4.3711385e-08, 0, -1, 0, 1, 0, 0.99999994, 0, -4.371139
 transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 1.5, 0.45, 1.5)
 
 [node name="ui_ingame" parent="." unique_id=840960031 instance=ExtResource("13_npc45")]
-welcome_text = "欢迎来到第三关『向上突破』！
-喝下药水，突破你所熟悉的机制吧！"
-congrats_text = "恭喜你完成了第三关！"
-next_scene = "res://level4/main.tscn"
+welcome_text = "欢迎来到第一关。"
+congrats_text = "恭喜你完成了第一关！"
+next_scene = "res://level_new2/main.tscn"
 
 [editable path="Node3D/StaticBox_EXIT/FryingPan"]

@@ -137,13 +137,6 @@ theme_override_fonts/font = ExtResource("2_font")
 theme_override_font_sizes/font_size = 26
 text = "开始游戏"
 
-[node name="TutorialButton" type="Button" parent="Root/CenterContainer/VBoxContainer"]
-custom_minimum_size = Vector2(360, 52)
-layout_mode = 2
-theme_override_fonts/font = ExtResource("2_font")
-theme_override_font_sizes/font_size = 26
-text = "教学关"
-
 [node name="Level1Button" type="Button" parent="Root/CenterContainer/VBoxContainer"]
 custom_minimum_size = Vector2(360, 52)
 layout_mode = 2
@@ -164,34 +157,6 @@ layout_mode = 2
 theme_override_fonts/font = ExtResource("2_font")
 theme_override_font_sizes/font_size = 26
 text = "第三关"
-
-[node name="Level4Button" type="Button" parent="Root/CenterContainer/VBoxContainer"]
-custom_minimum_size = Vector2(360, 52)
-layout_mode = 2
-theme_override_fonts/font = ExtResource("2_font")
-theme_override_font_sizes/font_size = 26
-text = "第四关"
-
-[node name="Level5Button" type="Button" parent="Root/CenterContainer/VBoxContainer"]
-custom_minimum_size = Vector2(360, 52)
-layout_mode = 2
-theme_override_fonts/font = ExtResource("2_font")
-theme_override_font_sizes/font_size = 26
-text = "第五关"
-
-[node name="Level6Button" type="Button" parent="Root/CenterContainer/VBoxContainer"]
-custom_minimum_size = Vector2(360, 52)
-layout_mode = 2
-theme_override_fonts/font = ExtResource("2_font")
-theme_override_font_sizes/font_size = 26
-text = "第六关"
-
-[node name="ZenModeButton" type="Button" parent="Root/CenterContainer/VBoxContainer"]
-custom_minimum_size = Vector2(360, 52)
-layout_mode = 2
-theme_override_fonts/font = ExtResource("2_font")
-theme_override_font_sizes/font_size = 26
-text = "禅模式"
 
 [node name="QuitButton" type="Button" parent="Root/CenterContainer/VBoxContainer"]
 custom_minimum_size = Vector2(360, 52)

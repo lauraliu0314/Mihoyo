@@ -11,7 +11,8 @@ config_version=5
 [application]
 
 config/name="3dtest"
-run/main_scene="res://inbetween_scene/transform.tscn"
+config/version="1.1.0"
+run/main_scene="res://MainMenu/level_select.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 

@@ -148,4 +148,4 @@ func reset_level() -> void:
 
 func _on_next_pressed() -> void:
 	get_tree().paused = false
-	get_tree().change_scene_to_file("res://level2/main.tscn")
+	get_tree().change_scene_to_file("res://level_new2/main.tscn")

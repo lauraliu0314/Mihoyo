@@ -1,0 +1,28 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://assets/decon/decon_block.gd" id="1_block"]
+[ext_resource type="Shader" path="res://assets/decon/decon_sketch.gdshader" id="2_sketch"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_cell"]
+size = Vector3(1, 1, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cell"]
+size = Vector3(1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cell"]
+shader = ExtResource("2_sketch")
+shader_parameter/shade = 0.54
+shader_parameter/face_axis = Vector3(0, 1, 0)
+shader_parameter/side_axis = Vector3(1, 0, 0)
+
+[node name="StaticBox" type="StaticBody3D"]
+script = ExtResource("1_block")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_cell")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(0.992, 0, 0, 0, 0.992, 0, 0, 0, 0.992, 0, 0, 0)
+cast_shadow = 0
+mesh = SubResource("BoxMesh_cell")
+surface_material_override/0 = SubResource("ShaderMaterial_cell")
