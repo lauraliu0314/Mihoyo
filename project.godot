@@ -11,8 +11,8 @@ config_version=5
 [application]
 
 config/name="3dtest"
-config/version="1.2.0"
-run/main_scene="res://theme_select.tscn"
+config/version="1.1.1"
+run/main_scene="res://MainMenu/level_select.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
