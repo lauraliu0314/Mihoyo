@@ -1,0 +1,79 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://theme_b/runtime/final_key/final_key.gd" id="1_root"]
+[ext_resource type="Script" path="res://theme_b/runtime/final_key/final_key_pickup.gd" id="2_key"]
+[ext_resource type="Script" path="res://theme_b/runtime/final_key/final_exit_absorb.gd" id="4_iaf8s"]
+[ext_resource type="AudioStream" path="res://assets/audio/吸入.MP3" id="8_mxaif"]
+
+[ext_resource type="Script" path="res://theme_b/runtime/art/line_architecture/forest_gate.gd" id="9_forest"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mxaif"]
+size = Vector3(0.5, 0.2, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_iaf8s"]
+albedo_color = Color(0.1882353, 0.20392157, 0.23921569, 1)
+metallic = 0.4
+roughness = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_awgiv"]
+material = SubResource("StandardMaterial3D_iaf8s")
+size = Vector3(0.5, 0.1, 0.5)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j31b5"]
+albedo_color = Color(0.6627451, 0.84705883, 0.9098039, 1)
+roughness = 0.5
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_jj81v"]
+material = SubResource("StandardMaterial3D_j31b5")
+top_radius = 0.1
+bottom_radius = 0.1
+height = 0.1
+radial_segments = 32
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_exit"]
+
+[node name="FinalKey" type="Node3D" unique_id=1752623780]
+script = ExtResource("1_root")
+
+[node name="Final_Key" type="Area3D" parent="." unique_id=806946301]
+transform = Transform3D(1, 0, 0, 0, -1, 8.742278e-08, 0, -8.742278e-08, -1, 0, 0.25, 0)
+script = ExtResource("2_key")
+press_depth = 0.06
+press_duration = 0.2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Final_Key" unique_id=494606238]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.4, 0)
+shape = SubResource("BoxShape3D_mxaif")
+
+[node name="ButtonVisual" type="Node3D" parent="Final_Key" unique_id=2118359851]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0)
+
+[node name="ButtonBase" type="MeshInstance3D" parent="Final_Key/ButtonVisual" unique_id=337418181]
+mesh = SubResource("BoxMesh_awgiv")
+
+[node name="ButtonCap" type="MeshInstance3D" parent="Final_Key/ButtonVisual" unique_id=1082544457]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+mesh = SubResource("CylinderMesh_jj81v")
+
+[node name="Final_Exit" type="Area3D" parent="." unique_id=1595902237 node_paths=PackedStringArray("vortex_root", "absorb_point")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0.5, 0)
+script = ExtResource("4_iaf8s")
+vortex_root = NodePath("FryingPan/Frying Pan/VortexEffects")
+absorb_point = NodePath("FryingPan/AbsorbPoint")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Final_Exit" unique_id=743267010]
+shape = SubResource("BoxShape3D_exit")
+
+[node name="FryingPan" type="Node3D" parent="Final_Exit" unique_id=1299094027]
+transform = Transform3D(-0.97317886, -8.625039e-08, 0.23004976, -0.23004976, -1.0055794e-08, -0.97317886, 8.625039e-08, -1, -1.0055794e-08, 0, 0, 0.45)
+
+[node name="Frying Pan" type="Node3D" parent="Final_Exit/FryingPan" unique_id=102665667]
+script = ExtResource("9_forest")
+
+[node name="VortexEffects" type="Node3D" parent="Final_Exit/FryingPan/Frying Pan" unique_id=41785056]
+[node name="AbsorbPoint" type="Marker3D" parent="Final_Exit/FryingPan" unique_id=699000962]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+
+[node name="AbsorbSfx" type="AudioStreamPlayer" parent="Final_Exit" unique_id=284716141]
+stream = ExtResource("8_mxaif")
+volume_db = -4.0

@@ -1,0 +1,41 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://theme_b/runtime/Tools_B_D_G/tool_b_d_g.gd" id="1_wuxxf"]
+[ext_resource type="Script" path="res://theme_b/runtime/Tools_B_D_G/b_tool.gd" id="2_btool"]
+[ext_resource type="Script" path="res://theme_b/runtime/Tools_B_D_G/d_wall.gd" id="2_onvv6"]
+[ext_resource type="PackedScene" path="res://theme_b/runtime/assets/model/tools/D/cupcake.tscn" id="3_u36l5"]
+[ext_resource type="Script" path="res://theme_b/tutorial/g_tool_standalone.gd" id="4_aiee5"]
+[ext_resource type="PackedScene" path="res://assets/model/tools/source/Dish.glb" id="4_b6hii"]
+[ext_resource type="PackedScene" path="res://theme_b/runtime/assets/model/tools/fork.tscn" id="4_u36l5"]
+[ext_resource type="PackedScene" path="res://assets/model/tools/G/Pizza Box.glb" id="5_onvv6"]
+[ext_resource type="PackedScene" path="res://theme_b/runtime/assets/model/tools/B/cage.tscn" id="7_802dc"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_5cdc3"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_lr1vn"]
+size = Vector3(1.15, 2.6, 1.15)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_tctkp"]
+size = Vector3(0.25, 0.9, 0.9)
+
+[node name="Node3D" type="Node3D" unique_id=887628236]
+script = ExtResource("1_wuxxf")
+
+[node name="G_Tool" type="AnimatableBody3D" parent="." unique_id=395531251]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 0, 1.5)
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("4_aiee5")
+capture_move_duration = 0.4
+capture_arc_height = 0.08
+idle_float_height = 0.03
+idle_float_duration = 1.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="G_Tool" unique_id=237102289]
+shape = SubResource("BoxShape3D_tctkp")
+
+[node name="Pizza Box" parent="G_Tool" unique_id=974405905 instance=ExtResource("5_onvv6")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.45, 0)
+
+[node name="PizzaSnapPoint" type="Marker3D" parent="G_Tool" unique_id=1780128505]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.1, -0.2, 0)

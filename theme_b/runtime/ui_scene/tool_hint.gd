@@ -1,0 +1,319 @@
+extends Control
+
+## Contextual item hint: the tool's own floor cell and its four orthogonal neighbors.
+## The panel lives at the left-side center, away from the map.
+const CHECK_INTERVAL := 0.12
+const SCREEN_HOVER_RADIUS := 34.0
+
+var _title: Label
+var _status: Label
+var _description: Label
+var _panel: PanelContainer
+var _elapsed := 0.0
+var _last_key := ""
+var _near_enter_order: Dictionary = {}
+var _enter_counter := 0
+var _last_player_position: Vector3
+var _has_last_player_position := false
+
+
+func _ready() -> void:
+	process_mode = Node.PROCESS_MODE_ALWAYS
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	# The hint root must fill the viewport; otherwise its centered child panel is
+	# positioned relative to a 0 × 0 control and ends up off-screen.
+	set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	_build_ui()
+	visible = false
+
+
+func _process(delta: float) -> void:
+	_elapsed += delta
+	if _elapsed < CHECK_INTERVAL:
+		return
+	_elapsed = 0.0
+	# Mouse hover temporarily disabled for adjacency-only testing.
+	var candidate: Node3D = _find_nearby_tool()
+	_update_hint(candidate)
+
+
+func _build_ui() -> void:
+	_panel = PanelContainer.new()
+	# A larger, vertically centered left-side panel leaves the cube unobstructed.
+	_panel.anchor_top = 0.5
+	_panel.anchor_bottom = 0.5
+	_panel.offset_left = 28.0
+	_panel.offset_top = -104.0
+	_panel.offset_right = 448.0
+	_panel.offset_bottom = 104.0
+	_panel.custom_minimum_size = Vector2(420, 208)
+	_panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_panel.add_theme_stylebox_override("panel", _style(Color("#0a1728e8"), Color("#3c8fd1"), 12, 1))
+	add_child(_panel)
+	var margin := MarginContainer.new()
+	margin.add_theme_constant_override("margin_left", 22)
+	margin.add_theme_constant_override("margin_right", 22)
+	margin.add_theme_constant_override("margin_top", 18)
+	margin.add_theme_constant_override("margin_bottom", 18)
+	_panel.add_child(margin)
+	var box := VBoxContainer.new()
+	box.add_theme_constant_override("separation", 6)
+	margin.add_child(box)
+	_title = Label.new()
+	_title.add_theme_font_size_override("font_size", 26)
+	_title.add_theme_color_override("font_color", Color("#f1f7ff"))
+	box.add_child(_title)
+	_status = Label.new()
+	_status.add_theme_font_size_override("font_size", 18)
+	_status.add_theme_color_override("font_color", Color("#5cb4ff"))
+	box.add_child(_status)
+	var line := HSeparator.new()
+	box.add_child(line)
+	_description = Label.new()
+	_description.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	_description.add_theme_font_size_override("font_size", 18)
+	_description.add_theme_color_override("font_color", Color("#c9d9eb"))
+	box.add_child(_description)
+
+
+func _find_hovered_tool() -> Node3D:
+	var viewport: Viewport = get_viewport()
+	var camera: Camera3D = viewport.get_camera_3d()
+	if camera == null:
+		return null
+	var mouse: Vector2 = viewport.get_mouse_position()
+	var query: PhysicsRayQueryParameters3D = PhysicsRayQueryParameters3D.create(
+		camera.project_ray_origin(mouse), camera.project_ray_origin(mouse) + camera.project_ray_normal(mouse) * 1000.0
+	)
+	query.collide_with_areas = true
+	query.collide_with_bodies = true
+	var hit: Dictionary = camera.get_world_3d().direct_space_state.intersect_ray(query)
+	if not hit.is_empty():
+		var collision_tool: Node3D = _find_tool_ancestor(hit.get("collider") as Node)
+		if collision_tool != null:
+			return collision_tool
+	# Some interactable props intentionally have no active collision layer. Fall back
+	# to a small screen-space hover area so they are still discoverable by mouse.
+	return _find_screen_hovered_tool(camera, mouse)
+
+
+func _find_screen_hovered_tool(camera: Camera3D, mouse: Vector2) -> Node3D:
+	var scene: Node = get_tree().current_scene
+	if scene == null:
+		return null
+	var closest: Node3D
+	var closest_distance: float = SCREEN_HOVER_RADIUS
+	for node in _all_nodes(scene):
+		var tool: Node3D = _find_tool_ancestor(node)
+		if tool == null or tool != node or camera.is_position_behind(tool.global_position):
+			continue
+		var distance: float = mouse.distance_to(camera.unproject_position(tool.global_position))
+		if distance < closest_distance:
+			closest_distance = distance
+			closest = tool
+	return closest
+
+
+func _find_nearby_tool() -> Node3D:
+	var scene: Node = get_tree().current_scene
+	if scene == null:
+		return null
+	var player: Node3D = get_tree().get_first_node_in_group("player") as Node3D
+	if player == null:
+		player = scene.get_node_or_null("Player") as Node3D
+	if player == null:
+		return null
+	var candidates: Array[Node3D] = []
+	for node in _all_nodes(scene):
+		var tool: Node3D = _find_tool_ancestor(node)
+		if tool == null or tool != node:
+			continue
+		if _is_cardinally_adjacent(player, tool):
+			candidates.append(tool)
+	return _select_last_entered_tool(player, candidates)
+
+
+func _is_cardinally_adjacent(player: Node3D, tool: Node3D) -> bool:
+	# Same floor only. A prop one cell up a wall is not a neighbor of the floor cell.
+	if absf(player.global_position.y - tool.global_position.y) > 0.75:
+		return false
+	var player_cell := _horizontal_cell(player, player.global_position)
+	var tool_cell := _horizontal_cell(player, tool.global_position)
+	var dx := absi(player_cell.x - tool_cell.x)
+	var dz := absi(player_cell.y - tool_cell.y)
+	# The tool's own cell, plus front / back / left / right. Not diagonals.
+	return dx + dz <= 1
+
+
+func _horizontal_cell(player: Node3D, world_pos: Vector3) -> Vector2i:
+	var x := world_pos.x
+	var z := world_pos.z
+	if player.has_method("snap_grid_axis"):
+		x = player.snap_grid_axis(x)
+		z = player.snap_grid_axis(z)
+	var even_grid := true
+	if player.has_method("get_map_n"):
+		even_grid = int(player.get_map_n()) % 2 == 0
+	return Vector2i(_cell_index(x, even_grid), _cell_index(z, even_grid))
+
+
+func _cell_index(center: float, even_grid: bool) -> int:
+	# Even maps use *.5 centers. roundi() alone maps -0.5 and 0.5 two cells apart.
+	if even_grid:
+		return roundi(center - 0.5)
+	return roundi(center)
+
+
+func _select_last_entered_tool(player: Node3D, candidates: Array[Node3D]) -> Node3D:
+	var present_ids: Dictionary = {}
+	var just_entered: Array[Node3D] = []
+	var newest: Node3D
+	var newest_order: int = -1
+	for tool in candidates:
+		var id: int = tool.get_instance_id()
+		present_ids[id] = true
+		if not _near_enter_order.has(id):
+			_enter_counter += 1
+			_near_enter_order[id] = _enter_counter
+			just_entered.append(tool)
+		var order: int = int(_near_enter_order[id])
+		if order > newest_order:
+			newest_order = order
+			newest = tool
+	for id in _near_enter_order.keys():
+		if not present_ids.has(id):
+			_near_enter_order.erase(id)
+	# If two regions are entered on the same polling frame, prefer the direction of
+	# the player's most recent step. This resolves corner cases by the last action.
+	if just_entered.size() > 1 and _has_last_player_position:
+		var movement: Vector3 = player.global_position - _last_player_position
+		if movement.length_squared() > 0.0001:
+			var directional_choice: Node3D = just_entered[0]
+			var best_score: float = -INF
+			for tool in just_entered:
+				var score: float = (tool.global_position - player.global_position).dot(movement)
+				if score > best_score:
+					best_score = score
+					directional_choice = tool
+			_last_player_position = player.global_position
+			return directional_choice
+	_last_player_position = player.global_position
+	_has_last_player_position = true
+	return newest
+
+
+func _all_nodes(root: Node) -> Array[Node]:
+	var result: Array[Node] = []
+	if root == null:
+		return result
+	var stack: Array[Node] = [root]
+	while not stack.is_empty():
+		# Array.pop_back() is Variant in Godot's API; declare the expected type
+		# explicitly because this project treats Variant-inference warnings as errors.
+		var node: Node = stack.pop_back()
+		result.append(node)
+		for child: Node in node.get_children():
+			stack.append(child)
+	return result
+
+
+func _find_tool_ancestor(node: Node) -> Node3D:
+	var current: Node = node
+	while current != null:
+		if current is Node3D and not _tool_info(current).is_empty():
+			return current as Node3D
+		current = current.get_parent()
+	return null
+
+
+func _update_hint(tool: Node3D) -> void:
+	if tool == null or not is_instance_valid(tool):
+		visible = false
+		_last_key = ""
+		return
+	var info: Dictionary = _tool_info(tool)
+	if info.is_empty():
+		visible = false
+		return
+	var key: String = "%s|%s|%s" % [info.title, info.status, info.description]
+	if key != _last_key:
+		_last_key = key
+		_title.text = info.title
+		_status.text = "【%s】" % info.status if not info.status.is_empty() else ""
+		_description.text = info.description
+	visible = true
+
+
+func _tool_info(node: Node) -> Dictionary:
+	match String(node.name):
+		"B_Tool":
+			if _bool_property(node, &"gravity_enabled"):
+				return _info("星芒", "已解除封印", "一束拥有流光之力的星芒，可随重力滑落，并净化前方的阻碍")
+			return _info("星芒", "已锁定", "星芒似乎被藤蔓封印了，需要点亮森林深处的某样东西")
+		"G_Tool":
+			return _info("灯盏", "待点亮", "一盏黯淡的森林灯盏，似乎在等待萤露的注入")
+		"D_Wall", "D_Wall2":
+			if _bool_property(node, &"is_open"):
+				return _info("星盘", "阻碍已消散", "星芒与星盘已化作流光消散，前方的道路畅通无阻")
+			return _info("星盘", "阻碍通行", "神秘的星盘挡住了道路，需要让星芒落入其中才能将其化解")
+		"StaticBox_E1":
+			if _bool_property(node, &"_unlocked"):
+				return _info("灯盏", "已点亮", "灯盏充满能量，星芒的封印已解锁")
+			return _info("灯盏", "待点亮", "一盏黯淡的森林灯盏，似乎在等待萤露的注入")
+		"StaticBox_E2":
+			if _bool_property(node, &"is_open"):
+				return _info("暗门", "开启", "暗门开启，新的道路出现。")
+			return _info("暗门", "关闭", "似乎隐藏着某个秘密，等待机关开启。")
+		# F must use the child Area3D itself. ToolsF is only a container at the
+		# scene origin; treating it as an interactable would ignore the final
+		# trigger_position configured in the level.
+		"Portal_A", "Portal_B":
+			var root: Node = node.get_parent()
+			if _bool_property(root, &"portals_unlocked"):
+				return _info("空间通道", "开启", "可通往另一处空间。")
+			return _info("空间通道", "关闭", "等待启动机关，建立空间连接。")
+		"Portal_Key":
+			return _info("启动开关", "待交互", "玩家交互后，空间通道已建立。")
+		"Final_Key":
+			return _info("启动开关", "待交互", "玩家交互后，最终出口已开启。")
+		"Final_Exit":
+			var final_root: Node = node.get_parent()
+			if _bool_property(final_root, &"exit_unlocked"):
+				return _info("出口", "开启", "")
+			return _info("出口", "关闭", "还需要完成最后的准备。")
+		"Tool_X":
+			return _info("启动开关", "待交互", "玩家交互后，跳板已恢复动力。")
+		"Tool_Y":
+			var xyz_root: Node = node.get_parent()
+			if _bool_property(xyz_root, &"_pad_active"):
+				return _info("跳板", "已解锁", "按space解锁跳跃，可突破上方障碍。")
+			return _info("跳板", "未解锁", "似乎缺少动力。")
+		"Tool_Z":
+			return _info("脆弱岩体", "", "看起来并不牢固，也许可以被撞碎。")
+	if String(node.name).begins_with("MovableBox_C"):
+		return _info("萤露", "", "可随重力移动的萤露，或许能点亮黯淡的机关")
+	return {}
+
+
+func _bool_property(object: Object, property_name: StringName) -> bool:
+	if object == null or not is_instance_valid(object):
+		return false
+
+	for property: Dictionary in object.get_property_list():
+		if StringName(property.get("name", "")) == property_name:
+			return object.get(property_name) == true
+
+	return false
+
+
+func _info(title: String, status: String, description: String) -> Dictionary:
+	return {"title": title, "status": status, "description": description}
+
+
+func _style(background: Color, border: Color, radius: int, width: int) -> StyleBoxFlat:
+	var style := StyleBoxFlat.new()
+	style.bg_color = background
+	style.border_color = border
+	style.set_border_width_all(width)
+	style.set_corner_radius_all(radius)
+	return style
