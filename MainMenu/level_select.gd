@@ -6,7 +6,14 @@ const CARD_SIZE := Vector2(480, 640)
 const SIDE_SCALE := 0.86
 const PEEK := 250.0
 const DRAG_CLICK_THRESHOLD := 12.0
+const GRID_PATH := "res://MainMenu/card_grids.cfg"
 const LEVELS: Array[Dictionary] = [
+	{
+		"key": "level_tutorial",
+		"title": "教学关",
+		"scene": "res://level_tutorial/main.tscn",
+		"pattern": 0,
+	},
 	{
 		"key": "level_new",
 		"title": "第一关",
@@ -36,11 +43,13 @@ var _press_pos := Vector2.ZERO
 var _drag_origin := 0.0
 var _moved := 0.0
 var _tween: Tween
+var _saved_grids: Dictionary = {}
 
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
 	_font = load(FONT_PATH) as Font
+	_load_grids()
 	_build_background()
 	_build_quit_button()
 	_build_cards()
@@ -55,10 +64,9 @@ func _ready() -> void:
 
 
 func _build_background() -> void:
-	var bg := ColorRect.new()
-	bg.color = Color(0.06, 0.06, 0.06)
-	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var bg := LevelBackdrop.new()
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(bg)
 
 
@@ -68,6 +76,7 @@ func _build_cards() -> void:
 		card.pattern = int(info["pattern"])
 		card.title = str(info["title"])
 		card.font = _font
+		card.rows = _grid_for(str(info["key"]), int(info["pattern"]))
 		card.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		card.custom_minimum_size = CARD_SIZE
 		card.size = CARD_SIZE
@@ -98,6 +107,36 @@ func _build_quit_button() -> void:
 	button.z_index = 20
 	button.pressed.connect(_on_quit_pressed)
 	add_child(button)
+	_build_theme_button()
+
+
+func _build_theme_button() -> void:
+	var button := Button.new()
+	button.text = "返回主题"
+	button.focus_mode = Control.FOCUS_NONE
+	button.set_anchors_preset(Control.PRESET_BOTTOM_LEFT)
+	button.offset_left = 0.0
+	button.offset_top = -80.0
+	button.offset_right = 200.0
+	button.offset_bottom = 0.0
+	button.grow_horizontal = Control.GROW_DIRECTION_END
+	button.grow_vertical = Control.GROW_DIRECTION_BEGIN
+	button.add_theme_font_size_override("font_size", 22)
+	button.add_theme_color_override("font_color", Color(0.94, 0.94, 0.94))
+	button.add_theme_color_override("font_hover_color", Color(1, 1, 1))
+	button.add_theme_color_override("font_pressed_color", Color(0.9, 0.9, 0.9))
+	if _font != null:
+		button.add_theme_font_override("font", _font)
+	button.add_theme_stylebox_override("normal", _button_style(Color(0.14, 0.14, 0.14), Color(0.75, 0.75, 0.75)))
+	button.add_theme_stylebox_override("hover", _button_style(Color(0.22, 0.22, 0.22), Color(0.88, 0.88, 0.88)))
+	button.add_theme_stylebox_override("pressed", _button_style(Color(0.32, 0.32, 0.32), Color(0.95, 0.95, 0.95)))
+	button.z_index = 20
+	button.pressed.connect(_on_theme_pressed)
+	add_child(button)
+
+
+func _on_theme_pressed() -> void:
+	_go_to_scene("res://theme_select.tscn")
 
 
 func _button_style(bg: Color, border: Color) -> StyleBoxFlat:
@@ -122,7 +161,7 @@ func _apply_unlocks() -> void:
 func _is_unlocked(key: String) -> bool:
 	var progress := get_node_or_null("/root/LevelProgress")
 	if progress == null:
-		return key == "level_new"
+		return key == str(LEVELS[0]["key"])
 	return bool(progress.is_level_unlocked(key))
 
 
@@ -282,11 +321,102 @@ func _go_to_scene(path: String) -> void:
 	tree.call_deferred("change_scene_to_file", path)
 
 
+func _load_grids() -> void:
+	var cfg := ConfigFile.new()
+	if cfg.load(GRID_PATH) != OK or not cfg.has_section("grids"):
+		return
+	for key in cfg.get_section_keys("grids"):
+		_saved_grids[key] = str(cfg.get_value("grids", key, ""))
+
+
+func _grid_for(key: String, pattern: int) -> PackedStringArray:
+	var parsed := _parse_grid(str(_saved_grids.get(key, "")))
+	if not parsed.is_empty():
+		return parsed
+	return _default_grid(pattern)
+
+
+func _parse_grid(text: String) -> PackedStringArray:
+	var parts := text.split(",", false)
+	if parts.size() != 6:
+		return PackedStringArray()
+	var rows := PackedStringArray()
+	for part in parts:
+		var row := str(part).strip_edges()
+		if row.length() != 6:
+			return PackedStringArray()
+		rows.append(row)
+	return rows
+
+
+func _default_grid(pattern: int) -> PackedStringArray:
+	var rows := PackedStringArray()
+	for y in 6:
+		var row := ""
+		for x in 6:
+			row += "." if _default_missing(pattern, x, y) else "#"
+		rows.append(row)
+	return rows
+
+
+func _default_missing(pattern: int, x: int, y: int) -> bool:
+	if pattern == 1:
+		return y == 2
+	if pattern == 2:
+		return (
+			(x == 0 and y == 1)
+			or (x == 2 and y == 0)
+			or (x == 3 and y == 2)
+			or (x == 5 and y == 1)
+			or (x == 1 and y == 3)
+			or (x == 4 and y == 4)
+			or (x == 2 and y == 5)
+			or (x == 5 and y == 5)
+		)
+	return false
+
+
+class LevelBackdrop extends Control:
+	const DeconFx := preload("res://assets/decon/decon_fx.gd")
+
+	var _time := 0.0
+	var _motes: Array[Dictionary] = []
+
+	func _ready() -> void:
+		mouse_filter = Control.MOUSE_FILTER_IGNORE
+		for i in 36:
+			_motes.append({
+				"x": randf(),
+				"y": randf(),
+				"size": randf_range(8.0, 26.0),
+				"speed": randf_range(0.008, 0.028),
+				"phase": randf() * TAU,
+				"color": DeconFx.burst_color(i),
+			})
+
+	func _process(delta: float) -> void:
+		_time += delta
+		queue_redraw()
+
+	func _draw() -> void:
+		if size.x < 2.0 or size.y < 2.0:
+			return
+		draw_rect(Rect2(Vector2.ZERO, size), Color(0.04, 0.04, 0.04))
+		for mote in _motes:
+			var x := fposmod(float(mote["x"]) + _time * float(mote["speed"]), 1.0) * size.x
+			var y := float(mote["y"]) * size.y + sin(_time * 0.35 + float(mote["phase"])) * 22.0
+			var mote_size := float(mote["size"])
+			var color: Color = mote["color"]
+			color.a = 0.32
+			draw_rect(Rect2(Vector2(x, y), Vector2(mote_size, mote_size)), color)
+
+
 class FragmentCard extends Control:
 	var pattern := 0
 	var title := ""
 	var unlocked := true
 	var font: Font
+	var rows: PackedStringArray = PackedStringArray()
 	var _lock_label: Label
 
 	func _ready() -> void:
@@ -345,10 +475,10 @@ class FragmentCard extends Control:
 		var cell := (art.size.x - joint * float(cells + 1)) / float(cells)
 		for y in cells:
 			for x in cells:
-				if _is_missing(x, y):
-					continue
 				var origin := art.position + Vector2(joint, joint) + Vector2(float(x), float(y)) * (cell + joint)
 				var cell_rect := Rect2(origin, Vector2(cell, cell))
+				if not _has_block(x, y):
+					continue
 				var color := _cell_color(x, y) * Color(dim, dim, dim, 1)
 				draw_rect(cell_rect, color)
 				var lift := minf(color.r + 0.06, 1.0)
@@ -371,21 +501,13 @@ class FragmentCard extends Control:
 		body += (_hash01(x + pattern * 13, y + 3) - 0.5) * 0.06
 		return Color(body, body, body)
 
-	func _is_missing(x: int, y: int) -> bool:
-		if pattern == 1:
-			return y == 2
-		if pattern == 2:
-			return (
-				(x == 0 and y == 1)
-				or (x == 2 and y == 0)
-				or (x == 3 and y == 2)
-				or (x == 5 and y == 1)
-				or (x == 1 and y == 3)
-				or (x == 4 and y == 4)
-				or (x == 2 and y == 5)
-				or (x == 5 and y == 5)
-			)
-		return false
+	func _has_block(x: int, y: int) -> bool:
+		if y < 0 or y >= rows.size():
+			return false
+		var row := rows[y]
+		if x < 0 or x >= row.length():
+			return false
+		return row[x] == "#"
 
 	func _hash01(x: int, y: int) -> float:
 		var n := x * 374761393 + y * 668265263 + pattern * 1274126177

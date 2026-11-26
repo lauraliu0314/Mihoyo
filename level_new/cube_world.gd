@@ -15,6 +15,8 @@ extends Node3D
 @export var settle_stable_frames: int = 4
 ## Safety cap so a stuck body cannot block orient forever.
 @export var settle_timeout: float = 4.0
+## Blocks the player can place this level. Tutorial uses 2; other levels stay at 3.
+@export var place_limit: int = 3
 
 var flipping: bool = false
 var start_transform: Transform3D

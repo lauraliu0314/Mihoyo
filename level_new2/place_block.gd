@@ -419,48 +419,40 @@ func _show_choice_ui(lines: Array[Dictionary]) -> void:
 
 	var panel := PanelContainer.new()
 	panel.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
-	panel.offset_left = -340.0
-	panel.offset_right = 340.0
-	panel.offset_top = -168.0
-	panel.offset_bottom = -72.0
+	panel.offset_left = -480.0
+	panel.offset_right = 480.0
+	panel.offset_top = -248.0
+	panel.offset_bottom = -36.0
 	var panel_style := StyleBoxFlat.new()
 	panel_style.bg_color = Color(0.06, 0.06, 0.06, 0.92)
-	panel_style.set_corner_radius_all(10)
-	panel_style.content_margin_left = 16.0
-	panel_style.content_margin_right = 16.0
-	panel_style.content_margin_top = 12.0
-	panel_style.content_margin_bottom = 12.0
+	panel_style.set_corner_radius_all(14)
+	panel_style.content_margin_left = 28.0
+	panel_style.content_margin_right = 28.0
+	panel_style.content_margin_top = 18.0
+	panel_style.content_margin_bottom = 18.0
 	panel.add_theme_stylebox_override("panel", panel_style)
 	_choice_layer.add_child(panel)
 
 	var column := VBoxContainer.new()
-	column.add_theme_constant_override("separation", 10)
+	column.add_theme_constant_override("separation", 16)
 	panel.add_child(column)
 	var title := Label.new()
 	title.text = "选择要消除的一排"
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	title.add_theme_font_size_override("font_size", 22)
+	title.add_theme_font_size_override("font_size", 36)
 	title.add_theme_color_override("font_color", Color(0.96, 0.96, 0.95))
 	column.add_child(title)
 
 	var row := HBoxContainer.new()
 	row.alignment = BoxContainer.ALIGNMENT_CENTER
-	row.add_theme_constant_override("separation", 8)
+	row.add_theme_constant_override("separation", 20)
 	column.add_child(row)
 
-	var axis_counts: Array[int] = [0, 0, 0]
-	for line in lines:
-		axis_counts[int(line["axis"])] += 1
-	var axis_seen: Array[int] = [0, 0, 0]
 	for index in lines.size():
-		var axis := int(lines[index]["axis"])
-		axis_seen[axis] += 1
 		var button := Button.new()
-		if axis_counts[axis] > 1:
-			button.text = "%s · %d" % [_axis_name(axis), axis_seen[axis]]
-		else:
-			button.text = _axis_name(axis)
+		button.text = _choice_label(index)
 		button.focus_mode = Control.FOCUS_NONE
+		button.custom_minimum_size = Vector2(160, 76)
 		_style_choice_button(button, _option_color(index))
 		button.pressed.connect(_commit_line.bind(index))
 		button.mouse_entered.connect(_paint_highlights.bind(index))
@@ -472,10 +464,10 @@ func _style_choice_button(button: Button, color: Color) -> void:
 	var normal := StyleBoxFlat.new()
 	normal.bg_color = Color(color.r, color.g, color.b, 0.92)
 	normal.set_corner_radius_all(6)
-	normal.content_margin_left = 14.0
-	normal.content_margin_right = 14.0
-	normal.content_margin_top = 8.0
-	normal.content_margin_bottom = 8.0
+	normal.content_margin_left = 28.0
+	normal.content_margin_right = 28.0
+	normal.content_margin_top = 14.0
+	normal.content_margin_bottom = 14.0
 	var hover := normal.duplicate() as StyleBoxFlat
 	hover.bg_color = color.lightened(0.2)
 	button.add_theme_stylebox_override("normal", normal)
@@ -483,7 +475,7 @@ func _style_choice_button(button: Button, color: Color) -> void:
 	button.add_theme_stylebox_override("pressed", hover)
 	var ink := Color(0.08, 0.08, 0.08) if color.get_luminance() > 0.55 else Color(0.96, 0.96, 0.95)
 	button.add_theme_color_override("font_color", ink)
-	button.add_theme_font_size_override("font_size", 18)
+	button.add_theme_font_size_override("font_size", 40)
 
 
 func _try_choose_from_click() -> void:
@@ -622,7 +614,7 @@ func _paint_highlights(hovered: int) -> void:
 		return
 	for index in _options.size():
 		var color := _option_color(index)
-		color.a = 0.62 if hovered < 0 or hovered == index else 0.16
+		color.a = 0.82 if hovered < 0 or hovered == index else 0.34
 		var stored: Variant = _options[index].get("nodes", [])
 		if not (stored is Array):
 			continue
@@ -726,7 +718,7 @@ func _add_preview(box: Node3D, color: Color) -> void:
 func _pulse_clear_preview() -> void:
 	if not _has_clear_preview:
 		return
-	var wave := 0.22 + 0.5 * (0.5 + 0.5 * sin(float(Time.get_ticks_msec()) * 0.008))
+	var wave := 0.5 + 0.38 * (0.5 + 0.5 * sin(float(Time.get_ticks_msec()) * 0.008))
 	for index in _previews.size():
 		var hint := _previews[index]
 		if not is_instance_valid(hint):
@@ -837,28 +829,19 @@ func _is_outer_center(value: float, low: float, high: float) -> bool:
 	return absf(value - low) < 0.2 or absf(value - high) < 0.2
 
 
-func _axis_name(axis: int) -> String:
-	match axis:
-		0:
-			return "左右一排"
-		1:
-			return "上下一排"
-		_:
-			return "前后一排"
+func _choice_label(index: int) -> String:
+	var labels := "ABCDEFGH"
+	if index >= 0 and index < labels.length():
+		return labels[index]
+	return str(index + 1)
 
 
 func _option_color(index: int) -> Color:
-	match index % 5:
+	match index % 2:
 		0:
-			return Color(0.96, 0.96, 0.95)
-		1:
-			return Color(0.62, 0.62, 0.62)
-		2:
-			return Color(0.1, 0.1, 0.1)
-		3:
-			return Color(0.78, 0.78, 0.78)
+			return Color(0.98, 0.98, 0.97)
 		_:
-			return Color(0.35, 0.35, 0.35)
+			return Color(0.05, 0.05, 0.05)
 
 
 func _snap_center(value: float, lo: float, hi: float) -> float:
