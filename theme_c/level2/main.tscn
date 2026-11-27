@@ -1,0 +1,1419 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://theme_c/local_assets/environment/level_environment.tscn" id="1_env"]
+[ext_resource type="Script" path="res://theme_c/level1/cube_world.gd" id="2_world"]
+[ext_resource type="PackedScene" path="res://theme_c/local_assets/model/walls/mondrian_wall_cubies_level2.tscn" id="3_mondrian"]
+[ext_resource type="PackedScene" path="res://theme_c/local_assets/model/walls/cube_shell_kitchen.tscn" id="3_walls"]
+[ext_resource type="PackedScene" path="res://theme_c/local_player/player.tscn" id="4_player"]
+[ext_resource type="PackedScene" path="res://theme_c/local_assets/model/box/static_box_ice.tscn" id="5_ice"]
+[ext_resource type="PackedScene" path="res://theme_c/local_assets/model/box/mondrian_exit_tile.tscn" id="6_exit"]
+[ext_resource type="PackedScene" path="res://theme_c/local_assets/ui/ui_ingame_shared.tscn" id="7_ui"]
+[ext_resource type="Script" path="res://theme_c/level1/rubik_layer_controller.gd" id="8_rubik"]
+[ext_resource type="Script" path="res://theme_c/level2/rubik_turn_marker.gd" id="9_marker"]
+[ext_resource type="Script" path="res://theme_c/scripts/movable_box.gd" id="10_movable_box"]
+[ext_resource type="PackedScene" path="res://theme_c/local_assets/model/box/deadly_box.tscn" id="11_deadly_box"]
+[ext_resource type="Script" uid="uid://b0yu40hr5sku3" path="res://global_script/crush_detector.gd" id="12_crush_detector"]
+[ext_resource type="AudioStream" uid="uid://cwe26e3fiw2e0" path="res://assets/audio/掉落.mp3" id="13_fall_sfx"]
+
+[sub_resource type="BoxShape3D" id="DeadlyShape"]
+
+[sub_resource type="StandardMaterial3D" id="TurnMarkerOrangeMaterial"]
+shading_mode = 0
+albedo_color = Color(0.035, 0.039, 0.046, 1)
+
+[sub_resource type="BoxMesh" id="TurnMarkerFaceMesh"]
+size = Vector3(0.86, 0.86, 0.03)
+
+[sub_resource type="StandardMaterial3D" id="TurnMarkerArrowMaterial"]
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(0.975, 0.969, 0.947, 1)
+
+[sub_resource type="QuadMesh" id="TurnMarkerArrowShaftMesh"]
+size = Vector2(0.11, 0.38)
+
+[sub_resource type="QuadMesh" id="TurnMarkerArrowArmMesh"]
+size = Vector2(0.07, 0.24)
+
+[sub_resource type="StandardMaterial3D" id="TurnMarkerPurpleMaterial"]
+shading_mode = 0
+albedo_color = Color(0.035, 0.039, 0.046, 1)
+
+[sub_resource type="BoxShape3D" id="ExitShape"]
+
+[node name="Main" type="Node3D" unique_id=762025018]
+
+[node name="LevelEnvironment" parent="." unique_id=831759729 instance=ExtResource("1_env")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+
+[node name="Player" parent="." unique_id=1685034830 instance=ExtResource("4_player")]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 1.5, 0.45, 1.5)
+
+[node name="Node3D" type="Node3D" parent="." unique_id=941695510]
+script = ExtResource("2_world")
+
+[node name="WALLS" parent="Node3D" unique_id=40497636 instance=ExtResource("3_walls")]
+
+[node name="WallCubies" parent="Node3D" unique_id=1098570431 instance=ExtResource("3_mondrian")]
+
+[node name="Cubie_0_0_0" parent="Node3D/WallCubies" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_0_0/Floor" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, -0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_0_0/Left" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, 0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_0_0/Front" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, 0.01375, 0.004)
+
+[node name="Cubie_0_0_1" parent="Node3D/WallCubies" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0.5, -1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_0_1/Floor" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_0_1/Left" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Cubie_0_0_2" parent="Node3D/WallCubies" index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0.5, -0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_0_2/Floor" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.945, 0, 0, 0, 1, 0.01375, 0, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_0_2/Left" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, 0.01375, 0.004)
+
+[node name="Cubie_0_0_3" parent="Node3D/WallCubies" index="3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0.5, 0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_0_3/Floor" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, -0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_0_3/Left" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Cubie_0_0_4" parent="Node3D/WallCubies" index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0.5, 1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_0_4/Floor" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 1, 0, 0, 0, 1, 0.01375, 0, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_0_4/Left" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, 0.01375, 0.004)
+
+[node name="Cubie_0_0_5" parent="Node3D/WallCubies" index="5"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_0_5/Floor" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, 0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_0_5/Left" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, 0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_0_5/Back" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, 0.01375, 0.004)
+
+[node name="Cubie_0_1_0" parent="Node3D/WallCubies" index="6"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_1_0/Left" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, -0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_1_0/Front" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 1, 0, 0, 0, 1, 0.01375, 0, 0.004)
+
+[node name="Cubie_0_1_1" parent="Node3D/WallCubies" index="7"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1.5, -1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_1_1/Left" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, -0.01375, 0.004)
+
+[node name="Cubie_0_1_2" parent="Node3D/WallCubies" index="8"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1.5, -0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_1_2/Left" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, -0.01375, 0.004)
+
+[node name="Cubie_0_1_3" parent="Node3D/WallCubies" index="9"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1.5, 0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_1_3/Left" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, -0.01375, 0.004)
+
+[node name="Cubie_0_1_4" parent="Node3D/WallCubies" index="10"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1.5, 1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_1_4/Left" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, -0.01375, 0.004)
+
+[node name="Cubie_0_1_5" parent="Node3D/WallCubies" index="11"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_1_5/Left" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, -0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_1_5/Back" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, -0.01375, 0.004)
+
+[node name="Cubie_0_2_0" parent="Node3D/WallCubies" index="12"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 2.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_2_0/Left" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_2_0/Front" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, -0.01375, 0.004)
+
+[node name="Cubie_0_2_1" parent="Node3D/WallCubies" index="13"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 2.5, -1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_2_1/Left" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.945, 0, 0, 0, 1, -0.01375, 0, 0.004)
+
+[node name="Cubie_0_2_2" parent="Node3D/WallCubies" index="14"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 2.5, -0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_2_2/Left" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.945, 0, 0, 0, 1, 0.01375, 0, 0.004)
+
+[node name="Cubie_0_2_3" parent="Node3D/WallCubies" index="15"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 2.5, 0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_2_3/Left" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.945, 0, 0, 0, 1, -0.01375, 0, 0.004)
+
+[node name="Cubie_0_2_4" parent="Node3D/WallCubies" index="16"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 2.5, 1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_2_4/Left" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Cubie_0_2_5" parent="Node3D/WallCubies" index="17"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 2.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_2_5/Left" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, 0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_2_5/Back" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.945, 0, 0, 0, 1, -0.01375, 0, 0.004)
+
+[node name="Cubie_0_3_0" parent="Node3D/WallCubies" index="18"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 3.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_3_0/Left" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_3_0/Front" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.945, 0, 0, 0, 1, 0.01375, 0, 0.004)
+
+[node name="Cubie_0_3_1" parent="Node3D/WallCubies" index="19"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 3.5, -1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_3_1/Left" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.945, 0, 0, 0, 1, -0.01375, 0, 0.004)
+
+[node name="Cubie_0_3_2" parent="Node3D/WallCubies" index="20"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 3.5, -0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_3_2/Left" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, 0.01375, 0.004)
+
+[node name="Cubie_0_3_3" parent="Node3D/WallCubies" index="21"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 3.5, 0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_3_3/Left" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, 0.01375, 0.004)
+
+[node name="Cubie_0_3_4" parent="Node3D/WallCubies" index="22"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 3.5, 1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_3_4/Left" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, 0.01375, 0.004)
+
+[node name="Cubie_0_3_5" parent="Node3D/WallCubies" index="23"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 3.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_3_5/Left" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_3_5/Back" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Cubie_0_4_0" parent="Node3D/WallCubies" index="24"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 4.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_4_0/Left" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_4_0/Front" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, 0.01375, 0.004)
+
+[node name="Cubie_0_4_1" parent="Node3D/WallCubies" index="25"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 4.5, -1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_4_1/Left" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Cubie_0_4_2" parent="Node3D/WallCubies" index="26"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 4.5, -0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_4_2/Left" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Cubie_0_4_3" parent="Node3D/WallCubies" index="27"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 4.5, 0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_4_3/Left" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 1, 0, 0, 0, 1, -0.01375, 0, 0.004)
+
+[node name="Cubie_0_4_4" parent="Node3D/WallCubies" index="28"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 4.5, 1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_4_4/Left" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 1, 0, 0, 0, 1, 0.01375, 0, 0.004)
+
+[node name="Cubie_0_4_5" parent="Node3D/WallCubies" index="29"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 4.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_4_5/Left" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, -0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_4_5/Back" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Cubie_0_5_0" parent="Node3D/WallCubies" index="30"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 5.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_5_0/Ceiling" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, 0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_5_0/Left" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, -0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_5_0/Front" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, -0.01375, 0.004)
+
+[node name="Cubie_0_5_1" parent="Node3D/WallCubies" index="31"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 5.5, -1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_5_1/Ceiling" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, -0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_5_1/Left" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, -0.01375, 0.004)
+
+[node name="Cubie_0_5_2" parent="Node3D/WallCubies" index="32"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 5.5, -0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_5_2/Ceiling" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, 0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_5_2/Left" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, -0.01375, 0.004)
+
+[node name="Cubie_0_5_3" parent="Node3D/WallCubies" index="33"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 5.5, 0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_5_3/Ceiling" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_5_3/Left" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, -0.01375, 0.004)
+
+[node name="Cubie_0_5_4" parent="Node3D/WallCubies" index="34"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 5.5, 1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_5_4/Ceiling" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, -0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_5_4/Left" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, -0.01375, 0.004)
+
+[node name="Cubie_0_5_5" parent="Node3D/WallCubies" index="35"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 5.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_5_5/Ceiling" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_5_5/Left" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_0_5_5/Back" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, -0.01375, 0.004)
+
+[node name="Cubie_1_0_0" parent="Node3D/WallCubies" index="36"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_1_0_0/Floor" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, -0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_1_0_0/Front" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, 0.01375, 0.004)
+
+[node name="Cubie_1_0_1" parent="Node3D/WallCubies" index="37"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0.5, -1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_1_0_1/Floor" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, 0.01375, 0.004)
+
+[node name="Cubie_1_0_2" parent="Node3D/WallCubies" index="38"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0.5, -0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_1_0_2/Floor" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Cubie_1_0_3" parent="Node3D/WallCubies" index="39"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0.5, 0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_1_0_3/Floor" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, -0.01375, 0.004)
+
+[node name="Cubie_1_0_4" parent="Node3D/WallCubies" index="40"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0.5, 1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_1_0_4/Floor" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 1, 0, 0, 0, 1, -0.01375, 0, 0.004)
+
+[node name="Cubie_1_0_5" parent="Node3D/WallCubies" index="41"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_1_0_5/Floor" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, 0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_1_0_5/Back" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, 0.01375, 0.004)
+
+[node name="Cubie_1_1_0" parent="Node3D/WallCubies" index="42"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 1.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_1_1_0/Front" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 1, 0, 0, 0, 1, -0.01375, 0, 0.004)
+
+[node name="Cubie_1_1_5" parent="Node3D/WallCubies" index="43"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 1.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_1_1_5/Back" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, -0.01375, 0.004)
+
+[node name="Cubie_1_2_0" parent="Node3D/WallCubies" index="44"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 2.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_1_2_0/Front" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, -0.01375, 0.004)
+
+[node name="Cubie_1_2_5" parent="Node3D/WallCubies" index="45"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 2.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_1_2_5/Back" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.945, 0, 0, 0, 1, 0.01375, 0, 0.004)
+
+[node name="Cubie_1_3_0" parent="Node3D/WallCubies" index="46"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 3.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_1_3_0/Front" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Cubie_1_3_5" parent="Node3D/WallCubies" index="47"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 3.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_1_3_5/Back" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Cubie_1_4_0" parent="Node3D/WallCubies" index="48"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 4.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_1_4_0/Front" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Cubie_1_4_5" parent="Node3D/WallCubies" index="49"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 4.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_1_4_5/Back" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Cubie_1_5_0" parent="Node3D/WallCubies" index="50"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 5.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_1_5_0/Ceiling" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_1_5_0/Front" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, -0.01375, 0.004)
+
+[node name="Cubie_1_5_1" parent="Node3D/WallCubies" index="51"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 5.5, -1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_1_5_1/Ceiling" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, -0.01375, 0.004)
+
+[node name="Cubie_1_5_2" parent="Node3D/WallCubies" index="52"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 5.5, -0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_1_5_2/Ceiling" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Cubie_1_5_3" parent="Node3D/WallCubies" index="53"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 5.5, 0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_1_5_3/Ceiling" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, 0.01375, 0.004)
+
+[node name="Cubie_1_5_4" parent="Node3D/WallCubies" index="54"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 5.5, 1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_1_5_4/Ceiling" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, -0.01375, 0.004)
+
+[node name="Cubie_1_5_5" parent="Node3D/WallCubies" index="55"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 5.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_1_5_5/Ceiling" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.945, 0, 0, 0, 1, 0.01375, 0, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_1_5_5/Back" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.945, 0, 0, 0, 1, 0.01375, 0, 0.004)
+
+[node name="Cubie_2_0_0" parent="Node3D/WallCubies" index="56"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_2_0_0/Floor" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, -0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_2_0_0/Front" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, 0.01375, 0.004)
+
+[node name="Cubie_2_0_1" parent="Node3D/WallCubies" index="57"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, -1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_2_0_1/Floor" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, 0.01375, 0.004)
+
+[node name="Cubie_2_0_2" parent="Node3D/WallCubies" index="58"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, -0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_2_0_2/Floor" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, -0.01375, 0.004)
+
+[node name="Cubie_2_0_3" parent="Node3D/WallCubies" index="59"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, 0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_2_0_3/Floor" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Cubie_2_0_4" parent="Node3D/WallCubies" index="60"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, 1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_2_0_4/Floor" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Cubie_2_0_5" parent="Node3D/WallCubies" index="61"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_2_0_5/Floor" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_2_0_5/Back" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Cubie_2_1_0" parent="Node3D/WallCubies" index="62"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_2_1_0/Front" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, -0.01375, 0.004)
+
+[node name="Cubie_2_1_5" parent="Node3D/WallCubies" index="63"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_2_1_5/Back" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, -0.01375, 0.004)
+
+[node name="Cubie_2_2_0" parent="Node3D/WallCubies" index="64"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 2.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_2_2_0/Front" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Cubie_2_2_5" parent="Node3D/WallCubies" index="65"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 2.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_2_2_5/Back" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, 0.01375, 0.004)
+
+[node name="Cubie_2_3_0" parent="Node3D/WallCubies" index="66"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 3.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_2_3_0/Front" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, -0.01375, 0.004)
+
+[node name="Cubie_2_3_5" parent="Node3D/WallCubies" index="67"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 3.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_2_3_5/Back" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 1, 0, 0, 0, 1, -0.01375, 0, 0.004)
+
+[node name="Cubie_2_4_0" parent="Node3D/WallCubies" index="68"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 4.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_2_4_0/Front" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, 0.01375, 0.004)
+
+[node name="Cubie_2_4_5" parent="Node3D/WallCubies" index="69"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 4.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_2_4_5/Back" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, -0.01375, 0.004)
+
+[node name="Cubie_2_5_0" parent="Node3D/WallCubies" index="70"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 5.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_2_5_0/Ceiling" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, 0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_2_5_0/Front" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, -0.01375, 0.004)
+
+[node name="Cubie_2_5_1" parent="Node3D/WallCubies" index="71"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 5.5, -1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_2_5_1/Ceiling" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, -0.01375, 0.004)
+
+[node name="Cubie_2_5_2" parent="Node3D/WallCubies" index="72"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 5.5, -0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_2_5_2/Ceiling" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Cubie_2_5_3" parent="Node3D/WallCubies" index="73"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 5.5, 0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_2_5_3/Ceiling" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.945, 0, 0, 0, 1, -0.01375, 0, 0.004)
+
+[node name="Cubie_2_5_4" parent="Node3D/WallCubies" index="74"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 5.5, 1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_2_5_4/Ceiling" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Cubie_2_5_5" parent="Node3D/WallCubies" index="75"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 5.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_2_5_5/Ceiling" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.945, 0, 0, 0, 1, -0.01375, 0, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_2_5_5/Back" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.945, 0, 0, 0, 1, -0.01375, 0, 0.004)
+
+[node name="Cubie_3_0_0" parent="Node3D/WallCubies" index="76"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_3_0_0/Floor" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, -0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_3_0_0/Front" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Cubie_3_0_1" parent="Node3D/WallCubies" index="77"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, -1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_3_0_1/Floor" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Cubie_3_0_2" parent="Node3D/WallCubies" index="78"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, -0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_3_0_2/Floor" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, -0.01375, 0.004)
+
+[node name="Cubie_3_0_3" parent="Node3D/WallCubies" index="79"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_3_0_3/Floor" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Cubie_3_0_4" parent="Node3D/WallCubies" index="80"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_3_0_4/Floor" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Cubie_3_0_5" parent="Node3D/WallCubies" index="81"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_3_0_5/Floor" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.945, 0, 0, 0, 1, 0.01375, 0, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_3_0_5/Back" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, 0.01375, 0.004)
+
+[node name="Cubie_3_1_0" parent="Node3D/WallCubies" index="82"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_3_1_0/Front" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, -0.01375, 0.004)
+
+[node name="Cubie_3_1_5" parent="Node3D/WallCubies" index="83"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_3_1_5/Back" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, -0.01375, 0.004)
+
+[node name="Cubie_3_2_0" parent="Node3D/WallCubies" index="84"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 2.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_3_2_0/Front" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Cubie_3_2_5" parent="Node3D/WallCubies" index="85"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 2.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_3_2_5/Back" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Cubie_3_3_0" parent="Node3D/WallCubies" index="86"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 3.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_3_3_0/Front" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, -0.01375, 0.004)
+
+[node name="Cubie_3_3_5" parent="Node3D/WallCubies" index="87"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 3.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_3_3_5/Back" index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Cubie_3_4_0" parent="Node3D/WallCubies" index="88"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 4.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_3_4_0/Front" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Cubie_3_4_5" parent="Node3D/WallCubies" index="89"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 4.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_3_4_5/Back" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, -0.01375, 0.004)
+
+[node name="Cubie_3_5_0" parent="Node3D/WallCubies" index="90"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 5.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_3_5_0/Ceiling" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_3_5_0/Front" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Cubie_3_5_1" parent="Node3D/WallCubies" index="91"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 5.5, -1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_3_5_1/Ceiling" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, -0.01375, 0.004)
+
+[node name="Cubie_3_5_2" parent="Node3D/WallCubies" index="92"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 5.5, -0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_3_5_2/Ceiling" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, 0.01375, 0.004)
+
+[node name="Cubie_3_5_3" parent="Node3D/WallCubies" index="93"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 5.5, 0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_3_5_3/Ceiling" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, -0.01375, 0.004)
+
+[node name="Cubie_3_5_4" parent="Node3D/WallCubies" index="94"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 5.5, 1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_3_5_4/Ceiling" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Cubie_3_5_5" parent="Node3D/WallCubies" index="95"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 5.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_3_5_5/Ceiling" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.945, 0, 0, 0, 1, 0.01375, 0, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_3_5_5/Back" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Cubie_4_0_0" parent="Node3D/WallCubies" index="96"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_4_0_0/Floor" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, -0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_4_0_0/Front" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, 0.01375, 0.004)
+
+[node name="Cubie_4_0_1" parent="Node3D/WallCubies" index="97"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0.5, -1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_4_0_1/Floor" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Cubie_4_0_2" parent="Node3D/WallCubies" index="98"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0.5, -0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_4_0_2/Floor" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, -0.01375, 0.004)
+
+[node name="Cubie_4_0_3" parent="Node3D/WallCubies" index="99"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0.5, 0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_4_0_3/Floor" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Cubie_4_0_4" parent="Node3D/WallCubies" index="100"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0.5, 1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_4_0_4/Floor" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.945, 0, 0, 0, 1, 0.01375, 0, 0.004)
+
+[node name="Cubie_4_0_5" parent="Node3D/WallCubies" index="101"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_4_0_5/Floor" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.945, 0, 0, 0, 1, -0.01375, 0, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_4_0_5/Back" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Cubie_4_1_0" parent="Node3D/WallCubies" index="102"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 1.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_4_1_0/Front" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, -0.01375, 0.004)
+
+[node name="Cubie_4_1_5" parent="Node3D/WallCubies" index="103"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 1.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_4_1_5/Back" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, -0.01375, 0.004)
+
+[node name="Cubie_4_2_0" parent="Node3D/WallCubies" index="104"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 2.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_4_2_0/Front" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Cubie_4_2_5" parent="Node3D/WallCubies" index="105"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 2.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_4_2_5/Back" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, 0.01375, 0.004)
+
+[node name="Cubie_4_3_0" parent="Node3D/WallCubies" index="106"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 3.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_4_3_0/Front" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Cubie_4_3_5" parent="Node3D/WallCubies" index="107"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 3.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_4_3_5/Back" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 1, 0, 0, 0, 1, 0.01375, 0, 0.004)
+
+[node name="Cubie_4_4_0" parent="Node3D/WallCubies" index="108"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 4.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_4_4_0/Front" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, -0.01375, 0.004)
+
+[node name="Cubie_4_4_5" parent="Node3D/WallCubies" index="109"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 4.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_4_4_5/Back" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, -0.01375, 0.004)
+
+[node name="Cubie_4_5_0" parent="Node3D/WallCubies" index="110"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 5.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_4_5_0/Ceiling" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, 0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_4_5_0/Front" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.945, 0, 0, 0, 1, 0.01375, 0, 0.004)
+
+[node name="Cubie_4_5_1" parent="Node3D/WallCubies" index="111"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 5.5, -1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_4_5_1/Ceiling" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, -0.01375, 0.004)
+
+[node name="Cubie_4_5_2" parent="Node3D/WallCubies" index="112"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 5.5, -0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_4_5_2/Ceiling" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.945, 0, 0, 0, 1, 0.01375, 0, 0.004)
+
+[node name="Cubie_4_5_3" parent="Node3D/WallCubies" index="113"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 5.5, 0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_4_5_3/Ceiling" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Cubie_4_5_4" parent="Node3D/WallCubies" index="114"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 5.5, 1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_4_5_4/Ceiling" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Cubie_4_5_5" parent="Node3D/WallCubies" index="115"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 5.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_4_5_5/Ceiling" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_4_5_5/Back" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.945, 0, 0, 0, 1, 0.01375, 0, 0.004)
+
+[node name="Cubie_5_0_0" parent="Node3D/WallCubies" index="116"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_0_0/Floor" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_0_0/Right" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, 0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_0_0/Front" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Cubie_5_0_1" parent="Node3D/WallCubies" index="117"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0.5, -1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_0_1/Floor" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_0_1/Right" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, 0.01375, 0.004)
+
+[node name="Cubie_5_0_2" parent="Node3D/WallCubies" index="118"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0.5, -0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_0_2/Floor" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, -0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_0_2/Right" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Cubie_5_0_3" parent="Node3D/WallCubies" index="119"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0.5, 0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_0_3/Floor" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_0_3/Right" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Cubie_5_0_4" parent="Node3D/WallCubies" index="120"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0.5, 1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_0_4/Floor" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.945, 0, 0, 0, 1, -0.01375, 0, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_0_4/Right" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, 0.01375, 0.004)
+
+[node name="Cubie_5_0_5" parent="Node3D/WallCubies" index="121"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_0_5/Floor" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_0_5/Right" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, 0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_0_5/Back" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, 0.01375, 0.004)
+
+[node name="Cubie_5_1_0" parent="Node3D/WallCubies" index="122"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_1_0/Right" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 1, 0, 0, 0, 1, 0.01375, 0, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_1_0/Front" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, -0.01375, 0.004)
+
+[node name="Cubie_5_1_1" parent="Node3D/WallCubies" index="123"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1.5, -1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_1_1/Right" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 1, 0, 0, 0, 1, -0.01375, 0, 0.004)
+
+[node name="Cubie_5_1_2" parent="Node3D/WallCubies" index="124"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1.5, -0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_1_2/Right" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, -0.01375, 0.004)
+
+[node name="Cubie_5_1_3" parent="Node3D/WallCubies" index="125"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1.5, 0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_1_3/Right" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, -0.01375, 0.004)
+
+[node name="Cubie_5_1_4" parent="Node3D/WallCubies" index="126"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1.5, 1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_1_4/Right" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, -0.01375, 0.004)
+
+[node name="Cubie_5_1_5" parent="Node3D/WallCubies" index="127"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_1_5/Right" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, -0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_1_5/Back" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, -0.01375, 0.004)
+
+[node name="Cubie_5_2_0" parent="Node3D/WallCubies" index="128"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 2.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_2_0/Right" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, -0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_2_0/Front" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Cubie_5_2_1" parent="Node3D/WallCubies" index="129"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 2.5, -1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_2_1/Right" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, -0.01375, 0.004)
+
+[node name="Cubie_5_2_2" parent="Node3D/WallCubies" index="130"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 2.5, -0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_2_2/Right" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Cubie_5_2_3" parent="Node3D/WallCubies" index="131"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 2.5, 0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_2_3/Right" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.945, 0, 0, 0, 1, 0.01375, 0, 0.004)
+
+[node name="Cubie_5_2_4" parent="Node3D/WallCubies" index="132"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 2.5, 1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_2_4/Right" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Cubie_5_2_5" parent="Node3D/WallCubies" index="133"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 2.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_2_5/Right" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, 0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_2_5/Back" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Cubie_5_3_0" parent="Node3D/WallCubies" index="134"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 3.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_3_0/Right" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_3_0/Front" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Cubie_5_3_1" parent="Node3D/WallCubies" index="135"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 3.5, -1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_3_1/Right" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Cubie_5_3_2" parent="Node3D/WallCubies" index="136"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 3.5, -0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_3_2/Right" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, 0.01375, 0.004)
+
+[node name="Cubie_5_3_3" parent="Node3D/WallCubies" index="137"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 3.5, 0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_3_3/Right" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, 0.01375, 0.004)
+
+[node name="Cubie_5_3_4" parent="Node3D/WallCubies" index="138"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 3.5, 1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_3_4/Right" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Cubie_5_3_5" parent="Node3D/WallCubies" index="139"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 3.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_3_5/Right" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, -0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_3_5/Back" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Cubie_5_4_0" parent="Node3D/WallCubies" index="140"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 4.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_4_0/Right" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, -0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_4_0/Front" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, -0.01375, 0.004)
+
+[node name="Cubie_5_4_1" parent="Node3D/WallCubies" index="141"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 4.5, -1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_4_1/Right" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, -0.01375, 0.004)
+
+[node name="Cubie_5_4_2" parent="Node3D/WallCubies" index="142"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 4.5, -0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_4_2/Right" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, -0.01375, 0.004)
+
+[node name="Cubie_5_4_3" parent="Node3D/WallCubies" index="143"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 4.5, 0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_4_3/Right" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, -0.01375, 0.004)
+
+[node name="Cubie_5_4_4" parent="Node3D/WallCubies" index="144"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 4.5, 1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_4_4/Right" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Cubie_5_4_5" parent="Node3D/WallCubies" index="145"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 4.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_4_5/Right" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_4_5/Back" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, -0.01375, 0.004)
+
+[node name="Cubie_5_5_0" parent="Node3D/WallCubies" index="146"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 5.5, -2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_5_0/Ceiling" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, 0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_5_0/Right" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_5_0/Front" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.945, 0, 0, 0, 1, -0.01375, 0, 0.004)
+
+[node name="Cubie_5_5_1" parent="Node3D/WallCubies" index="147"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 5.5, -1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_5_1/Ceiling" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, -0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_5_1/Right" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.945, 0, 0, 0, 1, 0.01375, 0, 0.004)
+
+[node name="Cubie_5_5_2" parent="Node3D/WallCubies" index="148"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 5.5, -0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_5_2/Ceiling" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.945, 0, 0, 0, 1, -0.01375, 0, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_5_2/Right" index="1"]
+transform = Transform3D(1, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Cubie_5_5_3" parent="Node3D/WallCubies" index="149"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 5.5, 0.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_5_3/Ceiling" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_5_3/Right" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.945, 0, 0, 0, 1, -0.01375, 0, 0.004)
+
+[node name="Cubie_5_5_4" parent="Node3D/WallCubies" index="150"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 5.5, 1.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_5_4/Ceiling" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0, 0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_5_4/Right" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, 0.01375, -0.01375, 0.004)
+
+[node name="Cubie_5_5_5" parent="Node3D/WallCubies" index="151"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 5.5, 2.5)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_5_5/Ceiling" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, -0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_5_5/Right" index="1"]
+transform = Transform3D(0.9725, 0, 0, 0, 0.9725, 0, 0, 0, 1, -0.01375, -0.01375, 0.004)
+
+[node name="Color" parent="Node3D/WallCubies/Cubie_5_5_5/Back" index="1"]
+transform = Transform3D(0.945, 0, 0, 0, 0.945, 0, 0, 0, 1, 0, 0, 0.004)
+
+[node name="DeadlyBox" type="RigidBody3D" parent="Node3D" unique_id=1556810177]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 1.5, -1.5)
+script = ExtResource("10_movable_box")
+fall_when_on_ceiling = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/DeadlyBox" unique_id=580383936]
+shape = SubResource("DeadlyShape")
+
+[node name="Box" parent="Node3D/DeadlyBox" unique_id=415084360 instance=ExtResource("11_deadly_box")]
+
+[node name="CrushDetector" type="Node" parent="Node3D/DeadlyBox" unique_id=1703316153]
+script = ExtResource("12_crush_detector")
+fall_trigger_speed = 0.05
+fall_sfx_volume_db = -4.0
+
+[node name="FallSfx" type="AudioStreamPlayer" parent="Node3D/DeadlyBox" unique_id=1046478323]
+stream = ExtResource("13_fall_sfx")
+
+[node name="staticboxes" type="Node3D" parent="Node3D" unique_id=1701190648]
+
+[node name="StaticBoxFrame01" parent="Node3D/staticboxes" unique_id=1470453677 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0.5, -1.5)
+
+[node name="StaticBoxFrame02" parent="Node3D/staticboxes" unique_id=1846637179 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, -1.5)
+
+[node name="StaticBoxFrame03" parent="Node3D/staticboxes" unique_id=2051863252 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, -0.5)
+
+[node name="StaticBoxFrame04" parent="Node3D/staticboxes" unique_id=344427871 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0.5, -2.5)
+
+[node name="StaticBoxFrame05" parent="Node3D/staticboxes" unique_id=2113518484 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, 2.5)
+
+[node name="StaticBoxFrame06" parent="Node3D/staticboxes" unique_id=1814186389 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 1.5, -2.5)
+
+[node name="StaticBoxFrame22" parent="Node3D/staticboxes" unique_id=1740518764 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1.5, -2.5)
+
+[node name="StaticBoxFrame07" parent="Node3D/staticboxes" unique_id=1319578993 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 1.5, -2.5)
+
+[node name="StaticBoxFrame08" parent="Node3D/staticboxes" unique_id=679824883 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 2.5, -2.5)
+
+[node name="StaticBoxFrame09" parent="Node3D/staticboxes" unique_id=1658159800 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 2.5, -2.5)
+
+[node name="StaticBoxFrame15" parent="Node3D/staticboxes" unique_id=1514947061 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 2.5, -2.5)
+
+[node name="StaticBoxFrame10" parent="Node3D/staticboxes" unique_id=531919551 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 3.5, -2.5)
+
+[node name="StaticBoxFrame17" parent="Node3D/staticboxes" unique_id=1250185082 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 3.5, -2.5)
+
+[node name="StaticBoxFrame11" parent="Node3D/staticboxes" unique_id=1209470634 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 3.5, -2.5)
+
+[node name="StaticBoxFrame24" parent="Node3D/staticboxes" unique_id=1268380032 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5000558, 5.5069118, -2.4950786)
+
+[node name="StaticBoxFrame29" parent="Node3D/staticboxes" unique_id=197882809 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 5.5, -1.5)
+
+[node name="StaticBoxFrame25" parent="Node3D/staticboxes" unique_id=1016747952 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 5.5, 2.5)
+
+[node name="StaticBoxFrame13" parent="Node3D/staticboxes" unique_id=228752188 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 4.5, -2.5)
+
+[node name="StaticBoxFrame12" parent="Node3D/staticboxes" unique_id=1287803177 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 4.5, -2.5)
+
+[node name="StaticBoxFrame14" parent="Node3D/staticboxes" unique_id=640023577 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.4999442, 5.5069118, -2.4950786)
+
+[node name="StaticBoxFrame16" parent="Node3D/staticboxes" unique_id=1748386441 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 5.5, -1.5)
+
+[node name="StaticBoxFrame18" parent="Node3D/staticboxes" unique_id=1204216651 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 5.5, -0.5)
+
+[node name="StaticBoxFrame19" parent="Node3D/staticboxes" unique_id=664615891 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 5.5, 0.5)
+
+[node name="StaticBoxFrame20" parent="Node3D/staticboxes" unique_id=153696722 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 5.5, 1.5)
+
+[node name="StaticBoxFrame21" parent="Node3D/staticboxes" unique_id=1474166774 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 5.5, 0.5)
+
+[node name="StaticBoxFrame23" parent="Node3D/staticboxes" unique_id=856252699 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 5.5, 1.5)
+
+[node name="StaticBoxFrame33" parent="Node3D/staticboxes" unique_id=1113550465 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 5.5, -1.5)
+
+[node name="StaticBoxFrame32" parent="Node3D/staticboxes" unique_id=255340219 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 5.5, 1.5)
+
+[node name="StaticBoxFrame26" parent="Node3D/staticboxes" unique_id=1361169558 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 4.5, 2.5)
+
+[node name="StaticBoxFrame27" parent="Node3D/staticboxes" unique_id=361987668 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 3.5, 2.5)
+
+[node name="StaticBoxFrame28" parent="Node3D/staticboxes" unique_id=1406153018 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 3.5, 2.5)
+
+[node name="StaticBoxFrame30" parent="Node3D/staticboxes" unique_id=2014849336 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 4.5, 2.5)
+
+[node name="StaticBoxGateExitLeft" parent="Node3D/staticboxes" unique_id=1063847605 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 5.5, 1.5)
+
+[node name="StaticBoxGateExitFront" parent="Node3D/staticboxes" unique_id=1656659325 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 5.5, 0.5)
+
+[node name="StaticBoxTurnFrontMid" parent="Node3D/staticboxes" unique_id=1945743395 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 3.5, -2.5)
+
+[node name="StaticBoxTurnFrontLow" parent="Node3D/staticboxes" unique_id=1887014299 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, -2.5)
+
+[node name="StaticBoxTurnFrontUpper" parent="Node3D/staticboxes" unique_id=1292953508 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 5.5, -2.5)
+
+[node name="StaticBoxTurnBackMid" parent="Node3D/staticboxes" unique_id=1266311972 instance=ExtResource("5_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 2.5, 2.5)
+
+[node name="turn_markers" type="Node3D" parent="Node3D" unique_id=2001698395]
+
+[node name="TurnMarkerA" type="Node3D" parent="Node3D/turn_markers" unique_id=1758852444]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 2.995, 4.5, -2.5)
+script = ExtResource("9_marker")
+
+[node name="MarkerFace" type="MeshInstance3D" parent="Node3D/turn_markers/TurnMarkerA" unique_id=1226090672]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.015)
+material_override = SubResource("TurnMarkerOrangeMaterial")
+mesh = SubResource("TurnMarkerFaceMesh")
+
+[node name="DoubleArrow" type="Node3D" parent="Node3D/turn_markers/TurnMarkerA" unique_id=1053463318]
+
+[node name="Shaft" type="MeshInstance3D" parent="Node3D/turn_markers/TurnMarkerA/DoubleArrow" unique_id=1388972441]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.034)
+material_override = SubResource("TurnMarkerArrowMaterial")
+mesh = SubResource("TurnMarkerArrowShaftMesh")
+
+[node name="TopLeft" type="MeshInstance3D" parent="Node3D/turn_markers/TurnMarkerA/DoubleArrow" unique_id=638117638]
+transform = Transform3D(0.7071069, 0.70710665, 0, -0.70710665, 0.7071069, 0, 0, 0, 1, -0.085, 0.24, 0.034)
+material_override = SubResource("TurnMarkerArrowMaterial")
+mesh = SubResource("TurnMarkerArrowArmMesh")
+
+[node name="TopRight" type="MeshInstance3D" parent="Node3D/turn_markers/TurnMarkerA/DoubleArrow" unique_id=644742251]
+transform = Transform3D(0.7071069, -0.70710665, 0, 0.70710665, 0.7071069, 0, 0, 0, 1, 0.085, 0.24, 0.034)
+material_override = SubResource("TurnMarkerArrowMaterial")
+mesh = SubResource("TurnMarkerArrowArmMesh")
+
+[node name="BottomLeft" type="MeshInstance3D" parent="Node3D/turn_markers/TurnMarkerA/DoubleArrow" unique_id=2126961086]
+transform = Transform3D(0.7071069, -0.70710665, 0, 0.70710665, 0.7071069, 0, 0, 0, 1, -0.085, -0.24, 0.034)
+material_override = SubResource("TurnMarkerArrowMaterial")
+mesh = SubResource("TurnMarkerArrowArmMesh")
+
+[node name="BottomRight" type="MeshInstance3D" parent="Node3D/turn_markers/TurnMarkerA/DoubleArrow" unique_id=1768364939]
+transform = Transform3D(0.7071069, 0.70710665, 0, -0.70710665, 0.7071069, 0, 0, 0, 1, 0.085, -0.24, 0.034)
+material_override = SubResource("TurnMarkerArrowMaterial")
+mesh = SubResource("TurnMarkerArrowArmMesh")
+
+[node name="TurnMarkerB" type="Node3D" parent="Node3D/turn_markers" unique_id=1950456121]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, -0.5, 5.995, -0.5)
+script = ExtResource("9_marker")
+
+[node name="MarkerFace" type="MeshInstance3D" parent="Node3D/turn_markers/TurnMarkerB" unique_id=230980178]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.015)
+material_override = SubResource("TurnMarkerPurpleMaterial")
+mesh = SubResource("TurnMarkerFaceMesh")
+
+[node name="DoubleArrow" type="Node3D" parent="Node3D/turn_markers/TurnMarkerB" unique_id=1927737617]
+
+[node name="Shaft" type="MeshInstance3D" parent="Node3D/turn_markers/TurnMarkerB/DoubleArrow" unique_id=659637118]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.034)
+material_override = SubResource("TurnMarkerArrowMaterial")
+mesh = SubResource("TurnMarkerArrowShaftMesh")
+
+[node name="TopLeft" type="MeshInstance3D" parent="Node3D/turn_markers/TurnMarkerB/DoubleArrow" unique_id=1183683039]
+transform = Transform3D(0.7071069, 0.70710665, 0, -0.70710665, 0.7071069, 0, 0, 0, 1, -0.085, 0.24, 0.034)
+material_override = SubResource("TurnMarkerArrowMaterial")
+mesh = SubResource("TurnMarkerArrowArmMesh")
+
+[node name="TopRight" type="MeshInstance3D" parent="Node3D/turn_markers/TurnMarkerB/DoubleArrow" unique_id=849468820]
+transform = Transform3D(0.7071069, -0.70710665, 0, 0.70710665, 0.7071069, 0, 0, 0, 1, 0.085, 0.24, 0.034)
+material_override = SubResource("TurnMarkerArrowMaterial")
+mesh = SubResource("TurnMarkerArrowArmMesh")
+
+[node name="BottomLeft" type="MeshInstance3D" parent="Node3D/turn_markers/TurnMarkerB/DoubleArrow" unique_id=653241124]
+transform = Transform3D(0.7071069, -0.70710665, 0, 0.70710665, 0.7071069, 0, 0, 0, 1, -0.085, -0.24, 0.034)
+material_override = SubResource("TurnMarkerArrowMaterial")
+mesh = SubResource("TurnMarkerArrowArmMesh")
+
+[node name="BottomRight" type="MeshInstance3D" parent="Node3D/turn_markers/TurnMarkerB/DoubleArrow" unique_id=1233846554]
+transform = Transform3D(0.7071069, 0.70710665, 0, -0.70710665, 0.7071069, 0, 0, 0, 1, 0.085, -0.24, 0.034)
+material_override = SubResource("TurnMarkerArrowMaterial")
+mesh = SubResource("TurnMarkerArrowArmMesh")
+
+[node name="StaticBox_EXIT" type="Area3D" parent="Node3D" unique_id=1734357816 groups=["rubik_anchor"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 5.5, 1.5)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Node3D/StaticBox_EXIT" unique_id=625858647]
+shape = SubResource("ExitShape")
+
+[node name="ExitTile" parent="Node3D/StaticBox_EXIT" unique_id=205285120 instance=ExtResource("6_exit")]
+transform = Transform3D(1, 0, 0, 0, -1, 0, 0, 0, -1, 0, 0.49, 0)
+
+[node name="Marker3D" type="Marker3D" parent="." unique_id=345534875]
+transform = Transform3D(0.70710677, 0.40860704, -0.5770964, 0, 0.8161376, 0.5778576, 0.70710677, -0.40860704, 0.5770964, 3, 0, -3)
+
+[node name="Camera3D" type="Camera3D" parent="Marker3D" unique_id=1208414533]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 5.9604645e-08, 0, -5.9604645e-08, 1, 0, 3.0517578e-05, 310.96033)
+projection = 1
+current = true
+size = 10.0
+
+[node name="ui_ingame" parent="." unique_id=1216194039 instance=ExtResource("7_ui")]
+next_scene_path = "res://theme_c/level3/main.tscn"
+welcome_text = "关卡02 · 换位接力"
+
+[node name="RubikLayerController" type="Node3D" parent="." unique_id=310155210]
+script = ExtResource("8_rubik")
+require_marker_in_slice = true
+
+[node name="RubikHintLayer" type="CanvasLayer" parent="RubikLayerController" unique_id=953677429]
+layer = 20
+
+[node name="RubikHint" type="Label" parent="RubikLayerController/RubikHintLayer" unique_id=1401622798]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -920.0
+offset_top = 18.0
+offset_right = -220.0
+offset_bottom = 100.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0.96, 0.98, 1, 1)
+theme_override_colors/font_shadow_color = Color(0.08, 0.12, 0.18, 0.9)
+theme_override_constants/shadow_offset_x = 2
+theme_override_constants/shadow_offset_y = 2
+text = "按住双箭头标记，沿箭头拖动；松开后转动标记所在的整层"
+horizontal_alignment = 2
+autowrap_mode = 3
+
+[connection signal="body_entered" from="Node3D/StaticBox_EXIT" to="ui_ingame" method="_on_exit_body_entered"]
+
+[editable path="Node3D/WallCubies"]

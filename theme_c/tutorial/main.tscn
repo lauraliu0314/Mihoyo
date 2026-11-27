@@ -1,0 +1,228 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://theme_c/level3/level_environment.tscn" id="1_env"]
+[ext_resource type="Script" path="res://theme_c/level1/cube_world.gd" id="2_world"]
+[ext_resource type="PackedScene" path="res://theme_c/local_assets/model/walls/mondrian_wall_cubies_level2.tscn" id="3_mondrian"]
+[ext_resource type="PackedScene" path="res://theme_c/local_assets/model/walls/cube_shell_kitchen.tscn" id="4_walls"]
+[ext_resource type="PackedScene" path="res://theme_c/local_player/player.tscn" id="5_player"]
+[ext_resource type="PackedScene" path="res://theme_c/local_assets/model/box/static_box_ice.tscn" id="6_ice"]
+[ext_resource type="PackedScene" path="res://theme_c/local_assets/model/box/mondrian_exit_tile.tscn" id="7_exit"]
+[ext_resource type="PackedScene" path="res://theme_c/local_assets/ui/ui_ingame_shared.tscn" id="8_ui"]
+[ext_resource type="Script" path="res://theme_c/level1/rubik_layer_controller.gd" id="9_rubik"]
+[ext_resource type="Script" path="res://theme_c/level2/rubik_turn_marker.gd" id="9_marker"]
+[ext_resource type="Script" path="res://theme_c/tutorial/tutorial_guide.gd" id="10_guide"]
+[ext_resource type="Script" path="res://theme_c/tutorial/tutorial_focus.gd" id="11_focus"]
+
+[sub_resource type="StandardMaterial3D" id="TurnMarkerOrangeMaterial"]
+shading_mode = 0
+albedo_color = Color(0.035, 0.039, 0.046, 1)
+
+[sub_resource type="BoxMesh" id="TurnMarkerFaceMesh"]
+size = Vector3(0.86, 0.86, 0.03)
+
+[sub_resource type="StandardMaterial3D" id="TurnMarkerArrowMaterial"]
+cull_mode = 2
+shading_mode = 0
+albedo_color = Color(0.975, 0.969, 0.947, 1)
+
+[sub_resource type="QuadMesh" id="TurnMarkerArrowShaftMesh"]
+size = Vector2(0.11, 0.38)
+
+[sub_resource type="QuadMesh" id="TurnMarkerArrowArmMesh"]
+size = Vector2(0.07, 0.24)
+
+[sub_resource type="StandardMaterial3D" id="TurnMarkerPurpleMaterial"]
+shading_mode = 0
+albedo_color = Color(0.035, 0.039, 0.046, 1)
+
+[sub_resource type="BoxShape3D" id="ExitShape"]
+
+[sub_resource type="StyleBoxFlat" id="GuidePanelStyle"]
+bg_color = Color(0.07, 0.095, 0.13, 0.93)
+border_color = Color(1, 0.78, 0.12, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[node name="Main" type="Node3D"]
+
+[node name="LevelEnvironment" parent="." instance=ExtResource("1_env")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+
+[node name="Player" parent="." instance=ExtResource("5_player")]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, -0.5, 0.45, -1.5)
+
+[node name="Node3D" type="Node3D" parent="."]
+script = ExtResource("2_world")
+
+[node name="WALLS" parent="Node3D" instance=ExtResource("4_walls")]
+
+[node name="WallCubies" parent="Node3D" instance=ExtResource("3_mondrian")]
+
+[node name="staticboxes" type="Node3D" parent="Node3D"]
+
+[node name="StaticBoxRingLower" parent="Node3D/staticboxes" instance=ExtResource("6_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 3.5, 0.5)
+metadata/cutaway_inward = Vector3(-1, 0, 0)
+
+[node name="StaticBoxRingUpper" parent="Node3D/staticboxes" instance=ExtResource("6_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 5.5, 0.5)
+metadata/cutaway_inward = Vector3(-1, 0, 0)
+
+[node name="StaticBoxRingNear" parent="Node3D/staticboxes" instance=ExtResource("6_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 4.5, -0.5)
+metadata/cutaway_inward = Vector3(-1, 0, 0)
+
+[node name="StaticBoxRingFar" parent="Node3D/staticboxes" instance=ExtResource("6_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 4.5, 1.5)
+metadata/cutaway_inward = Vector3(-1, 0, 0)
+
+[node name="StaticBoxDetourFloor" parent="Node3D/staticboxes" instance=ExtResource("6_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, 0.5)
+metadata/cutaway_inward = Vector3(0, 1, 0)
+
+[node name="StaticBoxDetourCeiling" parent="Node3D/staticboxes" instance=ExtResource("6_ice")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 5.5, 0.5)
+metadata/cutaway_inward = Vector3(0, -1, 0)
+
+[node name="turn_markers" type="Node3D" parent="Node3D"]
+
+[node name="TurnMarkerA" type="Node3D" parent="Node3D/turn_markers" unique_id=1758852444]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 2.995, 0.5, 0.5)
+script = ExtResource("9_marker")
+
+[node name="MarkerFace" type="MeshInstance3D" parent="Node3D/turn_markers/TurnMarkerA" unique_id=1226090672]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.015)
+material_override = SubResource("TurnMarkerOrangeMaterial")
+mesh = SubResource("TurnMarkerFaceMesh")
+
+[node name="DoubleArrow" type="Node3D" parent="Node3D/turn_markers/TurnMarkerA" unique_id=1053463318]
+
+[node name="Shaft" type="MeshInstance3D" parent="Node3D/turn_markers/TurnMarkerA/DoubleArrow" unique_id=1388972441]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.034)
+material_override = SubResource("TurnMarkerArrowMaterial")
+mesh = SubResource("TurnMarkerArrowShaftMesh")
+
+[node name="TopLeft" type="MeshInstance3D" parent="Node3D/turn_markers/TurnMarkerA/DoubleArrow" unique_id=638117638]
+transform = Transform3D(0.7071069, 0.70710665, 0, -0.70710665, 0.7071069, 0, 0, 0, 1, -0.085, 0.24, 0.034)
+material_override = SubResource("TurnMarkerArrowMaterial")
+mesh = SubResource("TurnMarkerArrowArmMesh")
+
+[node name="TopRight" type="MeshInstance3D" parent="Node3D/turn_markers/TurnMarkerA/DoubleArrow" unique_id=644742251]
+transform = Transform3D(0.7071069, -0.70710665, 0, 0.70710665, 0.7071069, 0, 0, 0, 1, 0.085, 0.24, 0.034)
+material_override = SubResource("TurnMarkerArrowMaterial")
+mesh = SubResource("TurnMarkerArrowArmMesh")
+
+[node name="BottomLeft" type="MeshInstance3D" parent="Node3D/turn_markers/TurnMarkerA/DoubleArrow" unique_id=2126961086]
+transform = Transform3D(0.7071069, -0.70710665, 0, 0.70710665, 0.7071069, 0, 0, 0, 1, -0.085, -0.24, 0.034)
+material_override = SubResource("TurnMarkerArrowMaterial")
+mesh = SubResource("TurnMarkerArrowArmMesh")
+
+[node name="BottomRight" type="MeshInstance3D" parent="Node3D/turn_markers/TurnMarkerA/DoubleArrow" unique_id=1768364939]
+transform = Transform3D(0.7071069, 0.70710665, 0, -0.70710665, 0.7071069, 0, 0, 0, 1, 0.085, -0.24, 0.034)
+material_override = SubResource("TurnMarkerArrowMaterial")
+mesh = SubResource("TurnMarkerArrowArmMesh")
+
+[node name="StaticBox_EXIT" type="Area3D" parent="Node3D" groups=["rubik_anchor"]]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 4.5, 0.5)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Node3D/StaticBox_EXIT"]
+shape = SubResource("ExitShape")
+
+[node name="ExitTile" parent="Node3D/StaticBox_EXIT" instance=ExtResource("7_exit")]
+transform = Transform3D(0, -1, 0, 1, 0, 0, 0, 0, 1, 0.49, 0, 0)
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(0.70710677, 0.40860704, -0.5770964, 0, 0.8161376, 0.5778576, 0.70710677, -0.40860704, 0.5770964, 3, 0, -3)
+
+[node name="Camera3D" type="Camera3D" parent="Marker3D"]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 5.9604645e-08, 0, -5.9604645e-08, 1, 0, 3.0517578e-05, 310.96033)
+projection = 1
+current = true
+size = 10.0
+
+[node name="ui_ingame" parent="." instance=ExtResource("8_ui")]
+layer = 10
+next_scene_path = "res://theme_c/level1/main.tscn"
+show_welcome = true
+welcome_text = "教学 · 空间初识"
+
+[node name="RubikLayerController" type="Node3D" parent="."]
+script = ExtResource("9_rubik")
+require_marker_in_slice = true
+
+[node name="RubikHintLayer" type="CanvasLayer" parent="RubikLayerController"]
+visible = false
+layer = 20
+
+[node name="RubikHint" type="Label" parent="RubikLayerController/RubikHintLayer"]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -920.0
+offset_top = 18.0
+offset_right = -220.0
+offset_bottom = 100.0
+grow_horizontal = 0
+text = "沿双箭头拖动，转动这一层"
+
+[node name="GuideHud" type="CanvasLayer" parent="."]
+layer = 5
+script = ExtResource("10_guide")
+
+[node name="FocusOverlay" type="Control" parent="GuideHud"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("11_focus")
+
+[node name="GuidePanel" type="PanelContainer" parent="GuideHud"]
+anchors_preset = 0
+offset_right = 520.0
+offset_bottom = 170.0
+custom_minimum_size = Vector2(520, 170)
+mouse_filter = 2
+theme_override_styles/panel = SubResource("GuidePanelStyle")
+
+[node name="Margin" type="MarginContainer" parent="GuideHud/GuidePanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 12
+
+[node name="VBox" type="VBoxContainer" parent="GuideHud/GuidePanel/Margin"]
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="StepLabel" type="Label" parent="GuideHud/GuidePanel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 0.8, 0.14, 1)
+theme_override_font_sizes/font_size = 24
+text = "教学 1 / 5 · 移动"
+
+[node name="InstructionLabel" type="Label" parent="GuideHud/GuidePanel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 22
+autowrap_mode = 3
+text = "用 WASD 或方向键移动 Bready。"
+
+[node name="DetailLabel" type="Label" parent="GuideHud/GuidePanel/Margin/VBox"]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.76, 0.85, 0.9, 1)
+theme_override_font_sizes/font_size = 18
+autowrap_mode = 3
+text = "沿地面朝画面右侧的白色方块走。"
+
+[connection signal="body_entered" from="Node3D/StaticBox_EXIT" to="ui_ingame" method="_on_exit_body_entered"]
+
+[editable path="Node3D/WallCubies"]

@@ -1,0 +1,82 @@
+[gd_scene format=3]
+
+[ext_resource type="Material" path="res://theme_c/local_assets/model/box/ice_frosted.tres" id="1_frost"]
+[ext_resource type="Material" path="res://theme_c/local_assets/model/box/ice_edge.tres" id="2_edge"]
+
+[sub_resource type="BoxMesh" id="IceBodyMesh"]
+size = Vector3(0.92, 0.92, 0.92)
+
+[sub_resource type="BoxMesh" id="EdgeX"]
+size = Vector3(0.94, 0.018, 0.018)
+
+[sub_resource type="BoxMesh" id="EdgeY"]
+size = Vector3(0.018, 0.94, 0.018)
+
+[sub_resource type="BoxMesh" id="EdgeZ"]
+size = Vector3(0.018, 0.018, 0.94)
+
+[node name="IceVisual" type="Node3D"]
+
+[node name="FrostedBody" type="MeshInstance3D" parent="."]
+mesh = SubResource("IceBodyMesh")
+material_override = ExtResource("1_frost")
+
+[node name="EdgeX_-1_-1" type="MeshInstance3D" parent="."]
+position = Vector3(0, -0.46, -0.46)
+mesh = SubResource("EdgeX")
+material_override = ExtResource("2_edge")
+
+[node name="EdgeX_-1_+1" type="MeshInstance3D" parent="."]
+position = Vector3(0, -0.46, 0.46)
+mesh = SubResource("EdgeX")
+material_override = ExtResource("2_edge")
+
+[node name="EdgeX_+1_-1" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.46, -0.46)
+mesh = SubResource("EdgeX")
+material_override = ExtResource("2_edge")
+
+[node name="EdgeX_+1_+1" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.46, 0.46)
+mesh = SubResource("EdgeX")
+material_override = ExtResource("2_edge")
+
+[node name="EdgeY_-1_-1" type="MeshInstance3D" parent="."]
+position = Vector3(-0.46, 0, -0.46)
+mesh = SubResource("EdgeY")
+material_override = ExtResource("2_edge")
+
+[node name="EdgeY_-1_+1" type="MeshInstance3D" parent="."]
+position = Vector3(-0.46, 0, 0.46)
+mesh = SubResource("EdgeY")
+material_override = ExtResource("2_edge")
+
+[node name="EdgeY_+1_-1" type="MeshInstance3D" parent="."]
+position = Vector3(0.46, 0, -0.46)
+mesh = SubResource("EdgeY")
+material_override = ExtResource("2_edge")
+
+[node name="EdgeY_+1_+1" type="MeshInstance3D" parent="."]
+position = Vector3(0.46, 0, 0.46)
+mesh = SubResource("EdgeY")
+material_override = ExtResource("2_edge")
+
+[node name="EdgeZ_-1_-1" type="MeshInstance3D" parent="."]
+position = Vector3(-0.46, -0.46, 0)
+mesh = SubResource("EdgeZ")
+material_override = ExtResource("2_edge")
+
+[node name="EdgeZ_-1_+1" type="MeshInstance3D" parent="."]
+position = Vector3(-0.46, 0.46, 0)
+mesh = SubResource("EdgeZ")
+material_override = ExtResource("2_edge")
+
+[node name="EdgeZ_+1_-1" type="MeshInstance3D" parent="."]
+position = Vector3(0.46, -0.46, 0)
+mesh = SubResource("EdgeZ")
+material_override = ExtResource("2_edge")
+
+[node name="EdgeZ_+1_+1" type="MeshInstance3D" parent="."]
+position = Vector3(0.46, 0.46, 0)
+mesh = SubResource("EdgeZ")
+material_override = ExtResource("2_edge")
