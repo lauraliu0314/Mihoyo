@@ -3,6 +3,8 @@ extends CanvasLayer
 const SUCCEED_SFX_PATH := "res://assets/audio/succeed.mp3"
 ## Resolved .import UID -> use path load as fallback when uid:// fails (e.g. Web).
 const FONT_PATH := "res://Fonts/Source Han Sans CN.ttf"
+const IngameChrome := preload("res://ui_shared/ingame_chrome.gd")
+const LevelSelectChrome := preload("res://ui_shared/level_select_chrome.gd")
 
 ## ????? _ready ?????? welcome Label
 @export_multiline var welcome_text: String = "?????????\n?????????"
@@ -15,18 +17,23 @@ const FONT_PATH := "res://Fonts/Source Han Sans CN.ttf"
 
 var won: bool = false
 var _succeed_sfx: AudioStreamPlayer
+var _pause_overlay: Control
 
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	get_tree().paused = false
 	won = false
+	var current := get_tree().current_scene
+	if current != null:
+		LevelSelectChrome.remember_scene("theme_a", current.scene_file_path)
 
 	if not is_in_group("ui_ingame"):
 		add_to_group("ui_ingame")
 
 	_apply_ui_theme()
 
+	$reload.visible = false
 	$back.visible = false
 	$next.visible = false
 	$next2.visible = false
@@ -58,6 +65,7 @@ func _ready() -> void:
 	var player := get_parent().get_node_or_null("Player")
 	if player != null and player.has_signal("died"):
 		player.died.connect(_on_player_died)
+	_install_shared_chrome()
 
 
 ## Apply the Chinese font to every Label + Button descendant,
@@ -89,7 +97,16 @@ func _gather_text_controls(node: Node, result: Array[Node]) -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if _pause_overlay != null and _pause_overlay.visible:
+		if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_ESCAPE:
+			_resume_shared_pause()
+			get_viewport().set_input_as_handled()
+		return
 	if get_tree().paused or won:
+		return
+	if event is InputEventKey and event.pressed and not event.echo and (event.keycode == KEY_ESCAPE or event.keycode == KEY_M):
+		_open_shared_pause()
+		get_viewport().set_input_as_handled()
 		return
 	var player := get_parent().get_node_or_null("Player")
 	if player != null and player.get("is_dead") == true:
@@ -409,3 +426,58 @@ func _on_restart_button_pressed() -> void:
 func _on_quit_button_pressed() -> void:
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://MainMenu/level_select.tscn")
+
+
+func _install_shared_chrome() -> void:
+	var menu := get_node_or_null("main_menu") as Button
+	var help := get_node_or_null("help_button") as Button
+	IngameChrome.place_corner_button(menu, "menu")
+	if help != null:
+		help.visible = false
+	var tools := get_node_or_null("tools_button") as Button
+	if tools != null:
+		tools.visible = false
+	var tools_layer := get_node_or_null("ToolsExplainLayer")
+	if tools_layer != null:
+		tools_layer.queue_free()
+	var movement := get_node_or_null("MovementHint")
+	if movement != null:
+		movement.queue_free()
+	if menu != null:
+		menu.text = "菜单"
+		if menu.pressed.is_connected(_on_main_menu_pressed):
+			menu.pressed.disconnect(_on_main_menu_pressed)
+		menu.pressed.connect(_open_shared_pause)
+	_pause_overlay = IngameChrome.build_pause(self, [
+		{"text": "继续游戏", "call": _resume_shared_pause},
+		{"text": "重新开始", "call": reset_level},
+		{"text": "跳过关卡", "call": _on_next_pressed, "hide": next_scene.is_empty()},
+		{"text": "玩法说明", "call": _open_help_from_pause},
+		{"text": "返回主菜单", "call": _on_main_menu_pressed},
+	], {
+		"card": Color(0.12, 0.12, 0.13),
+		"ink": Color(0.95, 0.95, 0.95),
+		"accent": Color(0.72, 0.72, 0.72),
+	})
+
+
+func _open_shared_pause() -> void:
+	if _pause_overlay == null or won:
+		return
+	var game_over := get_node_or_null("GameOverPanel") as CanvasItem
+	if game_over != null and game_over.visible:
+		return
+	_pause_overlay.visible = true
+	game_paused()
+
+
+func _open_help_from_pause() -> void:
+	if _pause_overlay != null:
+		_pause_overlay.visible = false
+	_on_help_button_pressed()
+
+
+func _resume_shared_pause() -> void:
+	if _pause_overlay != null:
+		_pause_overlay.visible = false
+	game_continued()

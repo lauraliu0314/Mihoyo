@@ -11,6 +11,14 @@ uniform float spin_speed : hint_range(-5.0, 5.0, 0.01) = 1.4;
 uniform float spiral_count : hint_range(1.0, 10.0, 1.0) = 5.0;
 uniform float brightness : hint_range(0.0, 5.0, 0.05) = 2.2;
 uniform float hole_size : hint_range(0.0, 0.3, 0.01) = 0.10;
+uniform float color_spread : hint_range(0.0, 1.0, 0.01) = 0.0;
+uniform float saturation : hint_range(0.0, 1.0, 0.01) = 0.38;
+
+vec3 hsv_to_rgb(vec3 hsv) {
+	vec4 k = vec4(1.0, 2.0 / 3.0, 1.0 / 3.0, 3.0);
+	vec3 p = abs(fract(hsv.xxx + k.xyz) * 6.0 - k.www);
+	return hsv.z * mix(k.xxx, clamp(p - k.xxx, 0.0, 1.0), hsv.y);
+}
 
 void fragment() {
 	vec2 p = UV - vec2(0.5);
@@ -44,6 +52,14 @@ void fragment() {
 		outer_color.rgb,
 		smoothstep(0.08, 0.45, radius)
 	);
+	float hue = fract(
+		angle * 0.15915494
+		+ radius * 0.5
+		+ bands * 0.08
+		+ TIME * 0.05
+	);
+	vec3 iridescent = hsv_to_rgb(vec3(hue, saturation, 0.9));
+	color = mix(color, iridescent, color_spread);
 
 	float alpha =
 		outer_mask

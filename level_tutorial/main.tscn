@@ -1,0 +1,240 @@
+[gd_scene format=3 uid="uid://7n3wtutorial"]
+
+[ext_resource type="Script" uid="uid://c7n3wcubewrld" path="res://level_new/cube_world.gd" id="1_djs47"]
+[ext_resource type="PackedScene" uid="uid://c4ah64xctwpig" path="res://assets/model/walls/cube_shell_kitchen.tscn" id="2_djs47"]
+[ext_resource type="PackedScene" path="res://assets/decon/decon_block.tscn" id="5_3aslf"]
+[ext_resource type="PackedScene" uid="uid://dpjdtxojyrf41" path="res://assets/environment/level_environment.tscn" id="11_6n5l6"]
+[ext_resource type="PackedScene" uid="uid://b7n3wplayersc" path="res://level_new/player.tscn" id="12_dxs6i"]
+[ext_resource type="PackedScene" uid="uid://1is4plx7j8v1" path="res://ui_scene/ui_ingame.tscn" id="13_npc45"]
+[ext_resource type="PackedScene" uid="uid://bxwg1o4swt0ji" path="res://assets/model/box/frying_pan.tscn" id="21_dxs6i"]
+[ext_resource type="Script" uid="uid://cdeconlookgd1" path="res://assets/decon/decon_look.gd" id="decon_look"]
+[ext_resource type="Script" uid="uid://b6c1p8odtaht2" path="res://level_tutorial/place_guide.gd" id="guide_script"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_npc45"]
+
+[node name="Tutorial" type="Node3D" unique_id=393993335]
+script = ExtResource("decon_look")
+
+[node name="Node3D" type="Node3D" parent="." unique_id=1891945368]
+script = ExtResource("1_djs47")
+place_limit = 2
+
+[node name="PlaceGuide" type="Node3D" parent="Node3D" unique_id=575769731]
+script = ExtResource("guide_script")
+
+[node name="提示格子1" type="Marker3D" parent="Node3D/PlaceGuide" unique_id=1897235336]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 3.5, -1.5)
+gizmo_extents = 0.55
+
+[node name="提示格子2" type="Marker3D" parent="Node3D/PlaceGuide" unique_id=527250276]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 5.5, 0.5)
+gizmo_extents = 0.55
+
+[node name="WALLS" parent="Node3D" unique_id=183908512 instance=ExtResource("2_djs47")]
+
+[node name="staticboxes" type="Node3D" parent="Node3D" unique_id=378013376]
+
+[node name="StaticBox" parent="Node3D/staticboxes" unique_id=1878154526 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0.5, -2.5)
+
+[node name="StaticBox16" parent="Node3D/staticboxes" unique_id=1676586220 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1.5, -2.5)
+
+[node name="StaticBox17" parent="Node3D/staticboxes" unique_id=809539520 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 2.5, -2.5)
+
+[node name="StaticBox49" parent="Node3D/staticboxes" unique_id=1972590268 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 2.5, -1.5)
+
+[node name="StaticBox18" parent="Node3D/staticboxes" unique_id=1277285637 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 3.5, -2.5)
+
+[node name="StaticBox19" parent="Node3D/staticboxes" unique_id=1633062482 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 4.5, -2.5)
+
+[node name="StaticBox20" parent="Node3D/staticboxes" unique_id=1556347656 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 5.5, -2.5)
+
+[node name="StaticBox29" parent="Node3D/staticboxes" unique_id=858494802 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 5.5, -2.5)
+
+[node name="StaticBox38" parent="Node3D/staticboxes" unique_id=1233793366 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 5.5, -2.5)
+
+[node name="StaticBox31" parent="Node3D/staticboxes" unique_id=1396463646 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 5.5, -2.5)
+
+[node name="StaticBox32" parent="Node3D/staticboxes" unique_id=2131343927 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 5.5, -2.5)
+
+[node name="StaticBox33" parent="Node3D/staticboxes" unique_id=1497267017 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 5.5, -2.5)
+
+[node name="StaticBox63" parent="Node3D/staticboxes" unique_id=1145283745 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 5.5, 0.5)
+
+[node name="StaticBox66" parent="Node3D/staticboxes" unique_id=1452542740 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 5.5, 0.5)
+
+[node name="StaticBox76" parent="Node3D/staticboxes" unique_id=1578166984 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 5.5, 1.5)
+
+[node name="StaticBox59" parent="Node3D/staticboxes" unique_id=363060901 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 5.5, -0.5)
+
+[node name="StaticBox60" parent="Node3D/staticboxes" unique_id=1934242581 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 5.5, -1.5)
+
+[node name="StaticBox41" parent="Node3D/staticboxes" unique_id=1066090860 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 5.5, -0.5)
+
+[node name="StaticBox42" parent="Node3D/staticboxes" unique_id=827753279 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 5.5, 0.5)
+
+[node name="StaticBox46" parent="Node3D/staticboxes" unique_id=1164548094 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 5.5, 1.5)
+
+[node name="StaticBox43" parent="Node3D/staticboxes" unique_id=120709425 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 5.5, 2.5)
+
+[node name="StaticBox52" parent="Node3D/staticboxes" unique_id=1531823906 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 5.5, 2.5)
+
+[node name="StaticBox44" parent="Node3D/staticboxes" unique_id=608573869 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 3.5, 2.5)
+
+[node name="StaticBox69" parent="Node3D/staticboxes" unique_id=1327037440 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 4.5, 2.5)
+
+[node name="StaticBox68" parent="Node3D/staticboxes" unique_id=2080530422 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 2.5, 2.5)
+
+[node name="StaticBox53" parent="Node3D/staticboxes" unique_id=1859796354 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 1.5, 2.5)
+
+[node name="StaticBox70" parent="Node3D/staticboxes" unique_id=587048499 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0.5, 2.5)
+
+[node name="StaticBox56" parent="Node3D/staticboxes" unique_id=706483899 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, 2.5)
+
+[node name="StaticBox57" parent="Node3D/staticboxes" unique_id=42652060 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, 2.5)
+
+[node name="StaticBox64" parent="Node3D/staticboxes" unique_id=250258162 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0.5, 2.5)
+
+[node name="StaticBox34" parent="Node3D/staticboxes" unique_id=892427098 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 4.5, -2.5)
+
+[node name="StaticBox35" parent="Node3D/staticboxes" unique_id=1656186679 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 2.5, -2.5)
+
+[node name="StaticBox45" parent="Node3D/staticboxes" unique_id=1000904180 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 1.5, -2.5)
+
+[node name="StaticBox36" parent="Node3D/staticboxes" unique_id=1807483252 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 0.5, -2.5)
+
+[node name="StaticBox65" parent="Node3D/staticboxes" unique_id=1148492164 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 3.5, -2.5)
+
+[node name="StaticBox67" parent="Node3D/staticboxes" unique_id=570281546 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 3.5, -2.5)
+
+[node name="StaticBox21" parent="Node3D/staticboxes" unique_id=2062997905 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 5.5, -1.5)
+
+[node name="StaticBox22" parent="Node3D/staticboxes" unique_id=1895816749 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 5.5, -0.5)
+
+[node name="StaticBox23" parent="Node3D/staticboxes" unique_id=1463754676 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 5.5, 0.5)
+
+[node name="StaticBox24" parent="Node3D/staticboxes" unique_id=1517858880 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 5.5, 1.5)
+
+[node name="StaticBox25" parent="Node3D/staticboxes" unique_id=355942142 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 5.5, 2.5)
+
+[node name="StaticBox26" parent="Node3D/staticboxes" unique_id=1756741465 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 1.5, 2.5)
+
+[node name="StaticBox39" parent="Node3D/staticboxes" unique_id=1474853824 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 2.5, 2.5)
+
+[node name="StaticBox28" parent="Node3D/staticboxes" unique_id=1043572355 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0.5, 2.5)
+
+[node name="StaticBox61" parent="Node3D/staticboxes" unique_id=1929688322 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 0.5, 1.5)
+
+[node name="StaticBox73" parent="Node3D/staticboxes" unique_id=395847765 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 3.5, 1.5)
+
+[node name="StaticBox75" parent="Node3D/staticboxes" unique_id=1293628426 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 3.5, 0.5)
+
+[node name="StaticBox77" parent="Node3D/staticboxes" unique_id=391712860 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.5, 3.5, -0.5)
+
+[node name="StaticBox14" parent="Node3D/staticboxes" unique_id=1489792760 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0.5, 1.5)
+
+[node name="StaticBox15" parent="Node3D/staticboxes" unique_id=1922093864 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0.5, 2.5)
+
+[node name="StaticBox2" parent="Node3D/staticboxes" unique_id=55046080 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.5, 0.5, -2.5)
+
+[node name="StaticBox4" parent="Node3D/staticboxes" unique_id=709327143 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 0.5, -2.5)
+
+[node name="StaticBox5" parent="Node3D/staticboxes" unique_id=1438342365 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0.5, -2.5)
+
+[node name="StaticBox6" parent="Node3D/staticboxes" unique_id=1663977749 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0.5, -2.5)
+
+[node name="StaticBox27" parent="Node3D/staticboxes" unique_id=129175236 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0.5, -1.5)
+
+[node name="StaticBox51" parent="Node3D/staticboxes" unique_id=793945266 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 0.5, -1.5)
+
+[node name="StaticBox30" parent="Node3D/staticboxes" unique_id=1104029339 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0.5, -0.5)
+
+[node name="StaticBox37" parent="Node3D/staticboxes" unique_id=1936557599 instance=ExtResource("5_3aslf")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.5, 0.5, 0.5)
+
+[node name="StaticBox_EXIT" type="Area3D" parent="Node3D" unique_id=1629628605]
+transform = Transform3D(1.1924881e-08, 8.742278e-08, 1, 0, -1, 8.742278e-08, 1, -1.0425061e-15, -1.1924881e-08, -2.5, 2.5, -0.5)
+
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="Node3D/StaticBox_EXIT" unique_id=13984908]
+shape = SubResource("BoxShape3D_npc45")
+
+[node name="FryingPan" parent="Node3D/StaticBox_EXIT" unique_id=502896246 instance=ExtResource("21_dxs6i")]
+transform = Transform3D(0.97336763, -1.0020823e-08, -0.22924972, -0.22924972, -4.254725e-08, -0.97336763, 0, 1, -4.371139e-08, 0, 0, -0.4)
+
+[node name="Marker3D" type="Marker3D" parent="." unique_id=1519782973]
+transform = Transform3D(0.70710677, 0.40860704, -0.5770964, 0, 0.8161376, 0.5778576, 0.70710677, -0.40860704, 0.5770964, 3, 0, -3)
+
+[node name="Camera3D" type="Camera3D" parent="Marker3D" unique_id=430663693]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 5.9604645e-08, 0, -5.9604645e-08, 1, 0, 3.0517578e-05, 310.96033)
+projection = 1
+size = 10.0
+
+[node name="LevelEnvironment" parent="." unique_id=117137453 instance=ExtResource("11_6n5l6")]
+transform = Transform3D(-4.3711385e-08, 0, -1, 0, 1, 0, 0.99999994, 0, -4.371139e-08, 0, 0, 0)
+
+[node name="Player" parent="." unique_id=1150537643 instance=ExtResource("12_dxs6i")]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 1.5, 0.45, 1.5)
+
+[node name="ui_ingame" parent="." unique_id=1985169392 instance=ExtResource("13_npc45")]
+welcome_text = "欢迎来到教学关。
+把方块放到提示位置，见证神奇的消除吧！"
+congrats_text = "恭喜你完成了教学关！"
+next_scene = "res://level_new/main.tscn"
+
+[editable path="Node3D/StaticBox_EXIT/FryingPan"]

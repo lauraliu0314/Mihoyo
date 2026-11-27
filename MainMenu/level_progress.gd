@@ -7,12 +7,14 @@ const SAVE_PATH := "user://progress.cfg"
 
 ## Menu order. The first level is always playable; the next unlocks after it.
 const LEVEL_ORDER: Array[String] = [
+	"level_tutorial",
 	"level_new",
 	"level_new2",
 	"level_new3",
 ]
 
 const SCENE_TO_KEY := {
+	"res://level_tutorial/main.tscn": "level_tutorial",
 	"res://level_new/main.tscn": "level_new",
 	"res://level_new2/main.tscn": "level_new2",
 	"res://level_new3/main.tscn": "level_new3",
@@ -78,9 +80,9 @@ func mark_completed_for_scene(scene_path: String) -> void:
 
 ## The first level is always unlocked. Each later level unlocks after the previous one.
 func is_level_unlocked(level_key: String) -> bool:
-	if level_key == "level_new":
-		return true
 	var idx := LEVEL_ORDER.find(level_key)
-	if idx <= 0:
+	if idx < 0:
 		return false
+	if idx == 0:
+		return true
 	return is_completed(LEVEL_ORDER[idx - 1])

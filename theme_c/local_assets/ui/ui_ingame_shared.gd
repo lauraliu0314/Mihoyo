@@ -1,5 +1,8 @@
 extends CanvasLayer
 
+const IngameChrome := preload("res://ui_shared/ingame_chrome.gd")
+const LevelSelectChrome := preload("res://ui_shared/level_select_chrome.gd")
+
 
 # ==================================================
 # 每个关卡单独设置的参数
@@ -129,8 +132,7 @@ var _welcome_tween: Tween
 var _succeed_sfx: AudioStreamPlayer
 var _fail_sfx: AudioStreamPlayer
 var pause_menu_overlay: Control
-var pause_skip_button: Button
-var pause_status_label: Label
+var _how_to_play: HowToPlayLayer
 
 
 # ==================================================
@@ -140,6 +142,9 @@ var pause_status_label: Label
 func _ready() -> void:
 	# UI 在游戏暂停时仍然可以接收按钮输入。
 	process_mode = Node.PROCESS_MODE_ALWAYS
+	var current := get_tree().current_scene
+	if current != null:
+		LevelSelectChrome.remember_scene("theme_c", current.scene_file_path)
 
 	if victory_panel != null:
 		victory_panel.process_mode = (
@@ -161,6 +166,7 @@ func _ready() -> void:
 	_connect_player_death_signal()
 	_setup_succeed_sfx()
 	_setup_fail_sfx()
+	_install_how_to_play()
 
 	if show_welcome:
 		_play_welcome_animation()
@@ -170,14 +176,60 @@ func _apply_button_styles() -> void:
 	var buttons: Array[Node] = []
 	_gather_buttons(self, buttons)
 	for node in buttons:
-		if SciFiButtonStyle.is_under_excluded_panel(node):
-			continue
 		var btn := node as Button
-		var highlight := btn.name in ["next", "back", "zen_mode"]
 		var size := btn.get_theme_font_size("font_size")
 		if size <= 0:
 			size = 26
-		SciFiButtonStyle.apply(btn, size, highlight)
+		_apply_yellow_button(btn, size)
+
+
+func _apply_yellow_button(button: Button, font_size: int) -> void:
+	var fill := Color(1, 0.757, 0.19)
+	var ink := Color(0.16, 0.11, 0.03)
+	var border := Color(0.72, 0.48, 0.02)
+	button.add_theme_font_size_override("font_size", font_size)
+	button.add_theme_color_override("font_color", ink)
+	button.add_theme_color_override("font_hover_color", ink)
+	button.add_theme_color_override("font_pressed_color", ink)
+	for state in ["normal", "hover", "pressed", "disabled"]:
+		var box := StyleBoxFlat.new()
+		box.bg_color = fill
+		box.border_color = border
+		box.set_border_width_all(2)
+		box.set_corner_radius_all(10)
+		if state == "hover":
+			box.bg_color = Color(1, 0.84, 0.42)
+		if state == "pressed":
+			box.bg_color = Color(0.9, 0.62, 0.05)
+		if state == "disabled":
+			box.bg_color = Color(0.86, 0.8, 0.66)
+		button.add_theme_stylebox_override(state, box)
+
+
+func _install_how_to_play() -> void:
+	var layer := preload("res://ui_scene/how_to_play_layer.tscn").instantiate() as HowToPlayLayer
+	layer.palette = {
+		"shade": Color(0.16, 0.12, 0.04, 0.62),
+		"panel": Color(1, 0.98, 0.93, 0.98),
+		"panel_border": Color(0.85, 0.62, 0.05),
+		"title": Color(0.22, 0.15, 0.04),
+		"accent": Color(0.62, 0.42, 0.02),
+		"goal": Color(0.4, 0.3, 0.12),
+		"page": Color(0.4, 0.3, 0.12),
+		"card": Color(1, 0.96, 0.86, 0.98),
+		"card_border": Color(0.9, 0.68, 0.12),
+		"heading": Color(0.18, 0.12, 0.03),
+		"body": Color(0.28, 0.2, 0.08),
+		"hint": Color(0.45, 0.35, 0.16),
+		"chip": Color(1, 0.757, 0.19),
+		"chip_text": Color(0.16, 0.11, 0.03),
+		"button": Color(1, 0.757, 0.19),
+		"button_text": Color(0.16, 0.11, 0.03),
+		"button_border": Color(0.72, 0.48, 0.02),
+	}
+	add_child(layer)
+	layer.return_requested.connect(_on_back_to_game_pressed)
+	_how_to_play = layer
 
 
 func _gather_buttons(node: Node, result: Array[Node]) -> void:
@@ -219,93 +271,18 @@ func _apply_initial_visibility() -> void:
 
 
 func _build_pause_menu() -> void:
-	pause_menu_overlay = Control.new()
-	pause_menu_overlay.name = "PauseMenu"
-	pause_menu_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	pause_menu_overlay.mouse_filter = Control.MOUSE_FILTER_STOP
-	pause_menu_overlay.visible = false
-	add_child(pause_menu_overlay)
-
-	var shade := ColorRect.new()
-	shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	shade.color = Color(0.06, 0.10, 0.14, 0.72)
-	shade.mouse_filter = Control.MOUSE_FILTER_STOP
-	pause_menu_overlay.add_child(shade)
-
-	var center := CenterContainer.new()
-	center.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
-	pause_menu_overlay.add_child(center)
-	var panel := PanelContainer.new()
-	panel.custom_minimum_size = Vector2(460, 540)
-	var panel_style := StyleBoxFlat.new()
-	panel_style.bg_color = Color("f5f8f5")
-	panel_style.border_color = Color("46a9a4")
-	panel_style.set_border_width_all(3)
-	panel_style.set_corner_radius_all(18)
-	panel_style.shadow_color = Color(0, 0, 0, 0.3)
-	panel_style.shadow_size = 18
-	panel.add_theme_stylebox_override("panel", panel_style)
-	center.add_child(panel)
-
-	var padding := MarginContainer.new()
-	padding.add_theme_constant_override("margin_left", 42)
-	padding.add_theme_constant_override("margin_right", 42)
-	padding.add_theme_constant_override("margin_top", 32)
-	padding.add_theme_constant_override("margin_bottom", 32)
-	panel.add_child(padding)
-	var content := VBoxContainer.new()
-	content.add_theme_constant_override("separation", 12)
-	padding.add_child(content)
-	var heading := Label.new()
-	heading.text = "游戏菜单"
-	heading.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	heading.add_theme_font_size_override("font_size", 38)
-	heading.add_theme_color_override("font_color", Color("253746"))
-	content.add_child(heading)
-	pause_status_label = Label.new()
-	pause_status_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	pause_status_label.add_theme_font_size_override("font_size", 16)
-	pause_status_label.add_theme_color_override("font_color", Color("748889"))
-	content.add_child(pause_status_label)
-
-	_add_pause_action(content, "继续游戏", _resume_game)
-	_add_pause_action(content, "重新开始", restart_current_level)
-	pause_skip_button = _add_pause_action(content, "跳过关卡", _on_next_pressed)
-	_add_pause_action(content, "返回主菜单", _on_return_to_menu_pressed)
-	_add_pause_action(content, "玩法说明", _on_help_button_pressed)
-	var hint := Label.new()
-	hint.text = "按 Esc 或 M 继续游戏"
-	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	hint.add_theme_font_size_override("font_size", 16)
-	hint.add_theme_color_override("font_color", Color("89979a"))
-	content.add_child(hint)
-
-
-func _add_pause_action(parent: VBoxContainer, title: String, callback: Callable) -> Button:
-	var button := Button.new()
-	button.text = title
-	button.custom_minimum_size = Vector2(360, 54)
-	button.add_theme_font_size_override("font_size", 22)
-	button.add_theme_color_override("font_color", Color("253746"))
-	button.add_theme_color_override("font_hover_color", Color("253746"))
-	button.add_theme_color_override("font_pressed_color", Color("253746"))
-	button.add_theme_color_override("font_disabled_color", Color("9ba8aa"))
-	for state in ["normal", "hover", "pressed", "disabled"]:
-		var style := StyleBoxFlat.new()
-		style.bg_color = Color("ffffff")
-		style.border_color = Color("c6d7d5")
-		style.set_border_width_all(2)
-		style.set_corner_radius_all(10)
-		if state == "hover":
-			style.bg_color = Color("e4f4f1")
-		if state == "pressed":
-			style.bg_color = Color("cce9e5")
-		if state == "disabled":
-			style.bg_color = Color("e8ecea")
-		button.add_theme_stylebox_override(state, style)
-	button.pressed.connect(callback)
-	parent.add_child(button)
-	return button
+	var can_skip := not next_scene_path.is_empty() and ResourceLoader.exists(next_scene_path)
+	pause_menu_overlay = IngameChrome.build_pause(self, [
+		{"text": "继续游戏", "call": _resume_game},
+		{"text": "重新开始", "call": restart_current_level},
+		{"text": "跳过关卡", "call": _on_next_pressed, "hide": not can_skip},
+		{"text": "玩法说明", "call": _on_help_button_pressed},
+		{"text": "返回主菜单", "call": _on_return_to_menu_pressed},
+	], {
+		"card": Color("fff8e8"),
+		"ink": Color(0.16, 0.11, 0.03),
+		"accent": Color(1, 0.757, 0.19),
+	})
 
 
 func _open_pause_menu() -> void:
@@ -314,9 +291,6 @@ func _open_pause_menu() -> void:
 	_hide_welcome_immediately()
 	pause_menu_overlay.visible = true
 	exit_button.visible = false
-	var can_skip := not next_scene_path.is_empty() and ResourceLoader.exists(next_scene_path)
-	pause_skip_button.disabled = not can_skip
-	pause_status_label.text = "游戏已暂停" if can_skip else "当前是最后一关，无法跳过"
 	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	game_paused()
 
@@ -509,7 +483,9 @@ func _set_welcome_alpha(alpha: float) -> void:
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo and event.keycode in [KEY_M, KEY_ESCAPE]:
 		get_viewport().set_input_as_handled()
-		if help_panel.visible:
+		if _how_to_play != null and _how_to_play.visible:
+			_on_back_to_game_pressed()
+		elif help_panel.visible:
 			_on_back_to_game_pressed()
 		elif pause_menu_overlay.visible:
 			_resume_game()
@@ -628,13 +604,17 @@ func _on_help_button_pressed() -> void:
 	_hide_welcome_immediately()
 
 	pause_menu_overlay.visible = false
-	help_background.visible = true
-	help_panel.visible = true
+	help_background.visible = false
+	help_panel.visible = false
+	if _how_to_play != null and _how_to_play.has_method("open"):
+		_how_to_play.open()
 
 	game_paused()
 
 
 func _on_back_to_game_pressed() -> void:
+	if _how_to_play != null:
+		_how_to_play.visible = false
 	help_background.visible = false
 	help_panel.visible = false
 

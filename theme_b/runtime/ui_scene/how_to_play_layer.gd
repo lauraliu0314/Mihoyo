@@ -4,10 +4,10 @@ extends Control
 signal return_requested
 
 const FONT_PATH := "res://Fonts/Source Han Sans CN.ttf"
-const CYAN := Color("#3ee4ee")
-const CYAN_DIM := Color("#276f84")
-const PANEL_BG := Color("#0b1928f8")
-const CARD_BG := Color("#14293bf5")
+const CYAN := Color("#b7cec2")
+const CYAN_DIM := Color("#5a7d6e")
+const PANEL_BG := Color("#10281cf8")
+const CARD_BG := Color("#163028f5")
 
 ## Five focused pages, presented one at a time.
 const PAGES := [
@@ -84,7 +84,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _build_interface() -> void:
 	var shade := ColorRect.new()
-	shade.color = Color("#06111ddd")
+	shade.color = Color(0.03, 0.08, 0.05, 0.86)
 	shade.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	shade.mouse_filter = Control.MOUSE_FILTER_STOP
 	add_child(shade)
@@ -112,13 +112,13 @@ func _build_interface() -> void:
 	content.add_theme_constant_override("separation", 12)
 	margin.add_child(content)
 
-	var title := _label("玩法说明", 46, Color("#f4f8ff"))
+	var title := _label("玩法说明", 46, Color("#e7f6ee"))
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	content.add_child(title)
 	var subtitle := _label("◆  HOW TO PLAY  ◆", 17, CYAN)
 	subtitle.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	content.add_child(subtitle)
-	var goal := _label("探索、旋转、翻转，找到绿色出口", 20, Color("#bdd4ea"))
+	var goal := _label("探索、旋转、翻转，找到绿色出口", 20, Color("#c5d9cc"))
 	goal.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	content.add_child(goal)
 
@@ -138,7 +138,7 @@ func _build_interface() -> void:
 	_previous_button = _make_navigation_button("← 上一页")
 	_previous_button.pressed.connect(func() -> void: _change_page(-1))
 	navigation.add_child(_previous_button)
-	_page_label = _label("", 18, Color("#c8def3"))
+	_page_label = _label("", 18, Color("#c5d9cc"))
 	_page_label.custom_minimum_size = Vector2(92, 42)
 	_page_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_page_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -152,10 +152,10 @@ func _build_interface() -> void:
 	_return_button.custom_minimum_size = Vector2(240, 48)
 	_return_button.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 	_return_button.focus_mode = Control.FOCUS_NONE
-	SciFiButtonStyle.apply(_return_button, 22, true)
+	_paint_button(_return_button, 22)
 	_return_button.pressed.connect(func() -> void: return_requested.emit())
 	content.add_child(_return_button)
-	var hint := _label("左右方向键翻页 · ESC 返回游戏", 14, Color("#7896b2"))
+	var hint := _label("左右方向键翻页 · ESC 返回游戏", 14, Color("#8aa898"))
 	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	content.add_child(hint)
 
@@ -167,7 +167,7 @@ func _build_interface() -> void:
 func _make_page_card(number: String, heading: String, keys: Array, body: String, tip: String) -> PanelContainer:
 	var card := PanelContainer.new()
 	card.custom_minimum_size = Vector2(820, 370)
-	card.add_theme_stylebox_override("panel", _style(CARD_BG, 16, Color("#315d78"), 1))
+	card.add_theme_stylebox_override("panel", _style(CARD_BG, 16, CYAN_DIM, 1))
 	var margin := MarginContainer.new()
 	margin.add_theme_constant_override("margin_left", 46)
 	margin.add_theme_constant_override("margin_right", 46)
@@ -180,12 +180,12 @@ func _make_page_card(number: String, heading: String, keys: Array, body: String,
 	var step := _label("STEP " + number, 17, CYAN)
 	step.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	box.add_child(step)
-	var heading_label := _label(heading, 32, Color("#f5f9ff"))
+	var heading_label := _label(heading, 32, Color("#e7f6ee"))
 	heading_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	box.add_child(heading_label)
 	box.add_child(_make_key_layout(number, keys))
 	box.add_child(HSeparator.new())
-	var description := _label(body, 21, Color("#ccddec"))
+	var description := _label(body, 21, Color("#d5e6db"))
 	description.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	description.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	description.size_flags_vertical = Control.SIZE_EXPAND_FILL
@@ -227,14 +227,14 @@ func _make_navigation_button(text: String) -> Button:
 	button.text = text
 	button.custom_minimum_size = Vector2(145, 42)
 	button.focus_mode = Control.FOCUS_NONE
-	SciFiButtonStyle.apply(button, 17)
+	_paint_button(button, 17)
 	return button
 
 
 func _make_key_chip(text: String) -> PanelContainer:
 	var chip := PanelContainer.new()
-	chip.add_theme_stylebox_override("panel", _style(Color("#091623"), 7, CYAN, 1))
-	var label := _label(text, 16, Color("#e9f7ff"))
+	chip.add_theme_stylebox_override("panel", _style(Color("#0c1c14"), 7, CYAN_DIM, 1))
+	var label := _label(text, 16, Color("#e7f6ee"))
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	var margin := MarginContainer.new()
 	margin.add_theme_constant_override("margin_left", 14)
@@ -282,6 +282,25 @@ func _show_page(animate: bool) -> void:
 	_page_label.text = "%d / %d" % [_page_index + 1, PAGES.size()]
 	_previous_button.disabled = _page_index == 0
 	_next_button.disabled = _page_index == PAGES.size() - 1
+
+
+func _paint_button(button: Button, font_size: int) -> void:
+	var fill := Color(0.12, 0.22, 0.17, 0.94)
+	var ink := Color("e7f6ee")
+	var border := Color("5a7d6e")
+	button.add_theme_font_size_override("font_size", font_size)
+	button.add_theme_color_override("font_color", ink)
+	button.add_theme_color_override("font_hover_color", ink)
+	button.add_theme_color_override("font_pressed_color", ink)
+	for state in ["normal", "hover", "pressed", "disabled"]:
+		var box := _style(fill, 10, border, 2)
+		if state == "hover":
+			box = _style(fill.lightened(0.12), 10, border, 2)
+		elif state == "pressed":
+			box = _style(Color("5a7d6e"), 10, Color("8fbfa8"), 2)
+		elif state == "disabled":
+			box = _style(fill.darkened(0.2), 10, border.darkened(0.2), 1)
+		button.add_theme_stylebox_override(state, box)
 
 
 func _style(color: Color, radius: int, border: Color, width: int) -> StyleBoxFlat:

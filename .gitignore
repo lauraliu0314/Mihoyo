@@ -1,3 +1,11 @@
 # Godot 4+ specific ignores
 .godot/
 /android/
+
+# Local web exports, logs, and archives
+/cube3d.*
+/export/
+/godot_err.txt
+/godot_out.txt
+/level4_playlog.txt
+/level5.zip

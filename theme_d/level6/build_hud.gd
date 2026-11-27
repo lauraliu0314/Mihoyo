@@ -5,6 +5,8 @@ extends CanvasLayer
 
 const MechIcon = preload("res://theme_d/level6/mech_icon.gd")
 const FONT_PATH := "res://inbetween_scene/UI/Source Han Sans CN.ttf"
+const IngameChrome := preload("res://ui_shared/ingame_chrome.gd")
+const LevelSelectChrome := preload("res://ui_shared/level_select_chrome.gd")
 const INK := Color(0.16, 0.15, 0.17)
 const CREAM := Color(1.0, 1.0, 1.0)
 const MAGENTA := Color(1.0, 0.0, 0.41)
@@ -22,6 +24,7 @@ var _toast_time := 0.0
 var _flip_toast_cooldown := 0.0
 var _status_timer := 0.0
 var _undo_button: Button
+var _pause_overlay: Control
 var _win: Control
 var _won := false
 var _inventory_panel: Panel
@@ -41,6 +44,9 @@ func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	add_to_group("ui_ingame")
 	get_tree().paused = false
+	var current := get_tree().current_scene
+	if current != null:
+		LevelSelectChrome.remember_scene("theme_d", current.scene_file_path)
 	cube = get_parent().get_node_or_null("Node3D")
 	font = load(FONT_PATH) as Font
 	if font == null:
@@ -89,7 +95,16 @@ func _refresh_undo_button() -> void:
 
 
 func _unhandled_input(event: InputEvent) -> void:
+	if _pause_overlay != null and _pause_overlay.visible:
+		if event is InputEventKey and event.pressed and not event.echo and event.keycode == KEY_ESCAPE:
+			_resume_pause()
+			get_viewport().set_input_as_handled()
+		return
 	if get_tree().paused or _won or cube == null:
+		return
+	if event is InputEventKey and event.pressed and not event.echo and (event.keycode == KEY_ESCAPE or event.keycode == KEY_M):
+		_open_pause()
+		get_viewport().set_input_as_handled()
 		return
 	if event.is_action_pressed("rotate_left") and cube.has_method("_on_left_pressed"):
 		cube._on_left_pressed()
@@ -140,7 +155,7 @@ func _build_tip_card() -> void:
 	tip_root.anchor_bottom = 0.0
 	tip_root.offset_left = -334.0
 	tip_root.offset_right = -14.0
-	tip_root.offset_top = 76.0
+	tip_root.offset_top = 96.0
 	tip_root.offset_bottom = 366.0
 
 	var panel := Panel.new()
@@ -450,18 +465,18 @@ func _build_crush_panel() -> void:
 	card.add_child(body)
 
 	var confirm := Button.new()
-	confirm.text = "确认"
-	confirm.position = Vector2(40, 190)
-	confirm.size = Vector2(190, 52)
+	confirm.text = "重新开始"
+	confirm.position = Vector2(40, 156)
+	confirm.size = Vector2(440, 48)
 	confirm.focus_mode = Control.FOCUS_NONE
 	_style_button(confirm)
 	confirm.pressed.connect(_on_crush_confirm)
 	card.add_child(confirm)
 
 	var leave := Button.new()
-	leave.text = "离开"
-	leave.position = Vector2(290, 190)
-	leave.size = Vector2(190, 52)
+	leave.text = "返回主菜单"
+	leave.position = Vector2(40, 216)
+	leave.size = Vector2(440, 48)
 	leave.focus_mode = Control.FOCUS_NONE
 	_style_button(leave)
 	leave.pressed.connect(_on_crush_leave)
@@ -502,36 +517,36 @@ func _soft_style(radius: int, bg: Color, border: Color, width: int) -> StyleBoxF
 
 
 func _build_menu_buttons() -> void:
-	var menu := Button.new()
-	menu.name = "MainMenuButton"
-	menu.text = "主菜单"
-	menu.position = Vector2(24, 22)
-	menu.size = Vector2(132, 42)
-	menu.focus_mode = Control.FOCUS_NONE
-	_style_button(menu)
-	menu.pressed.connect(_on_main_menu_pressed)
-	add_child(menu)
-
-	var reset := Button.new()
-	reset.name = "ResetButton"
-	reset.text = "重置关卡"
-	reset.position = Vector2(168, 22)
-	reset.size = Vector2(132, 42)
-	reset.focus_mode = Control.FOCUS_NONE
-	_style_button(reset)
-	reset.pressed.connect(_on_reset_pressed)
-	add_child(reset)
-
 	_undo_button = Button.new()
 	_undo_button.name = "UndoButton"
 	_undo_button.text = "收回最后一块"
-	_undo_button.position = Vector2(312, 22)
+	_undo_button.position = Vector2(24, 22)
 	_undo_button.size = Vector2(150, 42)
 	_undo_button.focus_mode = Control.FOCUS_NONE
 	_style_button(_undo_button)
 	_undo_button.disabled = true
 	_undo_button.pressed.connect(_on_undo_pressed)
 	add_child(_undo_button)
+
+	var menu := Button.new()
+	menu.name = "MenuButton"
+	menu.text = "菜单"
+	menu.focus_mode = Control.FOCUS_NONE
+	menu.custom_minimum_size = Vector2(160, 54)
+	_style_button(menu)
+	IngameChrome.place_corner_button(menu, "menu")
+	menu.pressed.connect(_open_pause)
+	add_child(menu)
+	_pause_overlay = IngameChrome.build_pause(self, [
+		{"text": "继续游戏", "call": _resume_pause},
+		{"text": "重新开始", "call": _on_reset_pressed},
+		{"text": "跳过关卡", "call": Callable(), "hide": true},
+		{"text": "返回主菜单", "call": _on_main_menu_pressed},
+	], {
+		"card": Color(0.985, 0.975, 0.955),
+		"ink": INK,
+		"accent": MAGENTA,
+	})
 
 
 
@@ -685,26 +700,29 @@ func _build_win_panel() -> void:
 		subtitle.add_theme_font_override("font", font)
 	vbox.add_child(subtitle)
 
-	var row := HBoxContainer.new()
-	row.alignment = BoxContainer.ALIGNMENT_CENTER
-	row.add_theme_constant_override("separation", 16)
-	vbox.add_child(row)
+	var next := Button.new()
+	next.text = "下一关"
+	next.custom_minimum_size = Vector2(360, 48)
+	next.focus_mode = Control.FOCUS_NONE
+	next.visible = false
+	_style_button(next)
+	vbox.add_child(next)
 
 	var again := Button.new()
 	again.text = "再玩一次"
-	again.custom_minimum_size = Vector2(170, 48)
+	again.custom_minimum_size = Vector2(360, 48)
 	again.focus_mode = Control.FOCUS_NONE
 	_style_button(again)
 	again.pressed.connect(_on_reset_pressed)
-	row.add_child(again)
+	vbox.add_child(again)
 
 	var menu_btn := Button.new()
 	menu_btn.text = "返回主菜单"
-	menu_btn.custom_minimum_size = Vector2(170, 48)
+	menu_btn.custom_minimum_size = Vector2(360, 48)
 	menu_btn.focus_mode = Control.FOCUS_NONE
 	_style_button(menu_btn)
 	menu_btn.pressed.connect(_on_main_menu_pressed)
-	row.add_child(menu_btn)
+	vbox.add_child(menu_btn)
 
 
 ## portal_absorb.gd 通过 call_group("ui_ingame", "show_win_after_absorb") 调用。
@@ -716,6 +734,22 @@ func show_win_after_absorb() -> void:
 		_win.visible = true
 		_win.process_mode = Node.PROCESS_MODE_ALWAYS
 	get_tree().paused = true
+
+
+func _open_pause() -> void:
+	if _pause_overlay == null or _won:
+		return
+	if _crush_panel != null and _crush_panel.visible:
+		return
+	_pause_overlay.visible = true
+	get_tree().paused = true
+
+
+func _resume_pause() -> void:
+	if _pause_overlay != null:
+		_pause_overlay.visible = false
+	if not _won:
+		get_tree().paused = false
 
 
 func _on_main_menu_pressed() -> void:

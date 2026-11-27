@@ -89,6 +89,7 @@ theme_override_font_sizes/font_size = 30
 text = "退出游戏"
 
 [node name="reload" type="Button" parent="." unique_id=235228788]
+visible = false
 offset_left = 1720.0
 offset_top = 920.0
 offset_right = 1920.0
@@ -319,7 +320,7 @@ theme_override_font_sizes/font_size = 15
 theme_override_styles/normal = SubResource("StyleBoxFlat_gameover_btn")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_gameover_btn_pressed")
 theme_override_styles/hover = SubResource("StyleBoxFlat_gameover_btn_hover")
-text = "Try Again"
+text = "重新开始"
 
 [node name="QuitButton" type="Button" parent="GameOverPanel/CenterContainer/DessertPanel/ContentMargin/GameOverContent"]
 custom_minimum_size = Vector2(180, 40)
@@ -332,7 +333,7 @@ theme_override_font_sizes/font_size = 15
 theme_override_styles/normal = SubResource("StyleBoxFlat_gameover_btn")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_gameover_btn_pressed")
 theme_override_styles/hover = SubResource("StyleBoxFlat_gameover_btn_hover")
-text = "Quit Game"
+text = "返回主菜单"
 
 
 [node name="VictoryPanel" type="ColorRect" parent="."]

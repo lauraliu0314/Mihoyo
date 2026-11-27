@@ -5,28 +5,39 @@ extends Control
 ## Theme B: res://theme_b/level_select.tscn
 
 const FONT_PATH := "res://inbetween_scene/UI/Source Han Sans CN.ttf"
-const CARD_SIZE := Vector2(480, 640)
+const CARD_SIZE := Vector2(640, 480)
+const CARD_DROP := 64.0
 const SIDE_SCALE := 0.86
 const PEEK := 250.0
 const DRAG_CLICK_THRESHOLD := 12.0
 const THEMES: Array[Dictionary] = [
 	{
-		"title": "主题 A",
+		"kicker": "主题 A",
+		"title": "解构黑白",
+		"corner": "br",
 		"scene": "res://MainMenu/level_select.tscn",
 	},
 	{
-		"title": "主题 B",
+		"kicker": "主题 B",
+		"title": "深夜森林",
+		"corner": "tl",
 		"scene": "res://theme_b/level_select.tscn",
 	},
 	{
-		"title": "主题 C",
+		"kicker": "主题 C",
+		"title": "原色魔方",
+		"corner": "br",
 		"scene": "res://theme_c/level_select.tscn",
 	},
 	{
-		"title": "主题 D",
+		"kicker": "彩蛋关卡",
+		"title": "多彩软糖",
+		"corner": "tl",
 		"scene": "res://theme_d/level_select.tscn",
 	},
 ]
+
+static var last_index := 0
 
 var _font: Font
 var _cards: Array = []
@@ -37,13 +48,17 @@ var _press_pos := Vector2.ZERO
 var _drag_origin := 0.0
 var _moved := 0.0
 var _tween: Tween
+var _dots: PageDots
 
 
 func _ready() -> void:
 	mouse_filter = Control.MOUSE_FILTER_STOP
+	_index = clampi(last_index, 0, THEMES.size() - 1)
+	_offset = float(_index)
 	_font = load(FONT_PATH) as Font
 	_build_background()
 	_build_title()
+	_build_dots()
 	_build_quit_button()
 	_build_cards()
 	resized.connect(_layout_cards)
@@ -58,6 +73,17 @@ func _build_background() -> void:
 	bg.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	bg.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	add_child(bg)
+	var texture := load("res://assets/bg/theme_select_bg.png") as Texture2D
+	if texture == null:
+		return
+	var art := TextureRect.new()
+	art.texture = texture
+	art.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	art.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	art.modulate = Color(1, 1, 1, 0.28)
+	add_child(art)
 
 
 func _build_title() -> void:
@@ -78,12 +104,39 @@ func _build_title() -> void:
 		title.add_theme_font_override("font", _font)
 	title.z_index = 20
 	add_child(title)
+	var rule := ColorRect.new()
+	rule.color = Color(0.95, 0.95, 0.95)
+	rule.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	rule.set_anchors_preset(Control.PRESET_CENTER_TOP)
+	rule.offset_left = -36.0
+	rule.offset_top = 102.0
+	rule.offset_right = 36.0
+	rule.offset_bottom = 104.0
+	rule.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	rule.z_index = 20
+	add_child(rule)
+
+
+func _build_dots() -> void:
+	_dots = PageDots.new()
+	_dots.count = THEMES.size()
+	_dots.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_dots.set_anchors_preset(Control.PRESET_CENTER_BOTTOM)
+	_dots.offset_left = -90.0
+	_dots.offset_top = -52.0
+	_dots.offset_right = 90.0
+	_dots.offset_bottom = -20.0
+	_dots.grow_horizontal = Control.GROW_DIRECTION_BOTH
+	_dots.z_index = 20
+	add_child(_dots)
 
 
 func _build_cards() -> void:
 	for info in THEMES:
 		var card := ThemeCard.new()
+		card.kicker = str(info["kicker"])
 		card.title = str(info["title"])
+		card.align_bottom_right = str(info["corner"]) == "br"
 		card.font = _font
 		card.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		card.custom_minimum_size = CARD_SIZE
@@ -97,32 +150,36 @@ func _build_quit_button() -> void:
 	button.text = "退出游戏"
 	button.focus_mode = Control.FOCUS_NONE
 	button.set_anchors_preset(Control.PRESET_BOTTOM_RIGHT)
-	button.offset_left = -200.0
-	button.offset_top = -80.0
-	button.offset_right = 0.0
-	button.offset_bottom = 0.0
+	button.offset_left = -224.0
+	button.offset_top = -104.0
+	button.offset_right = -24.0
+	button.offset_bottom = -24.0
 	button.grow_horizontal = Control.GROW_DIRECTION_BEGIN
 	button.grow_vertical = Control.GROW_DIRECTION_BEGIN
-	button.add_theme_font_size_override("font_size", 22)
-	button.add_theme_color_override("font_color", Color(0.94, 0.94, 0.94))
-	button.add_theme_color_override("font_hover_color", Color(1, 1, 1))
-	button.add_theme_color_override("font_pressed_color", Color(0.9, 0.9, 0.9))
 	if _font != null:
 		button.add_theme_font_override("font", _font)
-	button.add_theme_stylebox_override("normal", _button_style(Color(0.14, 0.14, 0.14), Color(0.75, 0.75, 0.75)))
-	button.add_theme_stylebox_override("hover", _button_style(Color(0.22, 0.22, 0.22), Color(0.88, 0.88, 0.88)))
-	button.add_theme_stylebox_override("pressed", _button_style(Color(0.32, 0.32, 0.32), Color(0.95, 0.95, 0.95)))
+	button.add_theme_font_size_override("font_size", 30)
+	button.add_theme_color_override("font_color", Color(0.94, 0.94, 0.94))
+	button.add_theme_color_override("font_hover_color", Color(1, 1, 1))
+	button.add_theme_color_override("font_pressed_color", Color(0.16, 0.16, 0.16))
+	button.add_theme_stylebox_override("normal", _mono_button_style(Color(0.10, 0.10, 0.10, 0.92), Color(0.72, 0.72, 0.72)))
+	button.add_theme_stylebox_override("hover", _mono_button_style(Color(0.20, 0.20, 0.20), Color(0.92, 0.92, 0.92)))
+	button.add_theme_stylebox_override("pressed", _mono_button_style(Color(0.88, 0.88, 0.88), Color(1, 1, 1), 3))
 	button.z_index = 20
 	button.pressed.connect(_on_quit_pressed)
 	add_child(button)
 
 
-func _button_style(bg: Color, border: Color) -> StyleBoxFlat:
+func _mono_button_style(bg: Color, border: Color, border_w: int = 2) -> StyleBoxFlat:
 	var style := StyleBoxFlat.new()
 	style.bg_color = bg
 	style.border_color = border
-	style.set_border_width_all(2)
-	style.set_content_margin_all(8)
+	style.set_border_width_all(border_w)
+	style.set_corner_radius_all(10)
+	style.content_margin_left = 18.0
+	style.content_margin_right = 18.0
+	style.content_margin_top = 10.0
+	style.content_margin_bottom = 10.0
 	return style
 
 
@@ -237,6 +294,7 @@ func _enter_theme(index: int) -> void:
 	if path.is_empty() or not ResourceLoader.exists(path):
 		push_warning("Scene not found: %s" % path)
 		return
+	last_index = index
 	_go_to_scene(path)
 
 
@@ -259,7 +317,7 @@ func _layout_cards() -> void:
 	if _cards.is_empty() or size.x < 2.0:
 		return
 	var stride := _stride()
-	var origin_y := clampf((size.y - CARD_SIZE.y) * 0.5, 24.0, maxf(24.0, size.y - CARD_SIZE.y - 24.0))
+	var origin_y := clampf((size.y - CARD_SIZE.y) * 0.5 + CARD_DROP, 24.0, maxf(24.0, size.y - CARD_SIZE.y - 24.0))
 	var origin_x := (size.x - CARD_SIZE.x) * 0.5
 	for i in _cards.size():
 		var card := _cards[i] as ThemeCard
@@ -270,6 +328,15 @@ func _layout_cards() -> void:
 		card.scale = Vector2.ONE * lerpf(1.0, SIDE_SCALE, blend)
 		card.modulate = Color(1, 1, 1, lerpf(1.0, 0.42, blend))
 		card.z_index = int((1.0 - clampf(dist, 0.0, 2.0)) * 10.0)
+		var next_focus := 1.0 - blend
+		if not is_equal_approx(card.focus, next_focus):
+			card.focus = next_focus
+			card.queue_redraw()
+	if _dots != null:
+		var active := clampi(roundi(_offset), 0, THEMES.size() - 1)
+		if _dots.active != active:
+			_dots.active = active
+			_dots.queue_redraw()
 
 
 func _stride() -> float:
@@ -285,32 +352,69 @@ func _go_to_scene(path: String) -> void:
 
 
 class ThemeCard extends Control:
+	var kicker := ""
 	var title := ""
 	var font: Font
+	var align_bottom_right := false
+	var focus := 0.0
 
 	func _ready() -> void:
 		mouse_filter = Control.MOUSE_FILTER_IGNORE
-		_build_label()
+		_build_labels()
 
-	func _build_label() -> void:
-		var title_label := Label.new()
-		title_label.text = title
-		title_label.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		title_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-		title_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		title_label.position = Vector2(0, size.y - 156)
-		title_label.size = Vector2(size.x, 48)
-		title_label.add_theme_font_size_override("font_size", 32)
-		title_label.add_theme_color_override("font_color", Color(0.95, 0.95, 0.95))
-		if font != null:
-			title_label.add_theme_font_override("font", font)
+	func _build_labels() -> void:
+		var kicker_label := _make_label(kicker, 20)
+		var title_label := _make_label(title, 36)
+		var pad := 28.0
+		var inner_w := size.x - pad * 2.0
+		if align_bottom_right:
+			kicker_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+			title_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
+			title_label.position = Vector2(pad, size.y - pad - 44.0)
+			title_label.size = Vector2(inner_w, 44.0)
+			kicker_label.position = Vector2(pad, title_label.position.y - 30.0)
+			kicker_label.size = Vector2(inner_w, 28.0)
+		else:
+			kicker_label.position = Vector2(pad, 22.0)
+			kicker_label.size = Vector2(inner_w, 28.0)
+			title_label.position = Vector2(pad, 52.0)
+			title_label.size = Vector2(inner_w, 48.0)
+		add_child(kicker_label)
 		add_child(title_label)
+
+	func _make_label(label_text: String, font_size: int) -> Label:
+		var label := Label.new()
+		label.text = label_text
+		label.mouse_filter = Control.MOUSE_FILTER_IGNORE
+		label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+		label.add_theme_font_size_override("font_size", font_size)
+		label.add_theme_color_override("font_color", Color(0.95, 0.95, 0.95))
+		if font != null:
+			label.add_theme_font_override("font", font)
+		return label
 
 	func _draw() -> void:
 		var rect := Rect2(Vector2.ZERO, size)
-		draw_rect(rect, Color(0.07, 0.07, 0.07))
-		var margin := 24.0
-		var art_size := size.x - margin * 2.0
-		var art := Rect2(margin, margin, art_size, art_size)
-		draw_rect(art, Color(0.1, 0.1, 0.1))
-		draw_rect(rect, Color(0.78, 0.78, 0.78, 0.9), false, 2.0)
+		draw_rect(rect, Color(0.08, 0.08, 0.08))
+		var border := Color(0.45, 0.45, 0.45).lerp(Color(0.95, 0.95, 0.95), focus)
+		draw_rect(rect, border, false, lerpf(1.5, 2.5, focus))
+
+
+class PageDots extends Control:
+	var count := 4
+	var active := 0
+
+	func _draw() -> void:
+		if count <= 0 or size.x < 2.0:
+			return
+		var gap := 22.0
+		var radius := 5.5
+		var total := gap * float(count - 1)
+		var origin := Vector2((size.x - total) * 0.5, size.y * 0.5)
+		var ink := Color(0.95, 0.95, 0.95)
+		for i in count:
+			var point := origin + Vector2(gap * float(i), 0.0)
+			if i == active:
+				draw_circle(point, radius, ink)
+			else:
+				draw_arc(point, radius, 0.0, TAU, 24, ink, 1.5, true)
