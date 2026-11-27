@@ -1,0 +1,45 @@
+[gd_scene load_steps=8 format=3]
+
+[ext_resource type="PackedScene" uid="uid://dpjdtxojyrf41" path="res://assets/environment/level_environment.tscn" id="1_env"]
+[ext_resource type="Script" path="res://theme_d/level6/build_cube_world.gd" id="2_world"]
+[ext_resource type="PackedScene" uid="uid://c4ah64xctwpig" path="res://assets/model/walls/cube_shell_kitchen.tscn" id="3_walls"]
+[ext_resource type="PackedScene" uid="uid://dfck0ewf8mv4j" path="res://player/player.tscn" id="4_player"]
+[ext_resource type="PackedScene" uid="uid://bxwg1o4swt0ji" path="res://assets/model/box/frying_pan.tscn" id="5_pan"]
+[ext_resource type="Script" path="res://theme_d/level6/build_hud.gd" id="6_hud"]
+[ext_resource type="Script" path="res://theme_d/level6/art_direction.gd" id="7_art"]
+
+[node name="Main" type="Node3D"]
+
+[node name="LevelEnvironment" parent="." instance=ExtResource("1_env")]
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, 0, 0, 0)
+
+[node name="Player" parent="." instance=ExtResource("4_player")]
+transform = Transform3D(0.9, 0, 0, 0, 0.9, 0, 0, 0, 0.9, 0.5, 0.45, 0.5)
+jump_enabled_by_default = true
+jump_impulse = 16.0
+
+[node name="Node3D" type="Node3D" parent="."]
+script = ExtResource("2_world")
+
+[node name="WALLS" parent="Node3D" instance=ExtResource("3_walls")]
+
+[node name="staticboxes" type="Node3D" parent="Node3D"]
+
+[node name="ExitPan" parent="Node3D" instance=ExtResource("5_pan")]
+transform = Transform3D(0, -1, 0, 0, 0, 1, -1, 0, 0, 2.9, 0.5, 1.5)
+
+[node name="ArtDirection" type="Node" parent="."]
+script = ExtResource("7_art")
+
+[node name="Marker3D" type="Marker3D" parent="."]
+transform = Transform3D(0.70710677, 0.40860704, -0.5770964, 0, 0.8161376, 0.5778576, 0.70710677, -0.40860704, 0.5770964, 3, 0, -3)
+
+[node name="Camera3D" type="Camera3D" parent="Marker3D"]
+transform = Transform3D(0.99999994, 0, 0, 0, 0.99999994, 5.9604645e-08, 0, -5.9604645e-08, 1, 0, 3.0517578e-05, 310.96033)
+projection = 1
+current = true
+size = 10.0
+h_offset = 0.0
+
+[node name="HUD" type="CanvasLayer" parent="."]
+script = ExtResource("6_hud")
