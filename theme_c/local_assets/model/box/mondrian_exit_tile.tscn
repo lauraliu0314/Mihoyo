@@ -1,0 +1,83 @@
+[gd_scene format=3]
+
+[ext_resource type="Material" path="res://theme_c/local_assets/model/walls/mondrian_black.tres" id="1_black"]
+[ext_resource type="Shader" path="res://theme_c/local_assets/material/sh_portal_vortex.gdshader" id="2_i7ynm"]
+[ext_resource type="Shader" path="res://theme_c/local_assets/material/sh_square_portal_glow.gdshader" id="3_qx5br"]
+[ext_resource type="Script" path="res://theme_c/scripts/portal_absorb.gd" id="4_s8sb4"]
+[ext_resource type="AudioStream" uid="uid://cbv4sr6yca57" path="res://assets/audio/吸入.MP3" id="5_bjc5h"]
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_fdgck"]
+
+[sub_resource type="PlaneMesh" id="BlackTileMesh"]
+size = Vector2(0.94, 0.94)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_foq2f"]
+render_priority = 0
+shader = ExtResource("2_i7ynm")
+shader_parameter/inner_color = Color(1, 0.96, 0.78, 1)
+shader_parameter/outer_color = Color(0.98, 0.73, 0.02, 1)
+shader_parameter/spin_speed = -2.000000067056
+shader_parameter/spiral_count = 5.0
+shader_parameter/brightness = 3.0000000447036
+shader_parameter/hole_size = 0.0999999977648
+
+[sub_resource type="PlaneMesh" id="SquareBeamMesh"]
+size = Vector2(0.88, 0.88)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qx5br"]
+render_priority = 0
+shader = ExtResource("3_qx5br")
+shader_parameter/glow_color = Color(1, 0.76, 0.08, 1)
+shader_parameter/brightness = 3.0
+shader_parameter/pulse_speed = 1.8
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_bjc5h"]
+height = 0.3
+radius = 0.45
+
+[node name="ExitTile" type="Node3D"]
+
+[node name="BlackTile" type="MeshInstance3D" parent="."]
+position = Vector3(0, 0.002, 0)
+mesh = SubResource("BlackTileMesh")
+material_override = ExtResource("1_black")
+
+[node name="Vortex" type="MeshInstance3D" parent="." unique_id=870144226]
+transform = Transform3D(0.4, 0, 0, 0, 0.4, 0, 0, 0, 0.4, 0, 0.014, 0)
+layers = 2
+mesh = SubResource("PlaneMesh_fdgck")
+surface_material_override/0 = SubResource("ShaderMaterial_foq2f")
+
+[node name="PortalBeam" type="MeshInstance3D" parent="." unique_id=1810591153]
+position = Vector3(0, 0.025, 0)
+layers = 2
+mesh = SubResource("SquareBeamMesh")
+surface_material_override/0 = SubResource("ShaderMaterial_qx5br")
+
+[node name="PortalFillLight" type="OmniLight3D" parent="." unique_id=39667758]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+light_energy = 0.5
+light_color = Color(1, 0.8, 0.25, 1)
+light_cull_mask = 4294966274
+omni_range = 0.5
+
+[node name="AbsorbPoint" type="Marker3D" parent="." unique_id=699000962]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.1, 0)
+
+[node name="CaptureArea" type="Area3D" parent="." unique_id=2053711986 node_paths=PackedStringArray("absorb_point")]
+script = ExtResource("4_s8sb4")
+absorb_point = NodePath("../AbsorbPoint")
+float_height = 0.7
+float_duration = 0.15000000000000002
+floating_arc_height = 0.3
+suction_duration = 0.55
+orbit_turns = 1.0
+sink_depth = 0.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CaptureArea" unique_id=830519019]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.39, 0)
+shape = SubResource("CylinderShape3D_bjc5h")
+
+[node name="AbsorbSfx" type="AudioStreamPlayer" parent="." unique_id=284716141]
+stream = ExtResource("5_bjc5h")
+volume_db = -4.0

@@ -1,0 +1,15 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://theme_c/level_select.gd" id="1_menu"]
+
+[node name="LevelSelect" type="Control" unique_id=1852552369]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_menu")
+card_travel_duration = 0.5
+side_card_scale = 0.8
+card_arc_height = null

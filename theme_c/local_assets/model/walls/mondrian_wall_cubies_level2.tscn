@@ -1,0 +1,3711 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://theme_c/local_assets/model/walls/mondrian_wall_cubies.gd" id="1_root"]
+[ext_resource type="Script" path="res://theme_c/local_assets/model/walls/mondrian_wall_sticker.gd" id="2_sticker"]
+[ext_resource type="Material" path="res://theme_c/local_assets/model/walls/mondrian_white.tres" id="mat_white"]
+[ext_resource type="Material" path="res://theme_c/local_assets/model/walls/mondrian_red.tres" id="mat_red"]
+[ext_resource type="Material" path="res://theme_c/local_assets/model/walls/mondrian_yellow.tres" id="mat_yellow"]
+[ext_resource type="Material" path="res://theme_c/local_assets/model/walls/mondrian_blue.tres" id="mat_blue"]
+[ext_resource type="Material" path="res://theme_c/local_assets/model/walls/mondrian_black.tres" id="mat_black"]
+
+[sub_resource type="QuadMesh" id="TileQuad"]
+size = Vector2(1, 1)
+
+[node name="WallCubies" type="Node3D"]
+script = ExtResource("1_root")
+
+[node name="Cubie_0_0_0" type="Node3D" parent="."]
+position = Vector3(-2.5, 0.5, -2.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_0_0_0"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_0_0/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_0_0/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Left" type="Node3D" parent="Cubie_0_0_0"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_0_0/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_0_0/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Front" type="Node3D" parent="Cubie_0_0_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_0_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_0_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Cubie_0_0_1" type="Node3D" parent="."]
+position = Vector3(-2.5, 0.5, -1.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_0_0_1"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_0_1/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_0_1/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Left" type="Node3D" parent="Cubie_0_0_1"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_0_1/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_0_1/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Cubie_0_0_2" type="Node3D" parent="."]
+position = Vector3(-2.5, 0.5, -0.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_0_0_2"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_0_2/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_0_2/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Left" type="Node3D" parent="Cubie_0_0_2"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_0_2/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_0_2/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Cubie_0_0_3" type="Node3D" parent="."]
+position = Vector3(-2.5, 0.5, 0.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_0_0_3"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_0_3/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_0_3/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Left" type="Node3D" parent="Cubie_0_0_3"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_0_3/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_0_3/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_0_0_4" type="Node3D" parent="."]
+position = Vector3(-2.5, 0.5, 1.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_0_0_4"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_0_4/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_0_4/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Left" type="Node3D" parent="Cubie_0_0_4"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_0_4/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_0_4/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_0_0_5" type="Node3D" parent="."]
+position = Vector3(-2.5, 0.5, 2.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_0_0_5"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_0_5/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_0_5/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Left" type="Node3D" parent="Cubie_0_0_5"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_0_5/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_0_5/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Back" type="Node3D" parent="Cubie_0_0_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_0_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_0_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_0_1_0" type="Node3D" parent="."]
+position = Vector3(-2.5, 1.5, -2.5)
+
+[node name="Left" type="Node3D" parent="Cubie_0_1_0"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_1_0/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_1_0/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Front" type="Node3D" parent="Cubie_0_1_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_1_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_1_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Cubie_0_1_1" type="Node3D" parent="."]
+position = Vector3(-2.5, 1.5, -1.5)
+
+[node name="Left" type="Node3D" parent="Cubie_0_1_1"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_1_1/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_1_1/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Cubie_0_1_2" type="Node3D" parent="."]
+position = Vector3(-2.5, 1.5, -0.5)
+
+[node name="Left" type="Node3D" parent="Cubie_0_1_2"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_1_2/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_1_2/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Cubie_0_1_3" type="Node3D" parent="."]
+position = Vector3(-2.5, 1.5, 0.5)
+
+[node name="Left" type="Node3D" parent="Cubie_0_1_3"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_1_3/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_1_3/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_0_1_4" type="Node3D" parent="."]
+position = Vector3(-2.5, 1.5, 1.5)
+
+[node name="Left" type="Node3D" parent="Cubie_0_1_4"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_1_4/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_1_4/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_0_1_5" type="Node3D" parent="."]
+position = Vector3(-2.5, 1.5, 2.5)
+
+[node name="Left" type="Node3D" parent="Cubie_0_1_5"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_1_5/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_1_5/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Back" type="Node3D" parent="Cubie_0_1_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_1_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_1_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_0_2_0" type="Node3D" parent="."]
+position = Vector3(-2.5, 2.5, -2.5)
+
+[node name="Left" type="Node3D" parent="Cubie_0_2_0"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_2_0/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_2_0/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Front" type="Node3D" parent="Cubie_0_2_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_2_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_2_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Cubie_0_2_1" type="Node3D" parent="."]
+position = Vector3(-2.5, 2.5, -1.5)
+
+[node name="Left" type="Node3D" parent="Cubie_0_2_1"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 2
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_2_1/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_2_1/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Cubie_0_2_2" type="Node3D" parent="."]
+position = Vector3(-2.5, 2.5, -0.5)
+
+[node name="Left" type="Node3D" parent="Cubie_0_2_2"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_2_2/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_2_2/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Cubie_0_2_3" type="Node3D" parent="."]
+position = Vector3(-2.5, 2.5, 0.5)
+
+[node name="Left" type="Node3D" parent="Cubie_0_2_3"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_2_3/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_2_3/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_0_2_4" type="Node3D" parent="."]
+position = Vector3(-2.5, 2.5, 1.5)
+
+[node name="Left" type="Node3D" parent="Cubie_0_2_4"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_2_4/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_2_4/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_0_2_5" type="Node3D" parent="."]
+position = Vector3(-2.5, 2.5, 2.5)
+
+[node name="Left" type="Node3D" parent="Cubie_0_2_5"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_2_5/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_2_5/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Back" type="Node3D" parent="Cubie_0_2_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_2_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_2_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_0_3_0" type="Node3D" parent="."]
+position = Vector3(-2.5, 3.5, -2.5)
+
+[node name="Left" type="Node3D" parent="Cubie_0_3_0"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_3_0/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_3_0/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Front" type="Node3D" parent="Cubie_0_3_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_3_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_3_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_0_3_1" type="Node3D" parent="."]
+position = Vector3(-2.5, 3.5, -1.5)
+
+[node name="Left" type="Node3D" parent="Cubie_0_3_1"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 2
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_3_1/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_3_1/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_0_3_2" type="Node3D" parent="."]
+position = Vector3(-2.5, 3.5, -0.5)
+
+[node name="Left" type="Node3D" parent="Cubie_0_3_2"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_3_2/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_3_2/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_0_3_3" type="Node3D" parent="."]
+position = Vector3(-2.5, 3.5, 0.5)
+
+[node name="Left" type="Node3D" parent="Cubie_0_3_3"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_3_3/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_3_3/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_0_3_4" type="Node3D" parent="."]
+position = Vector3(-2.5, 3.5, 1.5)
+
+[node name="Left" type="Node3D" parent="Cubie_0_3_4"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_3_4/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_3_4/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_0_3_5" type="Node3D" parent="."]
+position = Vector3(-2.5, 3.5, 2.5)
+
+[node name="Left" type="Node3D" parent="Cubie_0_3_5"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_3_5/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_3_5/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Back" type="Node3D" parent="Cubie_0_3_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_3_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_3_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_0_4_0" type="Node3D" parent="."]
+position = Vector3(-2.5, 4.5, -2.5)
+
+[node name="Left" type="Node3D" parent="Cubie_0_4_0"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_4_0/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_4_0/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Front" type="Node3D" parent="Cubie_0_4_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_4_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_4_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_0_4_1" type="Node3D" parent="."]
+position = Vector3(-2.5, 4.5, -1.5)
+
+[node name="Left" type="Node3D" parent="Cubie_0_4_1"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 2
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_4_1/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_4_1/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_0_4_2" type="Node3D" parent="."]
+position = Vector3(-2.5, 4.5, -0.5)
+
+[node name="Left" type="Node3D" parent="Cubie_0_4_2"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_4_2/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_4_2/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_0_4_3" type="Node3D" parent="."]
+position = Vector3(-2.5, 4.5, 0.5)
+
+[node name="Left" type="Node3D" parent="Cubie_0_4_3"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_4_3/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_4_3/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_0_4_4" type="Node3D" parent="."]
+position = Vector3(-2.5, 4.5, 1.5)
+
+[node name="Left" type="Node3D" parent="Cubie_0_4_4"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_4_4/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_4_4/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_0_4_5" type="Node3D" parent="."]
+position = Vector3(-2.5, 4.5, 2.5)
+
+[node name="Left" type="Node3D" parent="Cubie_0_4_5"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_4_5/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_4_5/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Back" type="Node3D" parent="Cubie_0_4_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_4_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_4_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_0_5_0" type="Node3D" parent="."]
+position = Vector3(-2.5, 5.5, -2.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_0_5_0"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_5_0/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_5_0/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Left" type="Node3D" parent="Cubie_0_5_0"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_5_0/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_5_0/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Front" type="Node3D" parent="Cubie_0_5_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_5_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_5_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_0_5_1" type="Node3D" parent="."]
+position = Vector3(-2.5, 5.5, -1.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_0_5_1"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_5_1/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_5_1/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Left" type="Node3D" parent="Cubie_0_5_1"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_5_1/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_5_1/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_0_5_2" type="Node3D" parent="."]
+position = Vector3(-2.5, 5.5, -0.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_0_5_2"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_5_2/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_5_2/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Left" type="Node3D" parent="Cubie_0_5_2"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_5_2/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_5_2/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_0_5_3" type="Node3D" parent="."]
+position = Vector3(-2.5, 5.5, 0.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_0_5_3"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_5_3/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_5_3/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Left" type="Node3D" parent="Cubie_0_5_3"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_5_3/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_5_3/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_0_5_4" type="Node3D" parent="."]
+position = Vector3(-2.5, 5.5, 1.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_0_5_4"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_5_4/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_5_4/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Left" type="Node3D" parent="Cubie_0_5_4"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_5_4/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_5_4/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_0_5_5" type="Node3D" parent="."]
+position = Vector3(-2.5, 5.5, 2.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_0_5_5"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 4
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_5_5/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_5_5/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Left" type="Node3D" parent="Cubie_0_5_5"]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, -0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 4
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_5_5/Left"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_5_5/Left"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Back" type="Node3D" parent="Cubie_0_5_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_0_5_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_0_5_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_1_0_0" type="Node3D" parent="."]
+position = Vector3(-1.5, 0.5, -2.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_1_0_0"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_1_0_0/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_1_0_0/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Front" type="Node3D" parent="Cubie_1_0_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_1_0_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_1_0_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Cubie_1_0_1" type="Node3D" parent="."]
+position = Vector3(-1.5, 0.5, -1.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_1_0_1"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_1_0_1/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_1_0_1/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_1_0_2" type="Node3D" parent="."]
+position = Vector3(-1.5, 0.5, -0.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_1_0_2"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_1_0_2/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_1_0_2/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_1_0_3" type="Node3D" parent="."]
+position = Vector3(-1.5, 0.5, 0.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_1_0_3"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_1_0_3/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_1_0_3/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Cubie_1_0_4" type="Node3D" parent="."]
+position = Vector3(-1.5, 0.5, 1.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_1_0_4"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_1_0_4/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_1_0_4/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Cubie_1_0_5" type="Node3D" parent="."]
+position = Vector3(-1.5, 0.5, 2.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_1_0_5"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_1_0_5/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_1_0_5/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Back" type="Node3D" parent="Cubie_1_0_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_1_0_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_1_0_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_1_1_0" type="Node3D" parent="."]
+position = Vector3(-1.5, 1.5, -2.5)
+
+[node name="Front" type="Node3D" parent="Cubie_1_1_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_1_1_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_1_1_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Cubie_1_1_5" type="Node3D" parent="."]
+position = Vector3(-1.5, 1.5, 2.5)
+
+[node name="Back" type="Node3D" parent="Cubie_1_1_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_1_1_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_1_1_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_1_2_0" type="Node3D" parent="."]
+position = Vector3(-1.5, 2.5, -2.5)
+
+[node name="Front" type="Node3D" parent="Cubie_1_2_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_1_2_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_1_2_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Cubie_1_2_5" type="Node3D" parent="."]
+position = Vector3(-1.5, 2.5, 2.5)
+
+[node name="Back" type="Node3D" parent="Cubie_1_2_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_1_2_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_1_2_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_1_3_0" type="Node3D" parent="."]
+position = Vector3(-1.5, 3.5, -2.5)
+
+[node name="Front" type="Node3D" parent="Cubie_1_3_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_1_3_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_1_3_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_1_3_5" type="Node3D" parent="."]
+position = Vector3(-1.5, 3.5, 2.5)
+
+[node name="Back" type="Node3D" parent="Cubie_1_3_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 2
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_1_3_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_1_3_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_1_4_0" type="Node3D" parent="."]
+position = Vector3(-1.5, 4.5, -2.5)
+
+[node name="Front" type="Node3D" parent="Cubie_1_4_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_1_4_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_1_4_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_1_4_5" type="Node3D" parent="."]
+position = Vector3(-1.5, 4.5, 2.5)
+
+[node name="Back" type="Node3D" parent="Cubie_1_4_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 6
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_1_4_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_1_4_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_1_5_0" type="Node3D" parent="."]
+position = Vector3(-1.5, 5.5, -2.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_1_5_0"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_1_5_0/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_1_5_0/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Front" type="Node3D" parent="Cubie_1_5_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_1_5_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_1_5_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_1_5_1" type="Node3D" parent="."]
+position = Vector3(-1.5, 5.5, -1.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_1_5_1"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_1_5_1/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_1_5_1/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_1_5_2" type="Node3D" parent="."]
+position = Vector3(-1.5, 5.5, -0.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_1_5_2"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_1_5_2/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_1_5_2/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_1_5_3" type="Node3D" parent="."]
+position = Vector3(-1.5, 5.5, 0.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_1_5_3"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_1_5_3/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_1_5_3/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_1_5_4" type="Node3D" parent="."]
+position = Vector3(-1.5, 5.5, 1.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_1_5_4"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_1_5_4/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_1_5_4/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_1_5_5" type="Node3D" parent="."]
+position = Vector3(-1.5, 5.5, 2.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_1_5_5"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_1_5_5/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_1_5_5/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Back" type="Node3D" parent="Cubie_1_5_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_1_5_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_1_5_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_2_0_0" type="Node3D" parent="."]
+position = Vector3(-0.5, 0.5, -2.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_2_0_0"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_2_0_0/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_2_0_0/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Front" type="Node3D" parent="Cubie_2_0_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_2_0_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_2_0_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_2_0_1" type="Node3D" parent="."]
+position = Vector3(-0.5, 0.5, -1.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_2_0_1"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 2
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_2_0_1/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_2_0_1/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_2_0_2" type="Node3D" parent="."]
+position = Vector3(-0.5, 0.5, -0.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_2_0_2"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 6
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_2_0_2/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_2_0_2/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_2_0_3" type="Node3D" parent="."]
+position = Vector3(-0.5, 0.5, 0.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_2_0_3"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 2
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_2_0_3/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_2_0_3/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_2_0_4" type="Node3D" parent="."]
+position = Vector3(-0.5, 0.5, 1.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_2_0_4"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 6
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_2_0_4/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_2_0_4/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_2_0_5" type="Node3D" parent="."]
+position = Vector3(-0.5, 0.5, 2.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_2_0_5"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 2
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_2_0_5/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_2_0_5/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Back" type="Node3D" parent="Cubie_2_0_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_2_0_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_2_0_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_2_1_0" type="Node3D" parent="."]
+position = Vector3(-0.5, 1.5, -2.5)
+
+[node name="Front" type="Node3D" parent="Cubie_2_1_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 6
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_2_1_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_2_1_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_2_1_5" type="Node3D" parent="."]
+position = Vector3(-0.5, 1.5, 2.5)
+
+[node name="Back" type="Node3D" parent="Cubie_2_1_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_2_1_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_2_1_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_2_2_0" type="Node3D" parent="."]
+position = Vector3(-0.5, 2.5, -2.5)
+
+[node name="Front" type="Node3D" parent="Cubie_2_2_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 2
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_2_2_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_2_2_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_2_2_5" type="Node3D" parent="."]
+position = Vector3(-0.5, 2.5, 2.5)
+
+[node name="Back" type="Node3D" parent="Cubie_2_2_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 2
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_2_2_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_2_2_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Cubie_2_3_0" type="Node3D" parent="."]
+position = Vector3(-0.5, 3.5, -2.5)
+
+[node name="Front" type="Node3D" parent="Cubie_2_3_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 6
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_2_3_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_2_3_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_2_3_5" type="Node3D" parent="."]
+position = Vector3(-0.5, 3.5, 2.5)
+
+[node name="Back" type="Node3D" parent="Cubie_2_3_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 2
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_2_3_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_2_3_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Cubie_2_4_0" type="Node3D" parent="."]
+position = Vector3(-0.5, 4.5, -2.5)
+
+[node name="Front" type="Node3D" parent="Cubie_2_4_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 2
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_2_4_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_2_4_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_2_4_5" type="Node3D" parent="."]
+position = Vector3(-0.5, 4.5, 2.5)
+
+[node name="Back" type="Node3D" parent="Cubie_2_4_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 6
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_2_4_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_2_4_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Cubie_2_5_0" type="Node3D" parent="."]
+position = Vector3(-0.5, 5.5, -2.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_2_5_0"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_2_5_0/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_2_5_0/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Front" type="Node3D" parent="Cubie_2_5_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_2_5_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_2_5_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_2_5_1" type="Node3D" parent="."]
+position = Vector3(-0.5, 5.5, -1.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_2_5_1"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_2_5_1/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_2_5_1/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_2_5_2" type="Node3D" parent="."]
+position = Vector3(-0.5, 5.5, -0.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_2_5_2"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_2_5_2/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_2_5_2/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_2_5_3" type="Node3D" parent="."]
+position = Vector3(-0.5, 5.5, 0.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_2_5_3"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_2_5_3/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_2_5_3/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_2_5_4" type="Node3D" parent="."]
+position = Vector3(-0.5, 5.5, 1.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_2_5_4"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 4
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_2_5_4/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_2_5_4/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Cubie_2_5_5" type="Node3D" parent="."]
+position = Vector3(-0.5, 5.5, 2.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_2_5_5"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_2_5_5/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_2_5_5/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Back" type="Node3D" parent="Cubie_2_5_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_2_5_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_2_5_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_3_0_0" type="Node3D" parent="."]
+position = Vector3(0.5, 0.5, -2.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_3_0_0"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_3_0_0/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_3_0_0/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Front" type="Node3D" parent="Cubie_3_0_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_3_0_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_3_0_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_3_0_1" type="Node3D" parent="."]
+position = Vector3(0.5, 0.5, -1.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_3_0_1"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_3_0_1/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_3_0_1/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_3_0_2" type="Node3D" parent="."]
+position = Vector3(0.5, 0.5, -0.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_3_0_2"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_3_0_2/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_3_0_2/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_3_0_3" type="Node3D" parent="."]
+position = Vector3(0.5, 0.5, 0.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_3_0_3"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_3_0_3/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_3_0_3/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_3_0_4" type="Node3D" parent="."]
+position = Vector3(0.5, 0.5, 1.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_3_0_4"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_3_0_4/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_3_0_4/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_3_0_5" type="Node3D" parent="."]
+position = Vector3(0.5, 0.5, 2.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_3_0_5"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_3_0_5/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_3_0_5/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Back" type="Node3D" parent="Cubie_3_0_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_3_0_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_3_0_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_3_1_0" type="Node3D" parent="."]
+position = Vector3(0.5, 1.5, -2.5)
+
+[node name="Front" type="Node3D" parent="Cubie_3_1_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_3_1_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_3_1_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_3_1_5" type="Node3D" parent="."]
+position = Vector3(0.5, 1.5, 2.5)
+
+[node name="Back" type="Node3D" parent="Cubie_3_1_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_3_1_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_3_1_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_3_2_0" type="Node3D" parent="."]
+position = Vector3(0.5, 2.5, -2.5)
+
+[node name="Front" type="Node3D" parent="Cubie_3_2_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_3_2_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_3_2_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_3_2_5" type="Node3D" parent="."]
+position = Vector3(0.5, 2.5, 2.5)
+
+[node name="Back" type="Node3D" parent="Cubie_3_2_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_3_2_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_3_2_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Cubie_3_3_0" type="Node3D" parent="."]
+position = Vector3(0.5, 3.5, -2.5)
+
+[node name="Front" type="Node3D" parent="Cubie_3_3_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_3_3_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_3_3_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_3_3_5" type="Node3D" parent="."]
+position = Vector3(0.5, 3.5, 2.5)
+
+[node name="Back" type="Node3D" parent="Cubie_3_3_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_3_3_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_3_3_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Cubie_3_4_0" type="Node3D" parent="."]
+position = Vector3(0.5, 4.5, -2.5)
+
+[node name="Front" type="Node3D" parent="Cubie_3_4_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_3_4_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_3_4_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_3_4_5" type="Node3D" parent="."]
+position = Vector3(0.5, 4.5, 2.5)
+
+[node name="Back" type="Node3D" parent="Cubie_3_4_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_3_4_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_3_4_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Cubie_3_5_0" type="Node3D" parent="."]
+position = Vector3(0.5, 5.5, -2.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_3_5_0"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_3_5_0/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_3_5_0/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Front" type="Node3D" parent="Cubie_3_5_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 4
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_3_5_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_3_5_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Cubie_3_5_1" type="Node3D" parent="."]
+position = Vector3(0.5, 5.5, -1.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_3_5_1"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 6
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_3_5_1/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_3_5_1/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_3_5_2" type="Node3D" parent="."]
+position = Vector3(0.5, 5.5, -0.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_3_5_2"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 2
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_3_5_2/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_3_5_2/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_3_5_3" type="Node3D" parent="."]
+position = Vector3(0.5, 5.5, 0.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_3_5_3"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 2
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_3_5_3/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_3_5_3/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_3_5_4" type="Node3D" parent="."]
+position = Vector3(0.5, 5.5, 1.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_3_5_4"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 6
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_3_5_4/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_3_5_4/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_3_5_5" type="Node3D" parent="."]
+position = Vector3(0.5, 5.5, 2.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_3_5_5"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_3_5_5/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_3_5_5/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Back" type="Node3D" parent="Cubie_3_5_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_3_5_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_3_5_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_4_0_0" type="Node3D" parent="."]
+position = Vector3(1.5, 0.5, -2.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_4_0_0"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_4_0_0/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_4_0_0/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Front" type="Node3D" parent="Cubie_4_0_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_4_0_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_4_0_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_4_0_1" type="Node3D" parent="."]
+position = Vector3(1.5, 0.5, -1.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_4_0_1"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 2
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_4_0_1/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_4_0_1/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_4_0_2" type="Node3D" parent="."]
+position = Vector3(1.5, 0.5, -0.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_4_0_2"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 2
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_4_0_2/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_4_0_2/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_4_0_3" type="Node3D" parent="."]
+position = Vector3(1.5, 0.5, 0.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_4_0_3"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 2
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_4_0_3/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_4_0_3/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_4_0_4" type="Node3D" parent="."]
+position = Vector3(1.5, 0.5, 1.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_4_0_4"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_4_0_4/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_4_0_4/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_4_0_5" type="Node3D" parent="."]
+position = Vector3(1.5, 0.5, 2.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_4_0_5"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_4_0_5/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_4_0_5/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Back" type="Node3D" parent="Cubie_4_0_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_4_0_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_4_0_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_4_1_0" type="Node3D" parent="."]
+position = Vector3(1.5, 1.5, -2.5)
+
+[node name="Front" type="Node3D" parent="Cubie_4_1_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_4_1_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_4_1_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_4_1_5" type="Node3D" parent="."]
+position = Vector3(1.5, 1.5, 2.5)
+
+[node name="Back" type="Node3D" parent="Cubie_4_1_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_4_1_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_4_1_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_4_2_0" type="Node3D" parent="."]
+position = Vector3(1.5, 2.5, -2.5)
+
+[node name="Front" type="Node3D" parent="Cubie_4_2_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 2
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_4_2_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_4_2_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_4_2_5" type="Node3D" parent="."]
+position = Vector3(1.5, 2.5, 2.5)
+
+[node name="Back" type="Node3D" parent="Cubie_4_2_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_4_2_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_4_2_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Cubie_4_3_0" type="Node3D" parent="."]
+position = Vector3(1.5, 3.5, -2.5)
+
+[node name="Front" type="Node3D" parent="Cubie_4_3_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 2
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_4_3_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_4_3_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_4_3_5" type="Node3D" parent="."]
+position = Vector3(1.5, 3.5, 2.5)
+
+[node name="Back" type="Node3D" parent="Cubie_4_3_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_4_3_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_4_3_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Cubie_4_4_0" type="Node3D" parent="."]
+position = Vector3(1.5, 4.5, -2.5)
+
+[node name="Front" type="Node3D" parent="Cubie_4_4_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 2
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_4_4_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_4_4_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_4_4_5" type="Node3D" parent="."]
+position = Vector3(1.5, 4.5, 2.5)
+
+[node name="Back" type="Node3D" parent="Cubie_4_4_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_4_4_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_4_4_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Cubie_4_5_0" type="Node3D" parent="."]
+position = Vector3(1.5, 5.5, -2.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_4_5_0"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_4_5_0/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_4_5_0/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Front" type="Node3D" parent="Cubie_4_5_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_4_5_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_4_5_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_4_5_1" type="Node3D" parent="."]
+position = Vector3(1.5, 5.5, -1.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_4_5_1"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_4_5_1/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_4_5_1/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Cubie_4_5_2" type="Node3D" parent="."]
+position = Vector3(1.5, 5.5, -0.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_4_5_2"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_4_5_2/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_4_5_2/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Cubie_4_5_3" type="Node3D" parent="."]
+position = Vector3(1.5, 5.5, 0.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_4_5_3"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 2
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_4_5_3/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_4_5_3/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_4_5_4" type="Node3D" parent="."]
+position = Vector3(1.5, 5.5, 1.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_4_5_4"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 6
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_4_5_4/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_4_5_4/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_4_5_5" type="Node3D" parent="."]
+position = Vector3(1.5, 5.5, 2.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_4_5_5"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_4_5_5/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_4_5_5/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Back" type="Node3D" parent="Cubie_4_5_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_4_5_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_4_5_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_5_0_0" type="Node3D" parent="."]
+position = Vector3(2.5, 0.5, -2.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_5_0_0"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 4
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_0_0/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_0_0/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Right" type="Node3D" parent="Cubie_5_0_0"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_0_0/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_0_0/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Front" type="Node3D" parent="Cubie_5_0_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_0_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_0_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_5_0_1" type="Node3D" parent="."]
+position = Vector3(2.5, 0.5, -1.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_5_0_1"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_0_1/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_0_1/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Right" type="Node3D" parent="Cubie_5_0_1"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 2
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_0_1/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_0_1/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_5_0_2" type="Node3D" parent="."]
+position = Vector3(2.5, 0.5, -0.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_5_0_2"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_0_2/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_0_2/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Right" type="Node3D" parent="Cubie_5_0_2"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_0_2/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_0_2/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_5_0_3" type="Node3D" parent="."]
+position = Vector3(2.5, 0.5, 0.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_5_0_3"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_0_3/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_0_3/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Right" type="Node3D" parent="Cubie_5_0_3"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_0_3/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_0_3/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_5_0_4" type="Node3D" parent="."]
+position = Vector3(2.5, 0.5, 1.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_5_0_4"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_0_4/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_0_4/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Right" type="Node3D" parent="Cubie_5_0_4"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_0_4/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_0_4/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_5_0_5" type="Node3D" parent="."]
+position = Vector3(2.5, 0.5, 2.5)
+
+[node name="Floor" type="Node3D" parent="Cubie_5_0_5"]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, -0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_0_5/Floor"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_0_5/Floor"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Right" type="Node3D" parent="Cubie_5_0_5"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_0_5/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_0_5/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Back" type="Node3D" parent="Cubie_5_0_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_0_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_0_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_5_1_0" type="Node3D" parent="."]
+position = Vector3(2.5, 1.5, -2.5)
+
+[node name="Right" type="Node3D" parent="Cubie_5_1_0"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_1_0/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_1_0/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Front" type="Node3D" parent="Cubie_5_1_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_1_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_1_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_5_1_1" type="Node3D" parent="."]
+position = Vector3(2.5, 1.5, -1.5)
+
+[node name="Right" type="Node3D" parent="Cubie_5_1_1"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 2
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_1_1/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_1_1/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_5_1_2" type="Node3D" parent="."]
+position = Vector3(2.5, 1.5, -0.5)
+
+[node name="Right" type="Node3D" parent="Cubie_5_1_2"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_1_2/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_1_2/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_5_1_3" type="Node3D" parent="."]
+position = Vector3(2.5, 1.5, 0.5)
+
+[node name="Right" type="Node3D" parent="Cubie_5_1_3"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_1_3/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_1_3/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_5_1_4" type="Node3D" parent="."]
+position = Vector3(2.5, 1.5, 1.5)
+
+[node name="Right" type="Node3D" parent="Cubie_5_1_4"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_1_4/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_1_4/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_5_1_5" type="Node3D" parent="."]
+position = Vector3(2.5, 1.5, 2.5)
+
+[node name="Right" type="Node3D" parent="Cubie_5_1_5"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_1_5/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_1_5/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Back" type="Node3D" parent="Cubie_5_1_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 2
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_1_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_1_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_yellow")
+
+[node name="Cubie_5_2_0" type="Node3D" parent="."]
+position = Vector3(2.5, 2.5, -2.5)
+
+[node name="Right" type="Node3D" parent="Cubie_5_2_0"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_2_0/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_2_0/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Front" type="Node3D" parent="Cubie_5_2_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_2_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_2_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_5_2_1" type="Node3D" parent="."]
+position = Vector3(2.5, 2.5, -1.5)
+
+[node name="Right" type="Node3D" parent="Cubie_5_2_1"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 6
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_2_1/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_2_1/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_5_2_2" type="Node3D" parent="."]
+position = Vector3(2.5, 2.5, -0.5)
+
+[node name="Right" type="Node3D" parent="Cubie_5_2_2"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_2_2/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_2_2/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_5_2_3" type="Node3D" parent="."]
+position = Vector3(2.5, 2.5, 0.5)
+
+[node name="Right" type="Node3D" parent="Cubie_5_2_3"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_2_3/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_2_3/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_5_2_4" type="Node3D" parent="."]
+position = Vector3(2.5, 2.5, 1.5)
+
+[node name="Right" type="Node3D" parent="Cubie_5_2_4"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_2_4/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_2_4/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_5_2_5" type="Node3D" parent="."]
+position = Vector3(2.5, 2.5, 2.5)
+
+[node name="Right" type="Node3D" parent="Cubie_5_2_5"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_2_5/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_2_5/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Back" type="Node3D" parent="Cubie_5_2_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_2_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_2_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_5_3_0" type="Node3D" parent="."]
+position = Vector3(2.5, 3.5, -2.5)
+
+[node name="Right" type="Node3D" parent="Cubie_5_3_0"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_3_0/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_3_0/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Front" type="Node3D" parent="Cubie_5_3_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_3_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_3_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_5_3_1" type="Node3D" parent="."]
+position = Vector3(2.5, 3.5, -1.5)
+
+[node name="Right" type="Node3D" parent="Cubie_5_3_1"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 2
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_3_1/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_3_1/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Cubie_5_3_2" type="Node3D" parent="."]
+position = Vector3(2.5, 3.5, -0.5)
+
+[node name="Right" type="Node3D" parent="Cubie_5_3_2"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_3_2/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_3_2/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Cubie_5_3_3" type="Node3D" parent="."]
+position = Vector3(2.5, 3.5, 0.5)
+
+[node name="Right" type="Node3D" parent="Cubie_5_3_3"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_3_3/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_3_3/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Cubie_5_3_4" type="Node3D" parent="."]
+position = Vector3(2.5, 3.5, 1.5)
+
+[node name="Right" type="Node3D" parent="Cubie_5_3_4"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 2
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_3_4/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_3_4/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_5_3_5" type="Node3D" parent="."]
+position = Vector3(2.5, 3.5, 2.5)
+
+[node name="Right" type="Node3D" parent="Cubie_5_3_5"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_3_5/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_3_5/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Back" type="Node3D" parent="Cubie_5_3_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_3_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_3_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_5_4_0" type="Node3D" parent="."]
+position = Vector3(2.5, 4.5, -2.5)
+
+[node name="Right" type="Node3D" parent="Cubie_5_4_0"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_4_0/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_4_0/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Front" type="Node3D" parent="Cubie_5_4_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_4_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_4_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_5_4_1" type="Node3D" parent="."]
+position = Vector3(2.5, 4.5, -1.5)
+
+[node name="Right" type="Node3D" parent="Cubie_5_4_1"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 2
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_4_1/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_4_1/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Cubie_5_4_2" type="Node3D" parent="."]
+position = Vector3(2.5, 4.5, -0.5)
+
+[node name="Right" type="Node3D" parent="Cubie_5_4_2"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_4_2/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_4_2/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Cubie_5_4_3" type="Node3D" parent="."]
+position = Vector3(2.5, 4.5, 0.5)
+
+[node name="Right" type="Node3D" parent="Cubie_5_4_3"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_4_3/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_4_3/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Cubie_5_4_4" type="Node3D" parent="."]
+position = Vector3(2.5, 4.5, 1.5)
+
+[node name="Right" type="Node3D" parent="Cubie_5_4_4"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 2
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_4_4/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_4_4/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_5_4_5" type="Node3D" parent="."]
+position = Vector3(2.5, 4.5, 2.5)
+
+[node name="Right" type="Node3D" parent="Cubie_5_4_5"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_4_5/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_4_5/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Back" type="Node3D" parent="Cubie_5_4_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_4_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_4_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_5_5_0" type="Node3D" parent="."]
+position = Vector3(2.5, 5.5, -2.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_5_5_0"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_5_0/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_5_0/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Right" type="Node3D" parent="Cubie_5_5_0"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 4
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_5_0/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_5_0/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Front" type="Node3D" parent="Cubie_5_5_0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.5)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_5_0/Front"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_5_0/Front"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_5_5_1" type="Node3D" parent="."]
+position = Vector3(2.5, 5.5, -1.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_5_5_1"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 4
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_5_1/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_5_1/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Right" type="Node3D" parent="Cubie_5_5_1"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_5_1/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_5_1/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_5_5_2" type="Node3D" parent="."]
+position = Vector3(2.5, 5.5, -0.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_5_5_2"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 3
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_5_2/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_5_2/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_blue")
+
+[node name="Right" type="Node3D" parent="Cubie_5_5_2"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_5_2/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_5_2/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_5_5_3" type="Node3D" parent="."]
+position = Vector3(2.5, 5.5, 0.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_5_5_3"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_5_3/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_5_3/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Right" type="Node3D" parent="Cubie_5_5_3"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 0
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_5_3/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_5_3/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_white")
+
+[node name="Cubie_5_5_4" type="Node3D" parent="."]
+position = Vector3(2.5, 5.5, 1.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_5_5_4"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_5_4/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_5_4/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Right" type="Node3D" parent="Cubie_5_5_4"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_5_4/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_5_4/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Cubie_5_5_5" type="Node3D" parent="."]
+position = Vector3(2.5, 5.5, 2.5)
+
+[node name="Ceiling" type="Node3D" parent="Cubie_5_5_5"]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, 0.5, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_5_5/Ceiling"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_5_5/Ceiling"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Right" type="Node3D" parent="Cubie_5_5_5"]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, 0.5, 0, 0)
+script = ExtResource("2_sticker")
+color_state = 1
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_5_5/Right"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_5_5/Right"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_red")
+
+[node name="Back" type="Node3D" parent="Cubie_5_5_5"]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, 0.5)
+script = ExtResource("2_sticker")
+color_state = 4
+force_edges = 0
+
+[node name="Frame" type="MeshInstance3D" parent="Cubie_5_5_5/Back"]
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")
+
+[node name="Color" type="MeshInstance3D" parent="Cubie_5_5_5/Back"]
+position = Vector3(0, 0, 0.004)
+mesh = SubResource("TileQuad")
+material_override = ExtResource("mat_black")

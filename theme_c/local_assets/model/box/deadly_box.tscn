@@ -1,0 +1,83 @@
+[gd_scene format=3]
+
+[ext_resource type="Material" path="res://theme_c/local_assets/model/walls/mondrian_white.tres" id="white"]
+[ext_resource type="Material" path="res://theme_c/local_assets/model/walls/mondrian_red.tres" id="red"]
+[ext_resource type="Material" path="res://theme_c/local_assets/model/walls/mondrian_yellow.tres" id="yellow"]
+[ext_resource type="Material" path="res://theme_c/local_assets/model/walls/mondrian_blue.tres" id="blue"]
+[ext_resource type="Material" path="res://theme_c/local_assets/model/walls/mondrian_black.tres" id="black"]
+
+[sub_resource type="BoxMesh" id="BoxCore"]
+size = Vector3(0.94, 0.94, 0.94)
+
+
+[sub_resource type="QuadMesh" id="Front_ColorMesh"]
+size = Vector2(0.90, 0.90)
+
+[sub_resource type="QuadMesh" id="Back_ColorMesh"]
+size = Vector2(0.90, 0.90)
+
+[sub_resource type="QuadMesh" id="Right_ColorMesh"]
+size = Vector2(0.90, 0.90)
+
+[sub_resource type="QuadMesh" id="Left_ColorMesh"]
+size = Vector2(0.90, 0.90)
+
+[sub_resource type="QuadMesh" id="Top_ColorMesh"]
+size = Vector2(0.90, 0.90)
+
+[sub_resource type="QuadMesh" id="Bottom_ColorMesh"]
+size = Vector2(0.90, 0.90)
+
+[node name="Box" type="Node3D"]
+
+[node name="BlackCore" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxCore")
+material_override = ExtResource("black")
+
+[node name="Front" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.472)
+
+[node name="Color" type="MeshInstance3D" parent="Front"]
+position = Vector3(0, 0, 0)
+mesh = SubResource("Front_ColorMesh")
+material_override = ExtResource("red")
+
+[node name="Back" type="Node3D" parent="."]
+transform = Transform3D(-1, 0, 0, 0, 1, 0, 0, 0, -1, 0, 0, -0.472)
+
+[node name="Color" type="MeshInstance3D" parent="Back"]
+position = Vector3(0, 0, 0)
+mesh = SubResource("Back_ColorMesh")
+material_override = ExtResource("white")
+
+[node name="Right" type="Node3D" parent="."]
+transform = Transform3D(0, 0, 1, 0, 1, 0, -1, 0, 0, 0.472, 0, 0)
+
+[node name="Color" type="MeshInstance3D" parent="Right"]
+position = Vector3(0, 0, 0)
+mesh = SubResource("Right_ColorMesh")
+material_override = ExtResource("yellow")
+
+[node name="Left" type="Node3D" parent="."]
+transform = Transform3D(0, 0, -1, 0, 1, 0, 1, 0, 0, -0.472, 0, 0)
+
+[node name="Color" type="MeshInstance3D" parent="Left"]
+position = Vector3(0, 0, 0)
+mesh = SubResource("Left_ColorMesh")
+material_override = ExtResource("blue")
+
+[node name="Top" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0, 1, 0, -1, 0, 0, 0.472, 0)
+
+[node name="Color" type="MeshInstance3D" parent="Top"]
+position = Vector3(0, 0, 0)
+mesh = SubResource("Top_ColorMesh")
+material_override = ExtResource("white")
+
+[node name="Bottom" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0, -1, 0, 1, 0, 0, -0.472, 0)
+
+[node name="Color" type="MeshInstance3D" parent="Bottom"]
+position = Vector3(0, 0, 0)
+mesh = SubResource("Bottom_ColorMesh")
+material_override = ExtResource("white")
